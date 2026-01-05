@@ -2,7 +2,7 @@ import { neon } from '@neondatabase/serverless';
 import * as dotenv from 'dotenv';
 import { join } from 'path';
 
-dotenv.config({ path: join(process.cwd(), 'website/.env.local') });
+dotenv.config({ path: join(process.cwd(), '.env.local') });
 
 const databaseUrl = process.env.DATABASE_URL || process.env.POSTGRES_URL;
 
@@ -16,7 +16,6 @@ const sql = neon(databaseUrl);
 async function cleanup() {
     console.log('🧹 Starting database cleanup...');
     try {
-        // Order matters due to foreign keys
         console.log('Deleting likes...');
         await sql`DELETE FROM likes`;
 
@@ -28,10 +27,6 @@ async function cleanup() {
 
         console.log('Deleting rate limits...');
         await sql`DELETE FROM rate_limits`;
-
-        // Optionally keep users or clear them too
-        // console.log('Deleting users...');
-        // await sql`DELETE FROM users`;
 
         console.log('✅ Database cleanup complete!');
     } catch (error) {
