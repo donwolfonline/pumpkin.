@@ -1,4 +1,4 @@
-# 🎃 Pumpkin.. - The Friendly Programming Language
+# 🎃 Pumpkin. - The Friendly Programming Language
 
 > **Code for Humans, Not Robots.**
 
