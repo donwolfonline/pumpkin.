@@ -1,60 +1,57 @@
-<svg width="256" height="256" viewBox="0 0 256 256" fill="none" xmlns="http://www.w3.org/2000/svg">
+<svg width="256" height="256" viewBox="0 0 256 256" xmlns="http://www.w3.org/2000/svg">
   <defs>
-    <!-- 3D Silver Shading -->
-    <linearGradient id="silver-3d" x1="0" y1="0" x2="256" y2="256" gradientUnits="userSpaceOnUse">
-      <stop offset="0" stop-color="#FFFFFF"/>
-      <stop offset="0.3" stop-color="#E0E0E0"/>
-      <stop offset="0.5" stop-color="#C0C0C0"/>
-      <stop offset="0.7" stop-color="#909090"/>
-      <stop offset="1" stop-color="#606060"/>
+    <!-- Golden Gradients matching the 3D renders -->
+    <linearGradient id="gold-body" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#CA8A04"/> <!-- Dark Gold -->
+      <stop offset="20%" stop-color="#FACC15"/> <!-- Light Gold -->
+      <stop offset="50%" stop-color="#CA8A04"/> <!-- Dark Gold -->
+      <stop offset="80%" stop-color="#854D0E"/> <!-- Deeper Shadow -->
     </linearGradient>
-    <filter id="shadow-3d" x="-20%" y="-20%" width="140%" height="140%">
-      <feGaussianBlur in="SourceAlpha" stdDeviation="4"/>
-      <feOffset dx="4" dy="4" result="offsetblur"/>
+    <radialGradient id="gold-highlight" cx="30%" cy="30%" r="50%">
+      <stop offset="0%" stop-color="#FEF08A" stop-opacity="0.8"/>
+      <stop offset="100%" stop-color="#FACC15" stop-opacity="0"/>
+    </radialGradient>
+    <radialGradient id="pie-crust" cx="50%" cy="50%" r="60%">
+      <stop offset="50%" stop-color="#D97706"/>
+      <stop offset="100%" stop-color="#92400E"/>
+    </radialGradient>
+    <filter id="drop-shadow">
+      <feGaussianBlur in="SourceAlpha" stdDeviation="2"/>
+      <feOffset dx="0" dy="2" result="offsetblur"/>
       <feComponentTransfer>
-        <feFuncA type="linear" slope="0.5"/>
+        <feFuncA type="linear" slope="0.3"/>
       </feComponentTransfer>
       <feMerge>
         <feMergeNode/>
         <feMergeNode in="SourceGraphic"/>
       </feMerge>
     </filter>
-    <!-- Pie Textures -->
-    <radialGradient id="crust-grad" cx="50%" cy="50%" r="50%">
-      <stop offset="0%" stop-color="#F39C12"/>
-      <stop offset="100%" stop-color="#D35400"/>
-    </radialGradient>
   </defs>
 
-  <!-- Shadow Under Pedestal -->
-  <ellipse cx="128" cy="235" rx="60" ry="10" fill="black" opacity="0.1" filter="url(#shadow-3d)"/>
-
-  <!-- Pedestal (Stacked 3D circles) -->
-  <rect x="78" y="215" width="100" height="20" rx="10" fill="#212121" filter="url(#shadow-3d)"/>
-  <rect x="88" y="200" width="80" height="20" rx="8" fill="#333333"/>
+  <!-- Pedestal Base (Golden Cylinder) -->
+  <path d="M78 200 L178 200 L178 230 C178 240 78 240 78 230 Z" fill="url(#gold-body)" filter="url(#drop-shadow)"/>
+  <ellipse cx="128" cy="200" rx="50" ry="10" fill="#854D0E"/>
   
   <!-- Stem -->
-  <path d="M120 180 L136 180 L140 210 L116 210 Z" fill="url(#silver-3d)"/>
+  <path d="M118 160 L138 160 L144 200 L112 200 Z" fill="#B45309"/>
+  <rect x="115" y="160" width="26" height="40" fill="url(#gold-body)"/>
 
-  <!-- Main Cup (Gourd Shape) -->
-  <path d="M50 70 Q50 180 128 200 Q206 180 206 70 L50 70 Z" fill="url(#silver-3d)" filter="url(#shadow-3d)"/>
+  <!-- Main Cup Body (Golden Chalice) -->
+  <path d="M64 60 C64 160 192 160 192 60" fill="url(#gold-body)" filter="url(#drop-shadow)"/>
+  <path d="M64 60 C64 160 192 160 192 60" fill="url(#gold-highlight)" style="mix-blend-mode: overlay;"/>
   
-  <!-- Rim -->
-  <ellipse cx="128" cy="70" rx="78" ry="15" fill="#A0A0A0" stroke="#FFFFFF" stroke-width="2"/>
+  <!-- Pie Filling (Top of Cup) -->
+  <ellipse cx="128" cy="60" rx="64" ry="20" fill="#F59E0B"/>
+  <ellipse cx="128" cy="60" rx="58" ry="16" fill="url(#pie-crust)"/>
+  
+  <!-- Lattice Pattern -->
+  <path d="M80 50 L176 70 M80 70 L176 50 M128 44 L128 76" stroke="#FEF3C7" stroke-width="3" stroke-linecap="round" opacity="0.8"/>
 
-  <!-- Handles (curved) -->
-  <path d="M50 80 C20 80 20 150 50 140" stroke="url(#silver-3d)" stroke-width="12" fill="none" stroke-linecap="round"/>
-  <path d="M206 80 C236 80 236 150 206 140" stroke="url(#silver-3d)" stroke-width="12" fill="none" stroke-linecap="round"/>
+  <!-- Handles (Golden Rings) -->
+  <path d="M64 70 C40 70 30 100 40 120 C45 130 64 120 64 110" stroke="url(#gold-body)" stroke-width="12" fill="none" stroke-linecap="round" filter="url(#drop-shadow)"/>
+  <path d="M192 70 C216 70 226 100 216 120 C211 130 192 120 192 110" stroke="url(#gold-body)" stroke-width="12" fill="none" stroke-linecap="round" filter="url(#drop-shadow)"/>
 
-  <!-- The Pie (Floating in Cup) -->
-  <ellipse cx="128" cy="65" rx="70" ry="25" fill="url(#crust-grad)"/>
-  <!-- Lattice -->
-  <path d="M70 60 Q128 90 186 60 M80 75 Q128 105 176 75 M65 50 L191 50" stroke="#FFFFFF" stroke-opacity="0.2" stroke-width="2" fill="none"/>
-  
-  <!-- Glow from pie -->
-  <ellipse cx="128" cy="60" rx="55" ry="15" fill="#F39C12" opacity="0.3" filter="url(#shadow-3d)"/>
-  
-  <!-- Tag -->
-  <path d="M98 205 L158 205 L154 225 L102 225 Z" fill="#FFB74D"/>
-  <text x="128" y="220" text-anchor="middle" font-family="Verdana" font-weight="bold" font-size="10" fill="#212121">PIE MASTER</text>
+  <!-- Plaque -->
+  <rect x="95" y="215" width="66" height="15" rx="4" fill="#451A03"/>
+  <text x="128" y="226" text-anchor="middle" font-family="Arial, sans-serif" font-weight="bold" font-size="9" fill="#FDE047">PIE MASTER</text>
 </svg>

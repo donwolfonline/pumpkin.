@@ -1,57 +1,59 @@
-<svg width="256" height="256" viewBox="0 0 256 256" fill="none" xmlns="http://www.w3.org/2000/svg">
+<svg width="256" height="256" viewBox="0 0 256 256" xmlns="http://www.w3.org/2000/svg">
   <defs>
-    <!-- Platinum 3D Shine -->
-    <linearGradient id="plat-3d" x1="0" y1="0" x2="256" y2="256" gradientUnits="userSpaceOnUse">
-      <stop offset="0" stop-color="#E5E4E2"/>
-      <stop offset="0.4" stop-color="#FFFFFF"/>
-      <stop offset="0.6" stop-color="#D1D1D1"/>
-      <stop offset="1" stop-color="#A9A9A9"/>
-    </linearGradient>
-    <!-- Celestial Glow -->
-    <radialGradient id="inner-glow" cx="50%" cy="50%" r="50%">
-      <stop offset="0%" stop-color="#FFFFFF" stop-opacity="0.8"/>
-      <stop offset="100%" stop-color="#2196F3" stop-opacity="0"/>
+    <!-- Radiant Golden Gradient -->
+    <radialGradient id="sun-gold" cx="40%" cy="40%" r="60%">
+      <stop offset="0%" stop-color="#FEF08A"/> <!-- White/Yellow Highlight -->
+      <stop offset="40%" stop-color="#FACC15"/> <!-- Bright Gold -->
+      <stop offset="80%" stop-color="#CA8A04"/> <!-- Deep Gold -->
+      <stop offset="100%" stop-color="#854D0E"/> <!-- Shadow -->
     </radialGradient>
-    <filter id="soft-glow" x="-50%" y="-50%" width="200%" height="200%">
-      <feGaussianBlur stdDeviation="15" result="blur"/>
+    <radialGradient id="inner-glow" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="#FFFFFF" stop-opacity="0.9"/>
+      <stop offset="60%" stop-color="#FDE047" stop-opacity="0.4"/>
+      <stop offset="100%" stop-color="#CA8A04" stop-opacity="0"/>
+    </radialGradient>
+    <filter id="outer-glow">
+      <feGaussianBlur in="SourceAlpha" stdDeviation="6"/>
       <feMerge>
-        <feMergeNode in="blur"/>
+        <feMergeNode/>
         <feMergeNode in="SourceGraphic"/>
       </feMerge>
     </filter>
   </defs>
 
-  <!-- Ground Shadows -->
-  <ellipse cx="128" cy="230" rx="90" ry="15" fill="black" opacity="0.05"/>
+  <!-- Pedestal (Massive Golden Base) -->
+  <path d="M68 210 L188 210 L198 240 L58 240 Z" fill="#CA8A04"/>
+  <rect x="78" y="195" width="100" height="20" fill="#FACC15"/>
+  <ellipse cx="128" cy="195" rx="50" ry="8" fill="#854D0E" opacity="0.5"/>
 
-  <!-- Pedestal (Obsidian Style) -->
-  <path d="M60 220 L196 220 L210 240 L46 240 Z" fill="#121212"/>
-  <rect x="75" y="210" width="106" height="15" rx="5" fill="#212121"/>
-
-  <!-- Celestial Sphere (The Great Pumpkin) -->
-  <circle cx="128" cy="115" r="95" fill="url(#plat-3d)" filter="url(#soft-glow)"/>
+  <!-- The Great Pumpkin (Giant Glowing Orb) -->
+  <circle cx="128" cy="110" r="85" fill="url(#sun-gold)" filter="url(#outer-glow)"/>
   
-  <!-- Outer Ring (3D Orbit) -->
-  <ellipse cx="128" cy="115" rx="115" ry="30" stroke="#FFD700" stroke-width="2" opacity="0.4" transform="rotate(-15 128 115)"/>
-  <ellipse cx="128" cy="115" rx="105" ry="25" stroke="#FFFFFF" stroke-width="1.5" opacity="0.6" transform="rotate(20 128 115)"/>
+  <!-- Internal Glow/Energy -->
+  <circle cx="128" cy="110" r="60" fill="url(#inner-glow)"/>
 
-  <!-- Moving Core Glow -->
-  <circle cx="128" cy="115" r="40" fill="url(#inner-glow)"/>
+  <!-- Ribs (Subtle 3D lines) -->
+  <path d="M128 25 Q90 110 128 195" stroke="#B45309" stroke-width="2" fill="none" opacity="0.4"/>
+  <path d="M128 25 Q166 110 128 195" stroke="#B45309" stroke-width="2" fill="none" opacity="0.4"/>
+  <path d="M128 25 Q60 110 128 195" stroke="#B45309" stroke-width="2" fill="none" opacity="0.4"/>
+  <path d="M128 25 Q196 110 128 195" stroke="#B45309" stroke-width="2" fill="none" opacity="0.4"/>
 
-  <!-- Stem (Crystalline) -->
-  <path d="M115 25 Q128 0 141 25" stroke="#4CAF50" stroke-width="10" stroke-linecap="round" fill="none" opacity="0.8"/>
+  <!-- Celestial Rings (Platinum Accents) -->
+  <ellipse cx="128" cy="110" rx="100" ry="25" stroke="#FFFFFF" stroke-width="2" fill="none" transform="rotate(-15 128 110)" opacity="0.8"/>
+  <ellipse cx="128" cy="110" rx="110" ry="10" stroke="#FDE047" stroke-width="1" fill="none" transform="rotate(10 128 110)"/>
 
-  <!-- Stars / Constellation -->
+  <!-- Stars -->
   <g fill="white">
-     <circle cx="90" cy="80" r="3" />
-     <circle cx="160" cy="90" r="2.5" />
-     <circle cx="128" cy="140" r="4" />
-     <circle cx="100" cy="110" r="2" />
-     <circle cx="150" cy="130" r="1.5" />
+     <circle cx="90" cy="80" r="3" opacity="0.8"/>
+     <circle cx="160" cy="90" r="2" opacity="0.8"/>
+     <circle cx="128" cy="140" r="3" opacity="0.8"/>
+     <circle cx="100" cy="120" r="2" opacity="0.6"/>
   </g>
-  <path d="M90 80 L100 110 L128 140 L150 130 L160 90" stroke="white" stroke-width="0.5" stroke-dasharray="4 4" opacity="0.5"/>
 
-  <!-- Title Plate -->
-  <rect x="70" y="215" width="116" height="25" rx="12" fill="#1A237E" stroke="#FFD700" stroke-width="2"/>
-  <text x="128" y="233" text-anchor="middle" font-family="Trebuchet MS" font-weight="bold" font-size="12" fill="#FFD700">GREAT PUMPKIN</text>
+  <!-- Stem (Golden Crown) -->
+  <path d="M120 25 L128 10 L136 25" fill="#854D0E"/>
+  
+  <!-- Plaque -->
+  <rect x="88" y="215" width="80" height="16" rx="8" fill="#451A03" stroke="#FDE047" stroke-width="1"/>
+  <text x="128" y="226" text-anchor="middle" font-family="Arial, sans-serif" font-weight="bold" font-size="9" fill="#FFFFFF">LEGENDARY</text>
 </svg>
