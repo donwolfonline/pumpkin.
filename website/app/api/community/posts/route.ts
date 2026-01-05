@@ -30,7 +30,10 @@ export async function GET(request: NextRequest) {
     } catch (error) {
         console.error('Get posts error:', error);
         return NextResponse.json(
-            { error: 'Failed to fetch posts' },
+            {
+                error: 'Failed to fetch posts',
+                details: error instanceof Error ? error.message : String(error)
+            },
             { status: 500 }
         );
     }
@@ -122,7 +125,10 @@ export async function POST(request: NextRequest) {
     } catch (error) {
         console.error('Create post error:', error);
         return NextResponse.json(
-            { error: 'Failed to create post' },
+            {
+                error: 'Failed to create post',
+                details: error instanceof Error ? error.message : String(error)
+            },
             { status: 500 }
         );
     }
