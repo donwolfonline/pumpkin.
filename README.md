@@ -1,4 +1,5 @@
-# 🎃 Pumpkin Programming Language
+#  <img width="783" height="318" alt="Screenshot_2026-01-05_at_7 03 21_PM-removebg-preview" src="https://github.com/user-attachments/assets/b62b15e7-9b92-48e6-a079-35cee2ce997b" />
+Pumpkin Dot 
 
 > **A friendly, explorative language for learning to code.**
 > *v0.1.0 - The Foundation Release*
