@@ -63,7 +63,10 @@ export async function POST(request: NextRequest) {
     } catch (error) {
         console.error('Create comment error:', error);
         return NextResponse.json(
-            { error: 'Failed to create comment' },
+            {
+                error: 'Failed to create comment',
+                details: error instanceof Error ? error.message : String(error)
+            },
             { status: 500 }
         );
     }

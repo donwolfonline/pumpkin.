@@ -36,7 +36,7 @@ export async function POST(request: NextRequest) {
         const buffer = Buffer.from(bytes);
 
         // Upload to Cloudinary
-        const result = await new Promise<any>((resolve, reject) => {
+        const result = await new Promise((resolve, reject) => {
             const uploadStream = cloudinary.uploader.upload_stream(
                 {
                     folder: 'pumpkin_community',
