@@ -149,8 +149,8 @@ Pumpkin honors its contributors with a gamified achievement system. Each level r
 | **4. The Blossom** | ![Blossom](/website/public/images/trophies/blossom.png) | For leading documentation efforts or conducting major refactors. |
 | **5. Golden Pumpkin** | ![Gold](/website/public/images/trophies/golden_pumpkin.png) | For 25 contributions or implementing a core language feature. |
 | **6. Jack-o'-Lantern** | ![Lantern](/website/public/images/trophies/jack_o_lantern.png) | For 50 contributions or achieving "Enlightenment" level optimization. |
-| **7. Master Pie-Maker** | 🥧 | For reaching core maintainer status and architectural leadership. |
-| **8. The Great Pumpkin** | 🎃✨ | For legendary impact that transforms the entire Pumpkin ecosystem. |
+| **7. Master Pie-Maker** | ![Pie Maker](/website/public/images/trophies/pie_maker.svg) | For reaching core maintainer status and architectural leadership. |
+| **8. The Great Pumpkin** | ![Great Pumpkin](/website/public/images/trophies/great_pumpkin.svg) | For legendary impact that transforms the entire Pumpkin ecosystem. |
 
 </div>
 
