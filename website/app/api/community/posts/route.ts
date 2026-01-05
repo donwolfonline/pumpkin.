@@ -7,24 +7,47 @@ export async function GET(request: NextRequest) {
     try {
         const { searchParams } = new URL(request.url);
         const page = parseInt(searchParams.get('page') || '1');
-        const limit = 20;
+        const category = searchParams.get('category');
+        const limit = parseInt(searchParams.get('limit') || '20');
         const offset = (page - 1) * limit;
 
-        const posts = await sql`
-            SELECT 
-                p.id,
-                p.content,
-                p.image_url,
-                p.likes_count,
-                p.comments_count,
-                p.created_at,
-                u.username
-            FROM posts p
-            JOIN users u ON p.user_id = u.id
-            ORDER BY p.created_at DESC
-            LIMIT ${limit}
-            OFFSET ${offset}
-        `;
+        let posts;
+        if (category) {
+            posts = await sql`
+                SELECT 
+                    p.id,
+                    p.content,
+                    p.image_url,
+                    p.category,
+                    p.likes_count,
+                    p.comments_count,
+                    p.created_at,
+                    u.username
+                FROM posts p
+                JOIN users u ON p.user_id = u.id
+                WHERE p.category = ${category}
+                ORDER BY p.created_at DESC
+                LIMIT ${limit}
+                OFFSET ${offset}
+            `;
+        } else {
+            posts = await sql`
+                SELECT 
+                    p.id,
+                    p.content,
+                    p.image_url,
+                    p.category,
+                    p.likes_count,
+                    p.comments_count,
+                    p.created_at,
+                    u.username
+                FROM posts p
+                JOIN users u ON p.user_id = u.id
+                ORDER BY p.created_at DESC
+                LIMIT ${limit}
+                OFFSET ${offset}
+            `;
+        }
 
         return NextResponse.json({ posts });
     } catch (error) {
@@ -45,7 +68,7 @@ export async function GET(request: NextRequest) {
 // POST /api/community/posts - Create new post
 export async function POST(request: NextRequest) {
     try {
-        const { userId, content, imageUrl } = await request.json();
+        const { userId, content, imageUrl, category } = await request.json();
 
         if (!userId || !content) {
             return NextResponse.json(
@@ -54,12 +77,18 @@ export async function POST(request: NextRequest) {
             );
         }
 
+        const finalCategory = category || 'General';
+
         if (content.length > 500) {
             return NextResponse.json(
                 { error: 'Content must be 500 characters or less' },
                 { status: 400 }
             );
         }
+
+        // ... (rate limiting logic omitted for brevity in multi-replace if possible, but I should probably keep it)
+        // I'll include the whole chunk to be safe.
+
 
         // Check rate limiting
         const fingerprint = request.headers.get('x-fingerprint');
@@ -108,9 +137,9 @@ export async function POST(request: NextRequest) {
 
         // Create post
         const newPost = await sql`
-            INSERT INTO posts (id, user_id, content, image_url)
-            VALUES (${uuidv4()}, ${userId}, ${content}, ${imageUrl || null})
-            RETURNING id, content, image_url, likes_count, comments_count, created_at
+            INSERT INTO posts (id, user_id, content, image_url, category)
+            VALUES (${uuidv4()}, ${userId}, ${content}, ${imageUrl || null}, ${finalCategory})
+            RETURNING id, content, image_url, category, likes_count, comments_count, created_at
         `;
 
         // Get username

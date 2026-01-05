@@ -22,11 +22,11 @@ export default function Navbar() {
                 <div className="flex justify-between items-center py-4">
                     <Link href="/" className="flex items-center gap-2 group transition-transform hover:scale-105 active:scale-95">
                         <Image
-                            src="/pumpkin-logo.png"
+                            src="/pumpkin-dot-logo.png"
                             alt="Pumpkin Logo"
-                            width={160}
-                            height={40}
-                            className="h-10 w-auto"
+                            width={220}
+                            height={55}
+                            className="h-12 w-auto"
                             priority
                         />
                     </Link>

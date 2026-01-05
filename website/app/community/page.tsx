@@ -3,7 +3,8 @@
 import { useState, useEffect } from 'react';
 import { getUserFingerprint, getStoredUsername, setStoredUsername } from '@/lib/user-identity';
 import CreatePostModal from '@/components/community/CreatePostModal';
-import PostCard from '@/components/community/PostCard';
+import CompactPostCard from '@/components/community/CompactPostCard';
+import PostExpandedModal from '@/components/community/PostExpandedModal';
 import { motion } from 'framer-motion';
 import Image from 'next/image';
 import Link from 'next/link';
@@ -14,29 +15,20 @@ interface Post {
     id: string;
     content: string;
     image_url: string | null;
+    category: string;
     likes_count: number;
     comments_count: number;
     created_at: string;
     username: string;
 }
 
-// Loading Skeleton Component
-function PostSkeleton() {
+const CATEGORIES = ['General', 'Showcase', 'Help', 'Idea', 'Question', 'Bug'];
+
+// Compact Skeleton for the new grid
+function CompactSkeleton() {
     return (
-        <div className="bg-white rounded-3xl p-8 border-4 border-gray-900 shadow-[8px_8px_0px_rgba(0,0,0,1)] animate-pulse">
-            <div className="flex items-center gap-3 mb-4">
-                <div className="w-12 h-12 bg-gray-200 rounded-full" />
-                <div className="flex-1">
-                    <div className="h-4 bg-gray-200 rounded w-24 mb-2" />
-                    <div className="h-3 bg-gray-200 rounded w-16" />
-                </div>
-            </div>
-            <div className="space-y-2 mb-4">
-                <div className="h-4 bg-gray-200 rounded w-full" />
-                <div className="h-4 bg-gray-200 rounded w-5/6" />
-                <div className="h-4 bg-gray-200 rounded w-4/6" />
-            </div>
-            <div className="h-10 bg-gray-200 rounded-xl" />
+        <div className="aspect-square bg-gray-100 rounded-2xl border-2 border-gray-900 animate-pulse flex items-center justify-center text-4xl">
+            🎃
         </div>
     );
 }
@@ -47,6 +39,7 @@ export default function CommunityPage() {
     const [userId, setUserId] = useState<string | null>(null);
     const [username, setUsername] = useState<string | null>(null);
     const [showCreateModal, setShowCreateModal] = useState(false);
+    const [selectedPost, setSelectedPost] = useState<Post | null>(null);
     const [isInitialized, setIsInitialized] = useState(false);
 
     // Initialize user
@@ -174,7 +167,7 @@ export default function CommunityPage() {
                 <VineDecoration className="top-1/3 left-5 opacity-30" rotate={90} delay={1.5} />
                 <VineDecoration className="bottom-10 right-1/4 opacity-30" rotate={-120} delay={2} />
 
-                <div className="max-w-4xl mx-auto relative z-10">
+                <div className="max-w-[1400px] mx-auto relative z-10 px-4">
                     {/* Logo Header - Back to Home */}
                     <motion.div
                         initial={{ opacity: 0, y: -20 }}
@@ -186,11 +179,11 @@ export default function CommunityPage() {
                             className="inline-flex items-center gap-2 hover:scale-105 transition-transform"
                         >
                             <Image
-                                src="/pumpkin-logo.png"
+                                src="/pumpkin-dot-logo.png"
                                 alt="Pumpkin"
-                                width={140}
-                                height={35}
-                                className="h-9 w-auto"
+                                width={180}
+                                height={45}
+                                className="h-11 w-auto"
                             />
                         </Link>
                     </motion.div>
@@ -257,43 +250,84 @@ export default function CommunityPage() {
                         </button>
                     </motion.div>
 
-                    {/* Posts Feed */}
                     {loading ? (
-                        <div className="space-y-6">
-                            {[1, 2, 3].map((i) => (
-                                <PostSkeleton key={i} />
+                        <div className="space-y-12">
+                            {CATEGORIES.slice(0, 2).map((cat) => (
+                                <div key={cat}>
+                                    <div className="h-8 bg-gray-200 rounded w-48 mb-6 animate-pulse" />
+                                    <div className="grid grid-cols-2 sm:grid-cols-4 md:grid-cols-6 lg:grid-cols-8 gap-4">
+                                        {[1, 2, 3, 4, 5, 6, 7, 8].map((i) => (
+                                            <CompactSkeleton key={i} />
+                                        ))}
+                                    </div>
+                                </div>
                             ))}
                         </div>
-                    ) : posts.length === 0 ? (
-                        <motion.div
-                            initial={{ opacity: 0, scale: 0.9 }}
-                            animate={{ opacity: 1, scale: 1 }}
-                            className="text-center py-20 bg-white rounded-3xl border-4 border-gray-900 shadow-[8px_8px_0px_rgba(0,0,0,1)] relative overflow-hidden"
-                        >
-                            <motion.div
-                                animate={{ scale: [1, 1.1, 1] }}
-                                transition={{ duration: 2, repeat: Infinity }}
-                                className="text-8xl mb-6"
-                            >
-                                👀
-                            </motion.div>
-                            <p className="text-3xl font-crazy text-gray-900 mb-4">
-                                Nothing Here Yet!
-                            </p>
-                            <p className="text-xl text-gray-600 font-semibold">
-                                Be the brave soul to share something first! 🚀
-                            </p>
-                        </motion.div>
                     ) : (
-                        <div className="space-y-8">
-                            {posts.map((post, index) => (
-                                <PostCard
-                                    key={post.id}
-                                    post={post}
-                                    currentUserId={userId}
-                                    delay={index * 0.1}
-                                />
-                            ))}
+                        <div className="space-y-16">
+                            {CATEGORIES.map((cat) => {
+                                const catPosts = posts.filter(p => (p.category || 'General') === cat);
+                                if (catPosts.length === 0) return null;
+
+                                return (
+                                    <motion.div
+                                        key={cat}
+                                        initial={{ opacity: 0, x: -20 }}
+                                        whileInView={{ opacity: 1, x: 0 }}
+                                        viewport={{ once: true }}
+                                        className="relative"
+                                    >
+                                        <div className="flex items-center justify-between mb-6">
+                                            <h2 className="text-3xl font-crazy font-bold text-gray-900 flex items-center gap-3">
+                                                <span className="w-3 h-8 bg-pumpkin-orange rounded-full" />
+                                                {cat}
+                                                <span className="text-sm font-sans text-gray-400 bg-gray-100 px-3 py-1 rounded-full border-2 border-gray-900">
+                                                    {catPosts.length}
+                                                </span>
+                                            </h2>
+                                        </div>
+
+                                        <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-8 gap-4">
+                                            {catPosts.map((post, index) => (
+                                                <motion.div
+                                                    key={post.id}
+                                                    initial={{ opacity: 0, scale: 0.8 }}
+                                                    whileInView={{ opacity: 1, scale: 1 }}
+                                                    transition={{ delay: index * 0.05 }}
+                                                    viewport={{ once: true }}
+                                                >
+                                                    <CompactPostCard
+                                                        post={post}
+                                                        currentUserId={userId}
+                                                        onClick={() => setSelectedPost(post)}
+                                                    />
+                                                </motion.div>
+                                            ))}
+                                            <motion.button
+                                                onClick={handleCreateClick}
+                                                whileHover={{ scale: 1.05 }}
+                                                whileTap={{ scale: 0.95 }}
+                                                className="aspect-square rounded-2xl border-4 border-dashed border-gray-300 flex flex-col items-center justify-center gap-2 hover:border-pumpkin-orange hover:bg-orange-50 transition-all group"
+                                            >
+                                                <div className="text-2xl group-hover:rotate-12 transition-transform">➕</div>
+                                                <span className="text-xs font-bold text-gray-400 group-hover:text-pumpkin-orange">Add to {cat}</span>
+                                            </motion.button>
+                                        </div>
+                                    </motion.div>
+                                );
+                            })}
+
+                            {posts.length === 0 && (
+                                <motion.div
+                                    initial={{ opacity: 0, scale: 0.9 }}
+                                    animate={{ opacity: 1, scale: 1 }}
+                                    className="text-center py-20 bg-white rounded-3xl border-4 border-gray-900 shadow-[8px_8px_0px_rgba(0,0,0,1)]"
+                                >
+                                    <div className="text-8xl mb-6">👀</div>
+                                    <p className="text-3xl font-crazy text-gray-900 mb-4">Nothing Here Yet!</p>
+                                    <p className="text-xl text-gray-600 font-semibold">Be the brave soul to share something first! 🚀</p>
+                                </motion.div>
+                            )}
                         </div>
                     )}
                 </div>
@@ -309,6 +343,15 @@ export default function CommunityPage() {
                     />
                 )}
             </main>
+
+            {/* Expanded Post Modal */}
+            {selectedPost && (
+                <PostExpandedModal
+                    post={selectedPost}
+                    currentUserId={userId}
+                    onClose={() => setSelectedPost(null)}
+                />
+            )}
         </>
     );
 }

@@ -29,11 +29,11 @@ export default function PlaygroundPage() {
                 <div className="flex flex-col items-center gap-6 mb-4">
                     <Link href="/" className="hover:scale-105 transition-transform">
                         <Image
-                            src="/pumpkin-logo.png"
+                            src="/pumpkin-dot-logo.png"
                             alt="Pumpkin Logo"
-                            width={200}
-                            height={50}
-                            className="h-12 w-auto"
+                            width={240}
+                            height={60}
+                            className="h-14 w-auto"
                         />
                     </Link>
                     <div className="inline-block relative">

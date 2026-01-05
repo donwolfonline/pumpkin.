@@ -11,6 +11,7 @@ interface Post {
     id: string;
     content: string;
     image_url: string | null;
+    category: string;
     likes_count: number;
     comments_count: number;
     created_at: string;
@@ -39,6 +40,9 @@ export default function CreatePostModal({
     const [imagePreview, setImagePreview] = useState<string | null>(null);
     const [uploading, setUploading] = useState(false);
     const [error, setError] = useState('');
+    const [category, setCategory] = useState('General');
+
+    const categories = ['General', 'Showcase', 'Help', 'Idea', 'Question', 'Bug'];
 
     const handleUsernameSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
@@ -65,14 +69,12 @@ export default function CreatePostModal({
         const file = e.target.files?.[0];
         if (!file) return;
 
-        // Validate file type
         const validTypes = ['image/jpeg', 'image/png', 'image/gif', 'image/webp'];
         if (!validTypes.includes(file.type)) {
             setError('Only JPEG, PNG, GIF, and WebP images are allowed');
             return;
         }
 
-        // Validate file size (5MB)
         if (file.size > 5 * 1024 * 1024) {
             setError('Image must be smaller than 5MB');
             return;
@@ -106,7 +108,6 @@ export default function CreatePostModal({
         try {
             let imageUrl = null;
 
-            // Upload image if present
             if (imageFile) {
                 const formData = new FormData();
                 formData.append('image', imageFile);
@@ -117,17 +118,18 @@ export default function CreatePostModal({
                 });
 
                 if (!uploadRes.ok) {
-                    throw new Error('Failed to upload image');
+                    const errorData = await uploadRes.json().catch(() => ({}));
+                    const detailMsg = errorData.details ? ` (${errorData.details})` : '';
+                    const diagMsg = errorData.diagnostics ? ` [Token: ${errorData.diagnostics.hasBlobToken}]` : '';
+                    throw new Error(`${errorData.error || 'Failed to upload image'}${detailMsg}${diagMsg}`);
                 }
 
                 const uploadData = await uploadRes.json();
                 imageUrl = uploadData.imageUrl;
             }
 
-            // Get fingerprint for rate limiting header
             const fingerprint = await getUserFingerprint();
 
-            // Create post
             const response = await fetch('/api/community/posts', {
                 method: 'POST',
                 headers: {
@@ -138,6 +140,7 @@ export default function CreatePostModal({
                     userId,
                     content: content.trim(),
                     imageUrl,
+                    category,
                 }),
             });
 
@@ -167,7 +170,6 @@ export default function CreatePostModal({
                     exit={{ opacity: 0, scale: 0.9 }}
                     className="bg-white rounded-3xl p-8 max-w-2xl w-full max-h-[90vh] overflow-y-auto border-4 border-gray-900 shadow-[8px_8px_0px_rgba(0,0,0,1)]"
                 >
-                    {/* Header */}
                     <div className="flex justify-between items-center mb-6">
                         <h2 className="text-3xl font-crazy font-bold text-gray-900">
                             {step === 'username' ? '👋 Welcome!' : '✨ Create Post'}
@@ -186,7 +188,6 @@ export default function CreatePostModal({
                         </div>
                     )}
 
-                    {/* Username Step */}
                     {step === 'username' && (
                         <form onSubmit={handleUsernameSubmit} className="space-y-6">
                             <div>
@@ -216,7 +217,6 @@ export default function CreatePostModal({
                         </form>
                     )}
 
-                    {/* Post Step */}
                     {step === 'post' && (
                         <form onSubmit={handleSubmit} className="space-y-6">
                             <div>
@@ -237,7 +237,27 @@ export default function CreatePostModal({
                                 </p>
                             </div>
 
-                            {/* Image Upload */}
+                            <div>
+                                <label className="block text-gray-700 font-semibold mb-3">
+                                    Category
+                                </label>
+                                <div className="flex flex-wrap gap-2">
+                                    {categories.map((cat) => (
+                                        <button
+                                            key={cat}
+                                            type="button"
+                                            onClick={() => setCategory(cat)}
+                                            className={`px-4 py-2 rounded-xl text-sm font-bold border-2 border-gray-900 transition-all ${category === cat
+                                                ? 'bg-pumpkin-orange text-white shadow-[2px_2px_0px_rgba(0,0,0,1)] -translate-x-0.5 -translate-y-0.5'
+                                                : 'bg-white text-gray-600 hover:bg-orange-50'
+                                                }`}
+                                        >
+                                            {cat}
+                                        </button>
+                                    ))}
+                                </div>
+                            </div>
+
                             <div>
                                 <label className="block text-gray-700 font-semibold mb-3">
                                     Add an image (optional)
@@ -259,7 +279,6 @@ export default function CreatePostModal({
                                     </span>
                                 </label>
 
-                                {/* Image Preview */}
                                 {imagePreview && (
                                     <motion.div
                                         initial={{ opacity: 0, scale: 0.9 }}
