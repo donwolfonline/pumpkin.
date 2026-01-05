@@ -16,7 +16,13 @@ Pumpkin {
     | LoopStmt
     | WhileStmt
     | FuncDecl
+    | ReturnStmt
     | CallStmt
+
+  // return value
+  ReturnStmt
+    = "return" Exp
+
     // Note: We deliberately exclude bare expressions (like "1 + 1") as statements
     // to encourage clear imperative code, unless it's a function call.
 

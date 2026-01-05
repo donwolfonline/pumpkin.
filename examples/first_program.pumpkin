@@ -1,0 +1,19 @@
+let count = 5
+let factorial = 1
+
+show "Calculating Factorial..."
+
+while count > 0 {
+  show count
+  factorial = factorial * count
+  count = count - 1
+}
+
+if factorial > 100 {
+  show "Big number! (Result > 100)"
+} else {
+  show "Small number"
+}
+
+show "Factorial Result:"
+show factorial

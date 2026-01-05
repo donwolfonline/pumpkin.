@@ -1,0 +1,54 @@
+# Pumpkin Feature Tour 🎃
+# Run this with: pumpkin run examples/tour.pumpkin
+
+show "Welcome to the Pumpkin Tour! 🎃"
+show "This program will guide you through the language features."
+show "-------------------------------------------------------"
+
+ask "Press Enter to see VARIABLES..." into key
+
+let name = "Developer"
+let age = 5
+show "We can store data in variables:"
+show name
+show age
+
+ask "Press Enter to see MATH..." into key
+
+let nextAge = age + 1
+let doubleAge = age * 2
+show "We can do math easily:"
+show "Next year you will be:" 
+show nextAge
+show "Double your age is:"
+show doubleAge
+
+ask "Press Enter to see LOGIC..." into key
+
+if age < 10 {
+    show "You are young! (Logic check passed)"
+} else {
+    show "You are grown up!"
+}
+
+ask "Press Enter to see LOOPING..." into key
+
+show "Counting down..."
+let count = 3
+while count > 0 {
+    show count
+    count = count - 1
+}
+show "Blastoff! 🚀"
+
+ask "Press Enter to see FUNCTIONS..." into key
+
+function greet(person) {
+    show "Hello from a function, " + person + "!"
+}
+
+greet(name)
+
+show "-------------------------------------------------------"
+show "That's the basics! Now try modifying this file."
+show "Open 'examples/tour.pumpkin' in your editor."

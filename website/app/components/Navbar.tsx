@@ -10,7 +10,7 @@ export default function Navbar() {
     const links = [
         { href: '#learn', label: 'Learn' },
         { href: '#docs', label: 'Docs' },
-        { href: '#playground', label: 'Playground' },
+        { href: '/playground', label: 'Playground' },
         { href: '#community', label: 'Community' },
     ];
 

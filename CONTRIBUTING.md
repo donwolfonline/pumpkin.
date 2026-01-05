@@ -1,58 +1,58 @@
 # Contributing to Pumpkin 🎃
 
-Hi there! We are thrilled that you want to help build Pumpkin.
+Hi there! 👋 We are thrilled that you want to contribute to Pumpkin.
+Pumpkin is a language **designed for learning**, and that applies to our contributors too.
 
-Our mission is to make programming **friendly** and **accessible** to everyone. By contributing, you are helping lower the barrier to entry for the next generation of coders.
+**You do NOT need to be a compiler expert to help.**
 
----
+## 🌱 What We Value
 
-## 💖 Our Values
+* **Kindness:** We are learning together. There are no "stupid" questions.
+* **Clarity:** Readable code is better than clever code.
+* **Curiosity:** We want you to understand *how* the language works.
 
-1. **Inclusivity**: Everyone belongs here. No question is "too stupid."
-2. **Kindness**: We treat each other with respect. Code reviews are for learning, not gatekeeping.
-3. **Clarity**: We prefer clear code over clever code.
+## 🚀 How to Get Started
 
-## 🤝 Code of Conduct
+### 1. Find an Issue
 
-We adopt the [Contributor Covenant](https://www.contributor-covenant.org/). In short: **Be nice.** Harassment or unwelcoming behavior is not tolerated.
+Look for issues labeled **"Good First Issue"**.
+These are tasks we have specifically prepared for new contributors. They usually involve:
 
----
+* Adding a helper function to the Standard Library (e.g. `Math.sqrt`).
+* Fixing a typo in documentation.
+* Adding a simple example program.
 
-## 🚀 How to Contribute
+### 2. Setup Your Environment
 
-### Everyone Can Help
+```bash
+git clone https://github.com/yourname/pumpkin.git
+cd pumpkin
+npm install
+npm test
+```
 
-You don't need to be a compiler expert. You can help by:
+If the tests pass, you are ready!
 
-* **Fixing Typos**: Found a spelling mistake in our docs? Fix it!
-* **Writing Examples**: Create new simple programs for the `examples/` folder.
-* **Reporting Bugs**: Did Pumpkin crash? Tell us *how* it happened so we can fix it.
-* **Improving Errors**: Can an error message be friendlier? Suggest a change!
+### 3. Make Your Change
 
-### Step-by-Step Guide
+* Create a branch: `git checkout -b feature/my-cool-feature`.
+* Write your code.
+* Run `npm test` often.
+* Add a test case in `tests/` if relevant.
 
-1. **Fork** the repository on GitHub.
-2. **Clone** your fork to your computer.
-3. **Create a Branch**: `git checkout -b my-new-feature`
-4. **Make Changes**: Write your code or docs.
-5. **Test**: Run existing examples to make sure nothing broke.
-    * `node src/run.js examples/calculator.pumpkin`
-6. **Push**: `git push origin my-new-feature`
-7. **Open a Pull Request**: Go to the main Pumpkin repo and click "New Pull Request".
+### 4. Open a Pull Request (PR)
 
-### Style Guidelines
+Push your branch and open a PR. We will review it and help you merge it!
 
-* **TypeScript**: We use strict typing. No `any` unless absolutely necessary.
-* **Formatting**: Keep lines clean. Run a linter if available.
-* **Commit Messages**: Be descriptive.
-  * ✅ `Fix: Correct spelling in hello_world example`
-  * ❌ `fixed stuff`
+## 🗺️ Project Structure
 
----
+* `src/parser.ts`: Reads code and finds structure.
+* `src/interpreter.ts`: Runs the code.
+* `src/stdlib/`: Where standard functions (Math, Text) live. **(Good place to start!)**
+* `grammar/`: The Ohm syntax rules.
 
-## 💡 Proposing Changes
+## 🤝 Need Help?
 
-Have a big idea? (Like adding a new loop type or changing syntax).
-Please **open an issue first** to discuss it. We want to make sure it fits with the "Beginner-First" philosophy before you spend hours coding it.
+Ask us in the [Discussions] tab or open an issue with your question. We are here to help you grow.
 
-Thank you for making Pumpkin better! 🎃
+Happy Coding! 🎃

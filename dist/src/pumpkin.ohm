@@ -1,0 +1,187 @@
+Pumpkin {
+  // A Pumpkin program is a sequence of statements.
+  // We allow arbitrary spacing (including newlines) between statements.
+  Program
+    = Statement+
+
+  // --- Statements ---
+  // Each statement corresponds to a complete command or control flow structure.
+
+  Statement
+    = LetDecl
+    | Reassignment
+    | ShowStmt
+    | AskStmt
+    | IfStmt
+    | LoopStmt
+    | WhileStmt
+    | FuncDecl
+    | ReturnStmt
+    | CallStmt
+
+  // return value
+  ReturnStmt
+    = "return" Exp
+
+    // Note: We deliberately exclude bare expressions (like "1 + 1") as statements
+    // to encourage clear imperative code, unless it's a function call.
+
+  // let variable = value
+  LetDecl
+    = "let" identifier "=" Exp
+
+  // variable = value
+  Reassignment
+    = identifier "=" Exp
+
+  // show "Hello", show 1 + 2
+  ShowStmt
+    = "show" Exp
+
+  // ask "What is your name?" into name
+  AskStmt
+    = "ask" stringLiteral "into" identifier
+
+  // if condition { ... } else { ... }
+  // verify: "Explicit { } blocks"
+  IfStmt
+    = "if" Exp Block ("else" Block)?
+
+  // repeat N times { ... }
+  LoopStmt
+    = "repeat" Exp "times" Block
+
+  // while condition { ... }
+  WhileStmt
+    = "while" Exp Block
+
+  // function name(p1, p2) { ... }
+  FuncDecl
+    = "function" identifier "(" ParamList? ")" Block
+
+  // For calling functions as a standalone statement: printLine()
+  CallStmt
+    = CallExp
+
+  // { statements... }
+  Block
+    = "{" Statement* "}"
+
+  // Argument definitions: name, name, name
+  ParamList
+    = NonemptyListOf<identifier, ",">
+
+  // --- Expressions ---
+  // Operator precedence from lowest to highest:
+  // or
+  // and
+  // not
+  // comparison (==, !=, <, >, <=, >=)
+  // additive (+, -)
+  // multiplicative (*, /, %)
+  // exponential (^)
+
+  Exp
+    = LogicOr
+
+  LogicOr
+    = LogicOr "or" LogicAnd  -- or
+    | LogicAnd
+
+  LogicAnd
+    = LogicAnd "and" LogicNot -- and
+    | LogicNot
+
+  LogicNot
+    = "not" Compare           -- not
+    | Compare
+
+  Compare
+    = AddExp "<=" AddExp      -- le
+    | AddExp "<"  AddExp      -- lt
+    | AddExp ">=" AddExp      -- ge
+    | AddExp ">"  AddExp      -- gt
+    | AddExp "==" AddExp      -- eq
+    | AddExp "!=" AddExp      -- neq
+    | AddExp
+
+  AddExp
+    = AddExp "+" MulExp       -- add
+    | AddExp "-" MulExp       -- sub
+    | MulExp
+
+  MulExp
+    = MulExp "*" ExpExp       -- mul
+    | MulExp "/" ExpExp       -- div
+    | MulExp "%" ExpExp       -- mod
+    | ExpExp
+
+  ExpExp
+    = Primary "^" ExpExp      -- power
+    | Primary
+
+  // Primary rules handles values and accessors (indexing/properties)
+  // Left-recursive definition for accessors
+  Primary
+    = Primary "[" Exp "]"     -- index
+    | Primary "." identifier  -- access
+    | Atom
+
+  // Atomic values
+  Atom
+    = "(" Exp ")"             -- paren
+    | CallExp                 // Must precede identifier to capture 'func()' vs 'var'
+    | List
+    | Object
+    | identifier
+    | number
+    | stringLiteral
+    | boolean
+
+  // Function calls in expressions: f(x)
+  CallExp
+    = identifier "(" ArgList? ")"
+
+  ArgList
+    = NonemptyListOf<Exp, ",">
+
+  // Lists: [1, 2, 3]
+  List
+    = "[" ListOf<Exp, ","> "]"
+
+  // Objects: { name: "Pumpkin", ver: 1 }
+  Object
+    = "{" ListOf<Prop, ","> "}"
+
+  Prop
+    = (identifier | stringLiteral) ":" Exp
+
+  // --- Lexical Rules ---
+
+  // Identifiers: cannot be keywords
+  identifier
+    = ~keyword letter (alnum | "_")*
+
+  keyword
+    = "let" | "show" | "ask" | "into" | "if" | "else" | "repeat" | "times" | "while" | "function" | "true" | "false" | "and" | "or" | "not"
+
+  // Numbers: 123, 12.34
+  number
+    = digit+ "." digit+  -- float
+    | digit+             -- int
+
+  // Strings: "..." (double quotes)
+  stringLiteral
+    = "\"" (~"\"" any)* "\""
+
+  boolean
+    = "true" | "false"
+
+  // Comments: # until end of line
+  comment
+    = "#" (~"\n" any)*
+
+  // Spaces include comments
+  space
+   += comment
+}
