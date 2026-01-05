@@ -1,4 +1,5 @@
-#  <img width="783" height="318" alt="Screenshot_2026-01-05_at_7 03 21_PM-removebg-preview" src="https://github.com/user-attachments/assets/b62b15e7-9b92-48e6-a079-35cee2ce997b" />
+#  <img width="684" height="218" alt="Gemini_Generated_Image_yqnzrgyqnzrgyqnz-removebg-preview" src="https://github.com/user-attachments/assets/dd0c0c18-4b42-4f7f-827d-cae5eefb115f" />
+
 Pumpkin Dot 
 
 > **A friendly, explorative language for learning to code.**
