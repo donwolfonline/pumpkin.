@@ -1,11 +1,10 @@
 
-// /public/workers/pumpkin.worker.ts
+// /public/workers/pumpkin.worker.js
 
 // Since we don't have the WASM built yet, we will mock the execution for now
 // to prove the UI works.
-// In the "Build" phase, we will import the real WASM init.
 
-self.onmessage = async (e: MessageEvent) => {
+self.onmessage = async (e) => {
     const { type, source } = e.data;
 
     if (type !== 'EXECUTE') return;
@@ -14,12 +13,11 @@ self.onmessage = async (e: MessageEvent) => {
     await new Promise(r => setTimeout(r, 500));
 
     // MOCK PARSER & RUNTIME
-    // This allows us to verify the UI interaction flow without the Rust build.
     try {
-        const output: string[] = [];
+        const output = [];
 
         // Very dumb mock interpreter
-        const lines = (source as string).split('\n');
+        const lines = source.split('\n');
 
         for (const line of lines) {
             const trimmed = line.trim();
@@ -54,7 +52,7 @@ self.onmessage = async (e: MessageEvent) => {
             payload: { output }
         });
 
-    } catch (err: any) {
+    } catch (err) {
         self.postMessage({
             type: 'ERROR',
             payload: {
@@ -64,5 +62,3 @@ self.onmessage = async (e: MessageEvent) => {
         });
     }
 };
-
-export { };

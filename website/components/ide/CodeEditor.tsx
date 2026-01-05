@@ -16,7 +16,7 @@ export function CodeEditor({ code, onChange }: CodeEditorProps) {
     // For now, using JavaScript syntax highlighting as a placeholder for Pumpkin
     // because Lezer grammar is not yet built.
     return (
-        <div className="h-full w-full font-mono text-base border rounded-lg overflow-hidden border-orange-200 shadow-sm">
+        <div className="h-full w-full font-mono text-base bg-white">
             <CodeMirror
                 value={code}
                 height="100%"

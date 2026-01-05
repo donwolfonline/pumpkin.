@@ -9,7 +9,18 @@
 
 Pumpkin is a toy programming language designed to be the "Anti-Gatekeeper". It prioritizes friendly error messages, predictable behavior, and a zero-setup experience over raw performance or complex features.
 
-**[Try the Playground](https://pumpkin-lang.org/playground)** (Runs entirely in your browser!)
+**[Try the Playground](https://pumpkinpatch.vercel.app/playground)** (Runs entirely in your browser!)
+
+---
+
+## 🎨 What can I build?
+
+Pumpkin v0.1 is designed for **Creative Coding** and **Learning**. While it's not meant for building operating systems or web servers yet, it's perfect for:
+
+* **Algorithmic Art:** Generate patterns, sequences, and text-based visuals.
+* **Text Adventures:** Create interactive stories with simple logic.
+* **Math Experiments:** Visualize algorithms and solve problems playfully.
+* **Learning Basics:** Master loops, variables, and conditions without the headache.
 
 ---
 
@@ -130,4 +141,4 @@ Pumpkin is open-source software licensed under the [MIT license](LICENSE).
 
 ---
 
-Made with 🧡 for the next generation of coders.
+Made with 🎃 for the next generation of coders.

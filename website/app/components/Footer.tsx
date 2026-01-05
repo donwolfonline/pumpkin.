@@ -1,10 +1,23 @@
+import { Github } from 'lucide-react';
+
 export default function Footer() {
     return (
-        <footer className="mx-4 md:mx-8 lg:mx-12 mb-8 md:mb-12 bg-white/5 backdrop-blur-xl py-6 md:py-8 rounded-full border-2 border-white/10 text-center">
+        <footer className="bg-gray-900 border-t border-white/10 py-12">
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-                <p className="text-white/70 text-base sm:text-lg">
-                    &copy; 2024 Pumpkin Language. Code for Humans.
-                </p>
+                <div className="flex flex-col md:flex-row justify-between items-center gap-6">
+                    <p className="text-gray-400 text-sm">
+                        © {new Date().getFullYear()} Pumpkin Programming Language. Open source (MIT).
+                    </p>
+                    <a
+                        href="https://github.com/donwolfonline/pumpkin."
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="text-gray-400 hover:text-white transition-colors flex items-center gap-2"
+                    >
+                        <Github size={20} />
+                        <span className="text-sm font-medium">GitHub</span>
+                    </a>
+                </div>
             </div>
         </footer>
     );

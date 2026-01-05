@@ -153,5 +153,9 @@
 - [x] IDE Telemetry (Privacy-Respecting) <!-- id: 670 -->
   - [x] Create `docs/telemetry_design.md` <!-- id: 671 -->
 
-- [ ] IDE Roadmap (v0.2+) <!-- id: 680 -->
-  - [ ] Create `docs/ide_roadmap_future.md` <!-- id: 681 -->
+- [x] IDE Roadmap (v0.2+) <!-- id: 680 -->
+  - [x] Create `docs/ide_roadmap_future.md` <!-- id: 681 -->
+
+- [ ] Refine Website UI (Footer & Playground) <!-- id: 700 -->
+  - [ ] Update Footer (Dynamic Year & GitHub Link) <!-- id: 701 -->
+  - [ ] Redesign Playground (Theme & Responsiveness) <!-- id: 702 -->
