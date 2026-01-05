@@ -31,6 +31,8 @@ export const metadata: Metadata = {
   description: "The programming language you can actually read. Built for beginners, designed for clarity.",
 };
 
+import InteractiveBackground from "./components/InteractiveBackground";
+
 export default function RootLayout({
   children,
 }: Readonly<{
@@ -42,6 +44,7 @@ export default function RootLayout({
         suppressHydrationWarning
         className={`${nunito.variable} ${permanentMarker.variable} ${openSans.variable} ${firaCode.variable} font-body antialiased overflow-x-hidden`}
       >
+        <InteractiveBackground />
         {children}
       </body>
     </html>

@@ -3,50 +3,53 @@
 import { motion } from 'framer-motion';
 
 const features = [
-    { icon: '🎁', title: 'Derpy Errors', desc: "Pumpkin doesn't yell. It whispers kindly: \"Hey, that semicolon looks lonely, maybe delete it?\"", rarity: 'Common' },
-    { icon: '🪄', title: 'Magic Words', desc: 'No brackets. No jargon. Just words you already know, like "show" and "ask".', rarity: 'Rare' },
-    { icon: '🍗', title: 'Instant Power', desc: 'Download it. Run it. Build global domination from your bedroom. No setup required.', rarity: 'Epic' },
+    { icon: '📦', title: 'Variables', desc: 'Store data like a pro. Strings, numbers, and booleans are ready to use instantly.', rarity: 'Common' },
+    { icon: '🧮', title: 'Math & Logic', desc: 'Calculate the tip or solve the universe. Plus, simple logic with "if", "else", "and".', rarity: 'Common' },
+    { icon: '🔁', title: 'Loops', desc: 'Repeat yourself without getting tired. Use "repeat" or "while" to automate everything.', rarity: 'Uncommon' },
+    { icon: '💬', title: 'Output', desc: 'Just say "show". No "System.out.println" or "console.log" required here.', rarity: 'Rare' },
+    { icon: '🛡️', title: 'Friendly Errors', desc: 'Errors that help you fix them, not scare you away. "Hey, you missed a quote!"', rarity: 'Epic' },
+    { icon: '🚀', title: 'Zero Setup', desc: 'No compiler to install. No environment variables. Just open your browser and code.', rarity: 'Legendary' },
 ];
 
 export default function Features() {
     return (
-        <section className="pill-section py-20 md:py-32">
-            <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <section className="py-20 px-4 md:px-0 relative overflow-hidden">
+            <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
                 <motion.h2
                     initial={{ opacity: 0, scale: 0.8, rotate: -5 }}
                     whileInView={{ opacity: 1, scale: 1, rotate: 2 }}
                     viewport={{ once: true }}
-                    className="text-5xl sm:text-6xl md:text-7xl font-crazy font-extrabold text-center mb-20 text-pumpkin-orange drop-shadow-[0_10px_40px_rgba(255,140,26,0.6)]"
+                    className="text-4xl sm:text-5xl md:text-6xl font-crazy font-extrabold text-center mb-16 text-pumpkin-orange drop-shadow-[2px_2px_0px_#000]"
                 >
-                    Collect Your Features! 💎
+                    Language Capabilities ⚡
                 </motion.h2>
-                <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-10 sm:gap-12 lg:gap-16">
+                <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-8 md:gap-12">
                     {features.map((feature, index) => (
                         <motion.div
                             key={feature.title}
                             initial={{ opacity: 0, y: 50, scale: 0.5 }}
                             whileInView={{ opacity: 1, y: 0, scale: 1 }}
                             viewport={{ once: true }}
-                            transition={{ delay: index * 0.2, type: "spring", stiffness: 100 }}
-                            whileHover={{ y: -20, rotate: index % 2 === 0 ? 3 : -3 }}
-                            className="relative p-1 bg-gradient-to-br from-pumpkin-orange via-transparent to-teal-accent rounded-[40px] group shadow-2xl"
+                            transition={{ delay: index * 0.1, type: "spring", stiffness: 100 }}
+                            whileHover={{ y: -10, rotate: index % 2 === 0 ? 2 : -2 }}
+                            className="relative group h-full"
                         >
-                            <div className="bg-[#1e1422] rounded-[38px] p-10 h-full flex flex-col items-center text-center">
-                                <div className="text-7xl mb-8 group-hover:scale-150 group-hover:rotate-[20deg] transition-all duration-300 drop-shadow-[0_0_20px_rgba(255,140,26,0.4)]">
+                            <div className="bg-white rounded-[32px] p-8 h-full flex flex-col items-center text-center border-4 border-gray-900 shadow-[8px_8px_0px_rgba(0,0,0,1)] group-hover:translate-x-[2px] group-hover:translate-y-[2px] group-hover:shadow-[4px_4px_0px_rgba(0,0,0,1)] transition-all">
+                                <div className="text-6xl mb-6 group-hover:scale-125 transition-transform duration-300 drop-shadow-md">
                                     {feature.icon}
                                 </div>
-                                <div className="mb-4 px-4 py-1 rounded-full bg-black/40 text-xs font-bold uppercase tracking-widest text-pumpkin-orange border border-pumpkin-orange/30">
-                                    {feature.rarity} Item
+                                <div className="mb-4 px-3 py-1 rounded-full bg-gray-100 text-[10px] font-bold uppercase tracking-widest text-gray-600 border border-gray-300">
+                                    {feature.rarity}
                                 </div>
-                                <h3 className="text-3xl font-crazy text-white mb-6 tracking-wide underline decoration-pumpkin-orange/50 underline-offset-8">
+                                <h3 className="text-2xl font-crazy text-gray-900 mb-4 tracking-wide underline decoration-pumpkin-orange/50 underline-offset-4">
                                     {feature.title}
                                 </h3>
-                                <p className="text-lg leading-relaxed opacity-80 text-gray-300 font-medium">
+                                <p className="text-base leading-relaxed text-gray-600 font-medium">
                                     {feature.desc}
                                 </p>
 
                                 {/* Glow effect */}
-                                <div className="absolute inset-0 bg-pumpkin-orange/5 opacity-0 group-hover:opacity-100 transition-opacity rounded-[40px] -z-10 blur-xl" />
+                                <div className="absolute inset-0 bg-pumpkin-orange/5 opacity-0 group-hover:opacity-100 transition-opacity rounded-[32px] -z-10 blur-xl" />
                             </div>
                         </motion.div>
                     ))}
@@ -54,8 +57,8 @@ export default function Features() {
             </div>
 
             {/* Background decorations */}
-            <div className="absolute -bottom-20 -left-20 w-64 h-64 bg-teal-accent/10 rounded-full blur-[100px] -z-10" />
-            <div className="absolute -top-20 -right-20 w-64 h-64 bg-pumpkin-orange/10 rounded-full blur-[100px] -z-10" />
+            <div className="absolute -bottom-20 -left-20 w-64 h-64 bg-teal-accent/20 rounded-full blur-[100px] -z-10" />
+            <div className="absolute -top-20 -right-20 w-64 h-64 bg-pumpkin-orange/20 rounded-full blur-[100px] -z-10" />
         </section>
     );
 }

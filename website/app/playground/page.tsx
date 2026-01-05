@@ -1,4 +1,5 @@
 import Link from 'next/link';
+import Image from 'next/image';
 import { PumpkinIDE } from '../../components/ide/PumpkinIDE';
 import Vine from '../components/VineDecoration';
 
@@ -25,11 +26,22 @@ export default function PlaygroundPage() {
 
             {/* Header Content */}
             <div className="mb-8 text-center relative z-10 w-full max-w-4xl mx-auto">
-                <div className="inline-block relative">
-                    <h1 className="text-4xl md:text-6xl font-black text-gray-900 mb-2 tracking-tight transform -rotate-2">
-                        Pumpkin Playground
-                    </h1>
-                    <span className="absolute -top-6 -right-8 text-6xl animate-bounce">🎃</span>
+                <div className="flex flex-col items-center gap-6 mb-4">
+                    <Link href="/" className="hover:scale-105 transition-transform">
+                        <Image
+                            src="/pumpkin-logo.png"
+                            alt="Pumpkin Logo"
+                            width={200}
+                            height={50}
+                            className="h-12 w-auto"
+                        />
+                    </Link>
+                    <div className="inline-block relative">
+                        <h1 className="text-4xl md:text-6xl font-black text-gray-900 mb-2 tracking-tight transform -rotate-2">
+                            Playground
+                        </h1>
+                        <span className="absolute -top-6 -right-8 text-6xl animate-bounce">🎃</span>
+                    </div>
                 </div>
                 <p className="text-xl md:text-2xl text-gray-600 font-bold mt-4 transform rotate-1 max-w-lg mx-auto leading-relaxed">
                     Write code. Break things. <br />

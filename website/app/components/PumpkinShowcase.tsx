@@ -39,7 +39,7 @@ export default function PumpkinShowcase() {
                                 height={150}
                                 className="w-28 sm:w-32 md:w-36 lg:w-40 drop-shadow-[0_15px_25px_rgba(0,0,0,0.4)] transition-all duration-300"
                             />
-                            <p className="mt-4 text-lg sm:text-xl font-semibold text-white">{pumpkin.name}</p>
+                            <p className="mt-4 text-lg sm:text-xl font-bold text-gray-900">{pumpkin.name}</p>
                         </motion.div>
                     ))}
                 </div>

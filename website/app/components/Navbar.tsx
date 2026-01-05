@@ -3,6 +3,8 @@
 import { useState } from 'react';
 import { Menu, X } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
+import Image from 'next/image';
+import Link from 'next/link';
 
 export default function Navbar() {
     const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
@@ -11,17 +13,23 @@ export default function Navbar() {
         { href: '#learn', label: 'Learn' },
         { href: '#docs', label: 'Docs' },
         { href: '/playground', label: 'Playground' },
-        { href: '#community', label: 'Community' },
+        { href: '/community', label: 'Community' },
     ];
 
     return (
-        <nav className="fixed top-4 md:top-8 left-4 md:left-8 lg:left-12 right-4 md:right-8 lg:right-12 z-50 bg-white/5 backdrop-blur-2xl border-2 border-white/10 rounded-full shadow-2xl overflow-visible">
+        <nav className="fixed top-4 md:top-8 left-4 md:left-8 lg:left-12 right-4 md:right-8 lg:right-12 z-50 bg-white/80 backdrop-blur-2xl border-2 border-gray-900/10 rounded-full shadow-xl overflow-visible">
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                 <div className="flex justify-between items-center py-4">
-                    {/* Logo */}
-                    <div className="text-2xl font-heading font-extrabold text-pumpkin-orange drop-shadow-[0_2px_10px_rgba(255,140,26,0.5)]">
-                        🎃 <span>Pumpkin</span>
-                    </div>
+                    <Link href="/" className="flex items-center gap-2 group transition-transform hover:scale-105 active:scale-95">
+                        <Image
+                            src="/pumpkin-logo.png"
+                            alt="Pumpkin Logo"
+                            width={160}
+                            height={40}
+                            className="h-10 w-auto"
+                            priority
+                        />
+                    </Link>
 
                     {/* Desktop Navigation */}
                     <ul className="hidden md:flex gap-8">
@@ -29,7 +37,7 @@ export default function Navbar() {
                             <li key={link.href}>
                                 <a
                                     href={link.href}
-                                    className="font-semibold relative group transition-colors hover:text-pumpkin-orange"
+                                    className="font-bold text-gray-700 relative group transition-colors hover:text-pumpkin-orange"
                                 >
                                     {link.label}
                                     <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-pumpkin-orange transition-all duration-300 group-hover:w-full" />
@@ -39,14 +47,14 @@ export default function Navbar() {
                     </ul>
 
                     {/* Desktop CTA */}
-                    <a href="#get-started" className="hidden md:block btn btn-secondary text-sm">
+                    <a href="#get-started" className="hidden md:block btn btn-primary text-sm shadow-[4px_4px_0px_rgba(0,0,0,1)] hover:shadow-none hover:translate-y-[2px] transition-all border-2 border-gray-900">
                         Get Started
                     </a>
 
                     {/* Mobile Menu Button */}
                     <button
                         onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-                        className="md:hidden p-2 rounded-lg hover:bg-white/10 transition-colors"
+                        className="md:hidden p-2 rounded-lg hover:bg-black/5 text-gray-900 transition-colors"
                         aria-label="Toggle menu"
                     >
                         {mobileMenuOpen ? <X size={24} /> : <Menu size={24} />}
@@ -54,7 +62,6 @@ export default function Navbar() {
                 </div>
             </div>
 
-            {/* Mobile Menu */}
             {/* Mobile Menu */}
             <AnimatePresence>
                 {mobileMenuOpen && (
@@ -66,7 +73,7 @@ export default function Navbar() {
                             exit={{ opacity: 0 }}
                             transition={{ duration: 0.3 }}
                             onClick={() => setMobileMenuOpen(false)}
-                            className="fixed inset-0 bg-black/60 backdrop-blur-md z-[-1]"
+                            className="fixed inset-0 bg-black/20 backdrop-blur-md z-[-1]"
                         />
 
                         {/* Floating Menu Container */}
@@ -80,7 +87,7 @@ export default function Navbar() {
                                 damping: 30,
                                 mass: 0.8
                             }}
-                            className="absolute top-full left-0 right-0 mt-4 mx-2 p-4 bg-gray-900/90 backdrop-blur-xl border border-white/10 rounded-[2rem] shadow-2xl overflow-hidden flex flex-col gap-3"
+                            className="absolute top-full left-0 right-0 mt-4 mx-2 p-4 bg-white border-2 border-gray-900 rounded-[2rem] shadow-[8px_8px_0px_rgba(0,0,0,0.2)] overflow-hidden flex flex-col gap-3"
                         >
                             {links.map((link, index) => (
                                 <motion.a
@@ -95,10 +102,10 @@ export default function Navbar() {
                                         stiffness: 300,
                                         damping: 20
                                     }}
-                                    className="flex items-center justify-center w-full py-3 px-6 rounded-full bg-white/5 border border-white/5 hover:bg-pumpkin-orange/20 hover:border-pumpkin-orange/50 transition-all duration-300 group"
+                                    className="flex items-center justify-center w-full py-3 px-6 rounded-full bg-gray-50 border-2 border-transparent hover:border-pumpkin-orange hover:bg-pumpkin-orange/10 transition-all duration-300 group"
                                     onClick={() => setMobileMenuOpen(false)}
                                 >
-                                    <span className="font-bold text-white text-lg group-hover:scale-105 transition-transform duration-300">
+                                    <span className="font-bold text-gray-900 text-lg group-hover:scale-105 transition-transform duration-300">
                                         {link.label}
                                     </span>
                                 </motion.a>
@@ -114,7 +121,7 @@ export default function Navbar() {
                                     stiffness: 300,
                                     damping: 15
                                 }}
-                                className="flex items-center justify-center w-full py-4 px-6 mt-2 rounded-full bg-gradient-to-r from-pumpkin-orange to-red-500 text-white font-extrabold shadow-lg hover:shadow-orange-500/30 transition-all duration-300 hover:scale-[1.02]"
+                                className="flex items-center justify-center w-full py-4 px-6 mt-2 rounded-full bg-pumpkin-orange text-white font-black border-2 border-gray-900 shadow-[4px_4px_0px_rgba(0,0,0,1)] hover:shadow-none hover:translate-y-[2px] transition-all duration-300"
                                 onClick={() => setMobileMenuOpen(false)}
                             >
                                 Get Started 🚀
