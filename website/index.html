@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pumpkin - Code for Humans</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500&family=Nunito:wght@700;800&family=Open+Sans:wght@400;600&display=swap" rel="stylesheet">
+</head>
+<body>
+
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="logo">🎃 <span class="logo-text">Pumpkin</span></div>
+        <ul class="nav-links">
+            <li><a href="#learn">Learn</a></li>
+            <li><a href="#docs">Docs</a></li>
+            <li><a href="#playground">Playground</a></li>
+            <li><a href="#community">Community</a></li>
+        </ul>
+        <a href="#get-started" class="btn btn-secondary">Get Started</a>
+    </nav>
+
+    <!-- Hero Section -->
+    <header class="hero">
+        <div class="hero-content">
+            <h1>The programming language you can actually <span class="highlight">read</span>.</h1>
+            <p class="hero-sub">Stop wrestling with syntax and start building ideas. Pumpkin is the friendly, human-readable language designed to teach you as you type.</p>
+            <div class="cta-group">
+                <a href="#playground" class="btn btn-primary">Try Pumpkin Now</a>
+                <a href="#docs" class="btn btn-outline">Read the Guide</a>
+            </div>
+        </div>
+        <div class="hero-visual">
+            <!-- Abstract Pumpkin Mascot representation -->
+            <div class="mascot-container">
+                <div class="pumpkin-shape">
+                    <div class="eye left"></div>
+                    <div class="eye right"></div>
+                    <div class="mouth"></div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- What Is Pumpkin -->
+    <section class="section what-is">
+        <div class="container">
+            <h2>What is Pumpkin?</h2>
+            <p class="lead">Pumpkin is a programming language built for humans, not robots.</p>
+            <p>Most languages feel like specialized codes written for machines. Pumpkin feels like English. It removes the scary symbols and confusing jargon, replacing them with clear instructions that make sense the first time you read them.</p>
+        </div>
+    </section>
+
+    <!-- Code Comparison -->
+    <section class="section comparison">
+        <div class="container">
+            <h2>Code That Feels Human</h2>
+            <div class="compare-grid">
+                <div class="code-card others">
+                    <h3>Thinking in Symbols</h3>
+                    <pre><code class="language-js">const x = readline();
+if (x != null && x > 10) {
+  console.log("Success");
+}</code></pre>
+                </div>
+                <div class="code-card pumpkin">
+                    <h3>Thinking in Pumpkin</h3>
+                    <pre><code class="language-pumpkin">ask "Enter a number" into x
+
+if x > 10 {
+    show "Success"
+}</code></pre>
+                </div>
+            </div>
+            <p class="center-text">Pumpkin lets you focus on <strong>logic</strong>, not punctuation.</p>
+        </div>
+    </section>
+
+    <!-- Features -->
+    <section class="section features">
+        <div class="container">
+            <h2>Why Pumpkin?</h2>
+            <div class="feature-grid">
+                <div class="feature-card">
+                    <div class="icon">🎃</div>
+                    <h3>Friendly Errors</h3>
+                    <p>When you make a mistake, Pumpkin explains <em>what</em> happened and <em>how</em> to fix it.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="icon">✨</div>
+                    <h3>Natural Syntax</h3>
+                    <p>No semicolons. No confusing brackets. Just clean, readable code.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="icon">🚀</div>
+                    <h3>Zero Setup</h3>
+                    <p>Download one file and you're ready to go. No complex build tools.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Playground Preview -->
+    <section id="playground" class="section playground-preview">
+        <div class="container">
+            <h2>Try it right now</h2>
+            <div class="editor-mockup">
+                <div class="editor-header">
+                    <span class="dot red"></span>
+                    <span class="dot yellow"></span>
+                    <span class="dot green"></span>
+                    <span class="filename">hello.pumpkin</span>
+                </div>
+                <div class="editor-body">
+                    <div class="code-area">
+                        <span class="line">1</span> <span class="kwd">show</span> <span class="str">"Hello, World!"</span><br>
+                        <span class="line">2</span> <span class="kwd">show</span> <span class="str">"I am coding!"</span>
+                    </div>
+                    <div class="output-area">
+                        <div class="output-header">Output</div>
+                        <div class="output-content">
+                            Hello, World!<br>
+                            I am coding!
+                        </div>
+                    </div>
+                </div>
+                <div class="editor-footer">
+                    <button class="btn btn-primary btn-sm">Run Code 🚀</button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Audience -->
+    <section class="section audience">
+        <div class="container">
+            <h2>Who is Pumpkin for?</h2>
+            <div class="tag-cloud">
+                <span class="tag">Beginners</span>
+                <span class="tag">Students</span>
+                <span class="tag">Non-Technical Founders</span>
+                <span class="tag">Creative Coders</span>
+                <span class="tag">Teachers</span>
+            </div>
+        </div>
+    </section>
+
+    <!-- Community & CTA -->
+    <section id="community" class="section final-cta">
+        <div class="container">
+            <h2>Join the Patch 🎃</h2>
+            <p>Pumpkin is open source and built by people like you. We value learning over ego.</p>
+            <div class="cta-buttons">
+                <a href="#" class="btn btn-outline">Check out GitHub</a>
+                <a href="#" class="btn btn-primary">Download Pumpkin</a>
+            </div>
+            <p class="tiny">Start coding in 10 minutes.</p>
+        </div>
+    </section>
+
+    <footer>
+        <div class="container">
+            <p>&copy; 2024 Pumpkin Language. Code for Humans.</p>
+        </div>
+    </footer>
+
+</body>
+</html>

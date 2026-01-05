@@ -1,0 +1,14 @@
+# Countdown Timer
+# 'repeat' loops let us do something multiple times.
+
+show "Countdown starting!"
+
+# We will start at 10 and count down.
+let count = 10
+
+repeat 10 times {
+    show count
+    count = count - 1
+}
+
+show "Blast off! 🚀"

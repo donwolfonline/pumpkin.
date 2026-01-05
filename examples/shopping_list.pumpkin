@@ -1,0 +1,14 @@
+# Shopping List
+# Lists can hold multiple items.
+
+let list = ["Apples", "Bananas", "Milk"]
+
+show "Here is my shopping list:"
+show list
+
+show "The first item is:"
+# We access items using [0], [1], etc.
+show list[0]
+
+show "The last item is:"
+show list[2]

@@ -1,0 +1,6 @@
+# Hello World
+# This is the simplest program you can write.
+# It just shows a message on the screen.
+
+show "Hello, World!"
+show "Welcome to Pumpkin! 🎃"

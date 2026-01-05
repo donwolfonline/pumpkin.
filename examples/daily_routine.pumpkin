@@ -1,0 +1,19 @@
+# Daily Routine
+# Functions help us group commands together.
+
+function brushTeeth() {
+    show "🪥 Brushing teeth..."
+    show "✨ Sparkly clean!"
+}
+
+function eatBreakfast(food) {
+    show "🍽️ Eating " + food
+    show "😋 Yummy!"
+}
+
+show "Morning Routine:"
+brushTeeth()
+eatBreakfast("Pancakes")
+
+show "Night Routine:"
+brushTeeth()

@@ -1,0 +1,5 @@
+# Asking for Input
+# We can ask the user for information and save it in a variable.
+
+ask "What is your name?" into name
+show "Nice to meet you, " + name

@@ -1,0 +1,22 @@
+<svg width="256" height="256" viewBox="0 0 256 256" fill="none" xmlns="http://www.w3.org/2000/svg" aria-label="Pump, the Pumpkin Mascot (Neutral)">
+    <!-- Body: A slightly soft, squat circle -->
+    <path d="M128 232C185.438 232 232 189.026 232 136C232 82.9735 185.438 40 128 40C70.5624 40 24 82.9735 24 136C24 189.026 70.5624 232 128 232Z" fill="#FF7518"/>
+    
+    <!-- Ribs: Subtle shading to imply pumpkin segments -->
+    <path d="M128 40C128 40 160 80 160 136C160 192 128 232 128 232" stroke="#E65D00" stroke-width="2" stroke-opacity="0.2"/>
+    <path d="M128 40C128 40 96 80 96 136C96 192 128 232 128 232" stroke="#E65D00" stroke-width="2" stroke-opacity="0.2"/>
+
+    <!-- Stem: Rounded, friendly green nub -->
+    <path d="M118 42C118 42 120 20 128 16C136 12 142 20 138 42" stroke="#3B8132" stroke-width="8" stroke-linecap="round" stroke-linejoin="round"/>
+
+    <!-- Eyes: Large, wide, filled with wonder -->
+    <circle cx="96" cy="120" r="12" fill="#1A1A2E"/> <!-- Left Eye -->
+    <circle cx="160" cy="120" r="12" fill="#1A1A2E"/> <!-- Right Eye -->
+    
+    <!-- Shine in eyes -->
+    <circle cx="92" cy="116" r="4" fill="white"/>
+    <circle cx="156" cy="116" r="4" fill="white"/>
+
+    <!-- Mouth: Tiny smile -->
+    <path d="M118 150Q128 156 138 150" stroke="#4A2C0F" stroke-width="3" stroke-linecap="round"/>
+</svg>

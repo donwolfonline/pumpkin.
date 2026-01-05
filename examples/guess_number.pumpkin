@@ -1,0 +1,18 @@
+# Guess the Number Game
+# We use a 'while' loop to keep asking until the guess is correct.
+
+let secret = 7
+let guess = 0
+
+show "I am thinking of a number."
+
+while guess != secret {
+    ask "Guess the number:" into inputVal
+    guess = inputVal
+    
+    if guess == secret {
+        show "You got it! 🎉"
+    } else {
+        show "Try again."
+    }
+}

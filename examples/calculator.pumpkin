@@ -1,0 +1,20 @@
+# Simple Calculator
+# Variables can store numbers, and we can do math with them.
+
+let a = 10
+let b = 5
+
+show "a is " + a
+show "b is " + b
+
+# Addition
+let sum = a + b
+show "Sum: " + sum
+
+# Multiplication
+let product = a * b
+show "Product: " + product
+
+# Division
+let division = a / b
+show "Division: " + division
