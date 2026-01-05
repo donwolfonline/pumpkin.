@@ -4,10 +4,10 @@ import sql from '@/lib/db';
 // GET /api/community/posts/:id - Get single post with comments
 export async function GET(
     request: NextRequest,
-    { params }: { params: { id: string } }
+    { params }: { params: Promise<{ id: string }> }
 ) {
     try {
-        const { id } = params;
+        const { id } = await params;
 
         // Get post
         const posts = await sql`
