@@ -22,44 +22,28 @@ export async function POST(request: NextRequest) {
             );
         }
 
-        // Validate file size (max 5MB)
-        const maxSize = 5 * 1024 * 1024; // 5MB
+        // Validate file size (max 4.5MB for Vercel Hobby limits)
+        const maxSize = 4.5 * 1024 * 1024;
         if (file.size > maxSize) {
             return NextResponse.json(
-                { error: 'File size too large. Maximum 5MB allowed.' },
+                { error: 'File size too large. Maximum 4.5MB allowed.' },
                 { status: 400 }
             );
         }
 
-        // Convert file to buffer
-        console.log('Converting file to buffer...');
+        // Convert file to base64
         const bytes = await file.arrayBuffer();
-        const buffer = Buffer.from(bytes);
+        const base64 = Buffer.from(bytes).toString('base64');
+        const dataUrl = `data:${file.type};base64,${base64}`;
 
         // Upload to Cloudinary
-        console.log('Finalizing Cloudinary upload_stream...');
-        const result = await new Promise<any>((resolve, reject) => {
-            const uploadStream = cloudinary.uploader.upload_stream(
-                {
-                    folder: 'pumpkin_community',
-                    resource_type: 'image',
-                    transformation: [
-                        { width: 1200, height: 1200, crop: 'limit' },
-                        { quality: 'auto:good' },
-                    ],
-                },
-                (error, result) => {
-                    if (error) {
-                        console.error('Cloudinary stream error:', error);
-                        reject(error);
-                    } else {
-                        console.log('Cloudinary upload successful');
-                        resolve(result);
-                    }
-                }
-            );
-
-            uploadStream.end(buffer);
+        const result = await cloudinary.uploader.upload(dataUrl, {
+            folder: 'pumpkin_community',
+            resource_type: 'image',
+            transformation: [
+                { width: 1200, height: 1200, crop: 'limit' },
+                { quality: 'auto:good' },
+            ],
         });
 
         return NextResponse.json({
