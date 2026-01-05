@@ -137,27 +137,6 @@ We love contributors! This project is a great place to learn about language desi
 
 ---
 
-## 🏆 Contributor Trophies
-
-Pumpkin honors its contributors with a gamified achievement system. Each level represents a milestone in your journey as a Pumpkin developer.
-
-<div align="center">
-
-| Level | Trophy | Achievement |
-| :--- | :---: | :--- |
-| **1. The Seedling** | ![Seedling](/website/public/images/trophies/seedling.png) | For your very first merged Pull Request. |
-| **2. The Sprout** | ![Sprout](/website/public/images/trophies/sprout.png) | For 5 contributions or solving your first complex bug. |
-| **3. The Winding Vine** | ![Vine](/website/public/images/trophies/vine.png) | For 10 contributions or implementing a new library module. |
-| **4. The Blossom** | ![Blossom](/website/public/images/trophies/blossom.png) | For leading documentation efforts or conducting major refactors. |
-| **5. Golden Pumpkin** | ![Gold](/website/public/images/trophies/golden_pumpkin.png) | For 25 contributions or implementing a core language feature. |
-| **6. Jack-o'-Lantern** | ![Lantern](/website/public/images/trophies/jack_o_lantern.png) | For 50 contributions or achieving "Enlightenment" level optimization. |
-| **7. Master Pie-Maker** | ![Pie Maker](/website/public/images/trophies/pie_maker.svg) | For reaching core maintainer status and architectural leadership. |
-| **8. The Great Pumpkin** | ![Great Pumpkin](/website/public/images/trophies/great_pumpkin.svg) | For legendary impact that transforms the entire Pumpkin ecosystem. |
-
-</div>
-
----
-
 ## 📜 License
 
 Pumpkin is open-source software licensed under the [MIT license](LICENSE).
