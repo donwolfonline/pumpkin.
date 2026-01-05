@@ -4,7 +4,7 @@
 
 Pumpkin. is a programming language designed from the ground up to be readable, friendly, and encouraging. It eliminates the fear of syntax errors and cryptic jargon, replacing them with clear logic and helpful feedback.
 
-![Uploading Screenshot 2026-01-05 at 10.21.14 AM.png…]()
+<img width="1423" height="662" alt="Screenshot 2026-01-05 at 10 21 14 AM" src="https://github.com/user-attachments/assets/41d7f413-a0a1-4479-b8b6-983a71c75353" />
 
 
 ## Why Pumpkin.?
