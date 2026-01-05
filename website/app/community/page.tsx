@@ -8,7 +8,7 @@ import { motion } from 'framer-motion';
 import Image from 'next/image';
 import Link from 'next/link';
 import VineDecoration from '../components/VineDecoration';
-import { Toaster } from 'react-hot-toast';
+import { Toaster, toast } from 'react-hot-toast';
 
 interface Post {
     id: string;
@@ -109,19 +109,30 @@ export default function CommunityPage() {
         setShowCreateModal(true);
     };
 
-    const handleUserRegistered = async (newUsername: string) => {
-        const fingerprint = await getUserFingerprint();
-        const response = await fetch('/api/community/user', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ fingerprint, username: newUsername }),
-        });
+    const handleUserRegistered = async (newUsername: string): Promise<boolean> => {
+        try {
+            const fingerprint = await getUserFingerprint();
+            const response = await fetch('/api/community/user', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ fingerprint, username: newUsername }),
+            });
 
-        if (response.ok) {
             const data = await response.json();
-            setUserId(data.userId);
-            setUsername(data.username);
-            setStoredUsername(data.username);
+
+            if (response.ok) {
+                setUserId(data.userId);
+                setUsername(data.username);
+                setStoredUsername(data.username);
+                return true;
+            } else {
+                toast.error(data.error || 'Failed to register username');
+                return false;
+            }
+        } catch (error) {
+            console.error('Registration error:', error);
+            toast.error('An unexpected error occurred during registration');
+            return false;
         }
     };
 

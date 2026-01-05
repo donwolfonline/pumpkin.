@@ -22,7 +22,7 @@ interface CreatePostModalProps {
     username: string | null;
     onClose: () => void;
     onPostCreated: (post: Post) => void;
-    onUserRegistered: (username: string) => void;
+    onUserRegistered: (username: string) => Promise<boolean>;
 }
 
 export default function CreatePostModal({
@@ -54,8 +54,11 @@ export default function CreatePostModal({
             return;
         }
 
-        await onUserRegistered(newUsername);
-        setStep('post');
+        const success = await onUserRegistered(newUsername);
+        if (success) {
+            setStep('post');
+            setError('');
+        }
     };
 
     const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
