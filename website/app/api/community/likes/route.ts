@@ -37,28 +37,22 @@ export async function POST(request: NextRequest) {
                 WHERE id = ${existingLike[0].id}
             `;
 
-            // Decrement count
+            let result;
             if (targetType === 'post') {
                 await sql`
                     UPDATE posts
                     SET likes_count = GREATEST(likes_count - 1, 0)
                     WHERE id = ${targetId}
                 `;
+                result = await sql`SELECT likes_count FROM posts WHERE id = ${targetId} LIMIT 1`;
             } else {
                 await sql`
                     UPDATE comments
                     SET likes_count = GREATEST(likes_count - 1, 0)
                     WHERE id = ${targetId}
                 `;
+                result = await sql`SELECT likes_count FROM comments WHERE id = ${targetId} LIMIT 1`;
             }
-
-            // Get new count
-            const table = targetType === 'post' ? 'posts' : 'comments';
-            const result = await sql`
-                SELECT likes_count FROM ${sql(table)}
-                WHERE id = ${targetId}
-                LIMIT 1
-            `;
 
             return NextResponse.json({
                 liked: false,
@@ -72,6 +66,7 @@ export async function POST(request: NextRequest) {
                 VALUES (${uuidv4()}, ${userId}, ${targetType}, ${targetId})
             `;
 
+            let result;
             // Increment count
             if (targetType === 'post') {
                 await sql`
@@ -79,21 +74,15 @@ export async function POST(request: NextRequest) {
                     SET likes_count = likes_count + 1
                     WHERE id = ${targetId}
                 `;
+                result = await sql`SELECT likes_count FROM posts WHERE id = ${targetId} LIMIT 1`;
             } else {
                 await sql`
                     UPDATE comments
                     SET likes_count = likes_count + 1
                     WHERE id = ${targetId}
                 `;
+                result = await sql`SELECT likes_count FROM comments WHERE id = ${targetId} LIMIT 1`;
             }
-
-            // Get new count
-            const table = targetType === 'post' ? 'posts' : 'comments';
-            const result = await sql`
-                SELECT likes_count FROM ${sql(table)}
-                WHERE id = ${targetId}
-                LIMIT 1
-            `;
 
             return NextResponse.json({
                 liked: true,
