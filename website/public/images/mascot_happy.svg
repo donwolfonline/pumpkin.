@@ -1,0 +1,26 @@
+<svg width="256" height="256" viewBox="0 0 256 256" fill="none" xmlns="http://www.w3.org/2000/svg" aria-label="Pump, the Pumpkin Mascot (Happy)">
+    <!-- Bounce Effect: Moved body slightly up -->
+    <path d="M128 222C185.438 222 232 179.026 232 126C232 72.9735 185.438 30 128 30C70.5624 30 24 72.9735 24 126C24 179.026 70.5624 222 128 222Z" fill="#FF7518"/>
+    
+    <!-- Ribs -->
+    <path d="M128 30C128 30 160 70 160 126C160 182 128 222 128 222" stroke="#E65D00" stroke-width="2" stroke-opacity="0.2"/>
+    <path d="M128 30C128 30 96 70 96 126C96 182 128 222 128 222" stroke="#E65D00" stroke-width="2" stroke-opacity="0.2"/>
+
+    <!-- Stem -->
+    <path d="M118 32C118 32 120 10 128 6C136 2 142 10 138 32" stroke="#3B8132" stroke-width="8" stroke-linecap="round" stroke-linejoin="round"/>
+
+    <!-- Eyes: Happy Squint (inverted arches) -->
+    <path d="M84 120Q96 110 108 120" stroke="#1A1A2E" stroke-width="4" stroke-linecap="round"/>
+    <path d="M148 120Q160 110 172 120" stroke="#1A1A2E" stroke-width="4" stroke-linecap="round"/>
+
+    <!-- Cheeks -->
+    <circle cx="80" cy="130" r="6" fill="#FF9E5E" fill-opacity="0.6"/>
+    <circle cx="176" cy="130" r="6" fill="#FF9E5E" fill-opacity="0.6"/>
+
+    <!-- Mouth: Big Open Smile -->
+    <path d="M108 145Q128 165 148 145" stroke="#4A2C0F" stroke-width="3" stroke-linecap="round"/>
+    
+    <!-- Sparkles -->
+    <path d="M220 60L222 65L227 67L222 69L220 74L218 69L213 67L218 65L220 60Z" fill="#F5D040"/>
+    <path d="M40 80L42 85L47 87L42 89L40 94L38 89L33 87L38 85L40 80Z" fill="#F5D040"/>
+</svg>

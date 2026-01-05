@@ -1,0 +1,128 @@
+[00:09:43.879] Server  ERROR   Error: Cannot find module 'next/dist/compiled/cookie'
+Require stack:
+- /Users/frederickdineen/pumpkin./website-nextjs/node_modules/next/dist/server/api-utils/get-cookie-parser.js
+- /Users/frederickdineen/pumpkin./website-nextjs/node_modules/next/dist/shared/lib/router/utils/prepare-destination.js
+- /Users/frederickdineen/pumpkin./website-nextjs/node_modules/next/dist/shared/lib/router/utils/middleware-route-matcher.js
+- /Users/frederickdineen/pumpkin./website-nextjs/node_modules/next/dist/server/lib/router-utils/filesystem.js
+- /Users/frederickdineen/pumpkin./website-nextjs/node_modules/next/dist/server/lib/router-server.js
+- /Users/frederickdineen/pumpkin./website-nextjs/node_modules/next/dist/server/lib/start-server.js
+[00:09:43.941] Server  ERROR   Error: Cannot find module 'next/dist/compiled/cookie'
+Require stack:
+- /Users/frederickdineen/pumpkin./website-nextjs/node_modules/next/dist/server/api-utils/get-cookie-parser.js
+- /Users/frederickdineen/pumpkin./website-nextjs/node_modules/next/dist/shared/lib/router/utils/prepare-destination.js
+- /Users/frederickdineen/pumpkin./website-nextjs/node_modules/next/dist/shared/lib/router/utils/middleware-route-matcher.js
+- /Users/frederickdineen/pumpkin./website-nextjs/node_modules/next/dist/server/lib/router-utils/filesystem.js
+- /Users/frederickdineen/pumpkin./website-nextjs/node_modules/next/dist/server/lib/router-server.js
+- /Users/frederickdineen/pumpkin./website-nextjs/node_modules/next/dist/server/lib/start-server.js
+[00:09:44.096] Server  ERROR   Error: Cannot find module 'next/dist/compiled/cookie'
+Require stack:
+- /Users/frederickdineen/pumpkin./website-nextjs/node_modules/next/dist/server/api-utils/get-cookie-parser.js
+- /Users/frederickdineen/pumpkin./website-nextjs/node_modules/next/dist/shared/lib/router/utils/prepare-destination.js
+- /Users/frederickdineen/pumpkin./website-nextjs/node_modules/next/dist/shared/lib/router/utils/middleware-route-matcher.js
+- /Users/frederickdineen/pumpkin./website-nextjs/node_modules/next/dist/server/lib/router-utils/filesystem.js
+- /Users/frederickdineen/pumpkin./website-nextjs/node_modules/next/dist/server/lib/router-server.js
+- /Users/frederickdineen/pumpkin./website-nextjs/node_modules/next/dist/server/lib/start-server.js
+[00:09:44.192] Server  ERROR   Error: Cannot find module 'next/dist/compiled/cookie'
+Require stack:
+- /Users/frederickdineen/pumpkin./website-nextjs/node_modules/next/dist/server/api-utils/get-cookie-parser.js
+- /Users/frederickdineen/pumpkin./website-nextjs/node_modules/next/dist/shared/lib/router/utils/prepare-destination.js
+- /Users/frederickdineen/pumpkin./website-nextjs/node_modules/next/dist/shared/lib/router/utils/middleware-route-matcher.js
+- /Users/frederickdineen/pumpkin./website-nextjs/node_modules/next/dist/server/lib/router-utils/filesystem.js
+- /Users/frederickdineen/pumpkin./website-nextjs/node_modules/next/dist/server/lib/router-server.js
+- /Users/frederickdineen/pumpkin./website-nextjs/node_modules/next/dist/server/lib/start-server.js
+[00:09:44.411] Server  ERROR   Error: Cannot find module 'next/dist/compiled/cookie'
+Require stack:
+- /Users/frederickdineen/pumpkin./website-nextjs/node_modules/next/dist/server/api-utils/get-cookie-parser.js
+- /Users/frederickdineen/pumpkin./website-nextjs/node_modules/next/dist/shared/lib/router/utils/prepare-destination.js
+- /Users/frederickdineen/pumpkin./website-nextjs/node_modules/next/dist/shared/lib/router/utils/middleware-route-matcher.js
+- /Users/frederickdineen/pumpkin./website-nextjs/node_modules/next/dist/server/lib/router-utils/filesystem.js
+- /Users/frederickdineen/pumpkin./website-nextjs/node_modules/next/dist/server/lib/router-server.js
+- /Users/frederickdineen/pumpkin./website-nextjs/node_modules/next/dist/server/lib/start-server.js
+[00:09:44.438] Server  ERROR   Error: Cannot find module 'next/dist/compiled/cookie'
+Require stack:
+- /Users/frederickdineen/pumpkin./website-nextjs/node_modules/next/dist/server/api-utils/get-cookie-parser.js
+- /Users/frederickdineen/pumpkin./website-nextjs/node_modules/next/dist/shared/lib/router/utils/prepare-destination.js
+- /Users/frederickdineen/pumpkin./website-nextjs/node_modules/next/dist/shared/lib/router/utils/middleware-route-matcher.js
+- /Users/frederickdineen/pumpkin./website-nextjs/node_modules/next/dist/server/lib/router-utils/filesystem.js
+- /Users/frederickdineen/pumpkin./website-nextjs/node_modules/next/dist/server/lib/router-server.js
+- /Users/frederickdineen/pumpkin./website-nextjs/node_modules/next/dist/server/lib/start-server.js
+[00:09:45.314] Server  ERROR   Error: Cannot find module 'next/dist/compiled/cookie'
+Require stack:
+- /Users/frederickdineen/pumpkin./website-nextjs/node_modules/next/dist/server/api-utils/get-cookie-parser.js
+- /Users/frederickdineen/pumpkin./website-nextjs/node_modules/next/dist/shared/lib/router/utils/prepare-destination.js
+- /Users/frederickdineen/pumpkin./website-nextjs/node_modules/next/dist/shared/lib/router/utils/middleware-route-matcher.js
+- /Users/frederickdineen/pumpkin./website-nextjs/node_modules/next/dist/server/lib/router-utils/filesystem.js
+- /Users/frederickdineen/pumpkin./website-nextjs/node_modules/next/dist/server/lib/router-server.js
+- /Users/frederickdineen/pumpkin./website-nextjs/node_modules/next/dist/server/lib/start-server.js
+[00:09:45.565] Server  ERROR   Error: Cannot find module 'next/dist/compiled/cookie'
+Require stack:
+- /Users/frederickdineen/pumpkin./website-nextjs/node_modules/next/dist/server/api-utils/get-cookie-parser.js
+- /Users/frederickdineen/pumpkin./website-nextjs/node_modules/next/dist/shared/lib/router/utils/prepare-destination.js
+- /Users/frederickdineen/pumpkin./website-nextjs/node_modules/next/dist/shared/lib/router/utils/middleware-route-matcher.js
+- /Users/frederickdineen/pumpkin./website-nextjs/node_modules/next/dist/server/lib/router-utils/filesystem.js
+- /Users/frederickdineen/pumpkin./website-nextjs/node_modules/next/dist/server/lib/router-server.js
+- /Users/frederickdineen/pumpkin./website-nextjs/node_modules/next/dist/server/lib/start-server.js
+[00:09:45.854] Server  ERROR   Error: Cannot find module 'next/dist/compiled/cookie'
+Require stack:
+- /Users/frederickdineen/pumpkin./website-nextjs/node_modules/next/dist/server/api-utils/get-cookie-parser.js
+- /Users/frederickdineen/pumpkin./website-nextjs/node_modules/next/dist/shared/lib/router/utils/prepare-destination.js
+- /Users/frederickdineen/pumpkin./website-nextjs/node_modules/next/dist/shared/lib/router/utils/middleware-route-matcher.js
+- /Users/frederickdineen/pumpkin./website-nextjs/node_modules/next/dist/server/lib/router-utils/filesystem.js
+- /Users/frederickdineen/pumpkin./website-nextjs/node_modules/next/dist/server/lib/router-server.js
+- /Users/frederickdineen/pumpkin./website-nextjs/node_modules/next/dist/server/lib/start-server.js
+[00:09:45.966] Server  ERROR   Error: Cannot find module 'next/dist/compiled/cookie'
+Require stack:
+- /Users/frederickdineen/pumpkin./website-nextjs/node_modules/next/dist/server/api-utils/get-cookie-parser.js
+- /Users/frederickdineen/pumpkin./website-nextjs/node_modules/next/dist/shared/lib/router/utils/prepare-destination.js
+- /Users/frederickdineen/pumpkin./website-nextjs/node_modules/next/dist/shared/lib/router/utils/middleware-route-matcher.js
+- /Users/frederickdineen/pumpkin./website-nextjs/node_modules/next/dist/server/lib/router-utils/filesystem.js
+- /Users/frederickdineen/pumpkin./website-nextjs/node_modules/next/dist/server/lib/router-server.js
+- /Users/frederickdineen/pumpkin./website-nextjs/node_modules/next/dist/server/lib/start-server.js
+[00:09:46.233] Server  ERROR   Error: Cannot find module 'next/dist/compiled/cookie'
+Require stack:
+- /Users/frederickdineen/pumpkin./website-nextjs/node_modules/next/dist/server/api-utils/get-cookie-parser.js
+- /Users/frederickdineen/pumpkin./website-nextjs/node_modules/next/dist/shared/lib/router/utils/prepare-destination.js
+- /Users/frederickdineen/pumpkin./website-nextjs/node_modules/next/dist/shared/lib/router/utils/middleware-route-matcher.js
+- /Users/frederickdineen/pumpkin./website-nextjs/node_modules/next/dist/server/lib/router-utils/filesystem.js
+- /Users/frederickdineen/pumpkin./website-nextjs/node_modules/next/dist/server/lib/router-server.js
+- /Users/frederickdineen/pumpkin./website-nextjs/node_modules/next/dist/server/lib/start-server.js
+[00:09:46.316] Server  ERROR   Error: Cannot find module 'next/dist/compiled/cookie'
+Require stack:
+- /Users/frederickdineen/pumpkin./website-nextjs/node_modules/next/dist/server/api-utils/get-cookie-parser.js
+- /Users/frederickdineen/pumpkin./website-nextjs/node_modules/next/dist/shared/lib/router/utils/prepare-destination.js
+- /Users/frederickdineen/pumpkin./website-nextjs/node_modules/next/dist/shared/lib/router/utils/middleware-route-matcher.js
+- /Users/frederickdineen/pumpkin./website-nextjs/node_modules/next/dist/server/lib/router-utils/filesystem.js
+- /Users/frederickdineen/pumpkin./website-nextjs/node_modules/next/dist/server/lib/router-server.js
+- /Users/frederickdineen/pumpkin./website-nextjs/node_modules/next/dist/server/lib/start-server.js
+[00:09:46.839] Server  ERROR   Error: Cannot find module 'next/dist/compiled/cookie'
+Require stack:
+- /Users/frederickdineen/pumpkin./website-nextjs/node_modules/next/dist/server/api-utils/get-cookie-parser.js
+- /Users/frederickdineen/pumpkin./website-nextjs/node_modules/next/dist/shared/lib/router/utils/prepare-destination.js
+- /Users/frederickdineen/pumpkin./website-nextjs/node_modules/next/dist/shared/lib/router/utils/middleware-route-matcher.js
+- /Users/frederickdineen/pumpkin./website-nextjs/node_modules/next/dist/server/lib/router-utils/filesystem.js
+- /Users/frederickdineen/pumpkin./website-nextjs/node_modules/next/dist/server/lib/router-server.js
+- /Users/frederickdineen/pumpkin./website-nextjs/node_modules/next/dist/server/lib/start-server.js
+[00:09:46.928] Server  ERROR   Error: Cannot find module 'next/dist/compiled/cookie'
+Require stack:
+- /Users/frederickdineen/pumpkin./website-nextjs/node_modules/next/dist/server/api-utils/get-cookie-parser.js
+- /Users/frederickdineen/pumpkin./website-nextjs/node_modules/next/dist/shared/lib/router/utils/prepare-destination.js
+- /Users/frederickdineen/pumpkin./website-nextjs/node_modules/next/dist/shared/lib/router/utils/middleware-route-matcher.js
+- /Users/frederickdineen/pumpkin./website-nextjs/node_modules/next/dist/server/lib/router-utils/filesystem.js
+- /Users/frederickdineen/pumpkin./website-nextjs/node_modules/next/dist/server/lib/router-server.js
+- /Users/frederickdineen/pumpkin./website-nextjs/node_modules/next/dist/server/lib/start-server.js
+[00:09:47.012] Server  ERROR   Error: Cannot find module 'next/dist/compiled/cookie'
+Require stack:
+- /Users/frederickdineen/pumpkin./website-nextjs/node_modules/next/dist/server/api-utils/get-cookie-parser.js
+- /Users/frederickdineen/pumpkin./website-nextjs/node_modules/next/dist/shared/lib/router/utils/prepare-destination.js
+- /Users/frederickdineen/pumpkin./website-nextjs/node_modules/next/dist/shared/lib/router/utils/middleware-route-matcher.js
+- /Users/frederickdineen/pumpkin./website-nextjs/node_modules/next/dist/server/lib/router-utils/filesystem.js
+- /Users/frederickdineen/pumpkin./website-nextjs/node_modules/next/dist/server/lib/router-server.js
+- /Users/frederickdineen/pumpkin./website-nextjs/node_modules/next/dist/server/lib/start-server.js
+[00:09:47.058] Server  ERROR   Error: Cannot find module 'next/dist/compiled/cookie'
+Require stack:
+- /Users/frederickdineen/pumpkin./website-nextjs/node_modules/next/dist/server/api-utils/get-cookie-parser.js
+- /Users/frederickdineen/pumpkin./website-nextjs/node_modules/next/dist/shared/lib/router/utils/prepare-destination.js
+- /Users/frederickdineen/pumpkin./website-nextjs/node_modules/next/dist/shared/lib/router/utils/middleware-route-matcher.js
+- /Users/frederickdineen/pumpkin./website-nextjs/node_modules/next/dist/server/lib/router-utils/filesystem.js
+- /Users/frederickdineen/pumpkin./website-nextjs/node_modules/next/dist/server/lib/router-server.js
+- /Users/frederickdineen/pumpkin./website-nextjs/node_modules/next/dist/server/lib/start-server.js

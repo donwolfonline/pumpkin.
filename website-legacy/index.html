@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -7,8 +8,11 @@
     <link rel="stylesheet" href="style.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500&family=Nunito:wght@700;800&family=Open+Sans:wght@400;600&display=swap" rel="stylesheet">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500&family=Nunito:wght@700;800&family=Open+Sans:wght@400;600&display=swap"
+        rel="stylesheet">
 </head>
+
 <body>
 
     <!-- Navigation -->
@@ -27,38 +31,48 @@
     <header class="hero">
         <div class="hero-content">
             <h1>The programming language you can actually <span class="highlight">read</span>.</h1>
-            <p class="hero-sub">Stop wrestling with syntax and start building ideas. Pumpkin is the friendly, human-readable language designed to teach you as you type.</p>
+            <p class="hero-sub">Stop wrestling with syntax and start building ideas. Pumpkin is the friendly,
+                human-readable language designed to teach you as you type.</p>
             <div class="cta-group">
                 <a href="#playground" class="btn btn-primary">Try Pumpkin Now</a>
                 <a href="#docs" class="btn btn-outline">Read the Guide</a>
             </div>
         </div>
         <div class="hero-visual">
-            <!-- Abstract Pumpkin Mascot representation -->
-            <div class="mascot-container">
-                <div class="pumpkin-shape">
-                    <div class="eye left"></div>
-                    <div class="eye right"></div>
-                    <div class="mouth"></div>
+            <div class="mascot-group">
+                <div class="mascot-item">
+                    <img src="images/mascot_neutral.svg" alt="Neutral Pumpkin">
+                </div>
+                <div class="mascot-item">
+                    <img src="images/mascot_happy.svg" alt="Happy Pumpkin">
                 </div>
             </div>
         </div>
     </header>
+
+    <!-- Wave Divider -->
+    <div class="wave-divider">
+        <svg viewBox="0 0 1200 120" preserveAspectRatio="none">
+            <path d="M0,50 Q300,0 600,50 T1200,50 L1200,120 L0,120 Z" fill="#1E4D4D" />
+        </svg>
+    </div>
 
     <!-- What Is Pumpkin -->
     <section class="section what-is">
         <div class="container">
             <h2>What is Pumpkin?</h2>
             <p class="lead">Pumpkin is a programming language built for humans, not robots.</p>
-            <p>Most languages feel like specialized codes written for machines. Pumpkin feels like English. It removes the scary symbols and confusing jargon, replacing them with clear instructions that make sense the first time you read them.</p>
+            <p>Most languages feel like specialized codes written for machines. Pumpkin feels like English. It removes
+                the scary symbols and confusing jargon, replacing them with clear instructions that make sense the first
+                time you read them.</p>
         </div>
     </section>
 
     <!-- Code Comparison -->
-    <section class="section comparison">
+    <section class="section teal-bg comparison">
         <div class="container">
             <h2>Code That Feels Human</h2>
-            <div class="compare-grid">
+            <div class="code-comparison">
                 <div class="code-card others">
                     <h3>Thinking in Symbols</h3>
                     <pre><code class="language-js">const x = readline();
@@ -75,12 +89,14 @@ if x > 10 {
 }</code></pre>
                 </div>
             </div>
-            <p class="center-text">Pumpkin lets you focus on <strong>logic</strong>, not punctuation.</p>
+            <p style="text-align: center; font-size: 1.2rem; margin-top: 20px;">Pumpkin lets you focus on
+                <strong>logic</strong>, not punctuation.
+            </p>
         </div>
     </section>
 
     <!-- Features -->
-    <section class="section features">
+    <section class="section burgundy-bg features">
         <div class="container">
             <h2>Why Pumpkin?</h2>
             <div class="feature-grid">
@@ -116,8 +132,10 @@ if x > 10 {
                 </div>
                 <div class="editor-body">
                     <div class="code-area">
-                        <span class="line">1</span> <span class="kwd">show</span> <span class="str">"Hello, World!"</span><br>
-                        <span class="line">2</span> <span class="kwd">show</span> <span class="str">"I am coding!"</span>
+                        <span class="line">1</span> <span class="kwd">show</span> <span class="str">"Hello,
+                            World!"</span><br>
+                        <span class="line">2</span> <span class="kwd">show</span> <span class="str">"I am
+                            coding!"</span>
                     </div>
                     <div class="output-area">
                         <div class="output-header">Output</div>
@@ -168,4 +186,5 @@ if x > 10 {
     </footer>
 
 </body>
+
 </html>
