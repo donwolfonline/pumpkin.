@@ -82,7 +82,10 @@ export async function POST(request: NextRequest) {
         return NextResponse.json(
             {
                 error: 'Internal server error',
-                details: error instanceof Error ? error.message : String(error)
+                details: error instanceof Error ? error.message : String(error),
+                diagnostics: {
+                    hasDatabaseUrl: !!(process.env.DATABASE_URL || process.env.POSTGRES_URL)
+                }
             },
             { status: 500 }
         );

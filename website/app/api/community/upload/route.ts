@@ -65,7 +65,12 @@ export async function POST(request: NextRequest) {
         return NextResponse.json(
             {
                 error: 'Failed to upload image',
-                details: error instanceof Error ? error.message : String(error)
+                details: error instanceof Error ? error.message : String(error),
+                diagnostics: {
+                    hasCloudName: !!(process.env.CLOUDINARY_CLOUD_NAME || process.env.NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME),
+                    hasApiKey: !!process.env.CLOUDINARY_API_KEY,
+                    hasApiSecret: !!process.env.CLOUDINARY_API_SECRET
+                }
             },
             { status: 500 }
         );
