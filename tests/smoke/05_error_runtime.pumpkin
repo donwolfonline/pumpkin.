@@ -1,0 +1,6 @@
+# 05_error_runtime.pumpkin
+# THIS TEST SHOULD FAIL
+# Using undefined variable
+
+let a = 10
+show b  # b is not defined

@@ -1,270 +1,321 @@
 
-import { grammar } from './parser.js';
+import * as AST from './ast/nodes.js';
+import { Environment } from './environment.js';
 import * as readlineSync from 'readline-sync';
+import {
+    PumpkinError,
+    TypeMismatchError,
+    FunctionNotFoundError,
+    InvalidOperationError
+} from './errors.js';
 
-// Environment to store variables
-class Environment {
-    constructor(public vars: Map<string, any> = new Map(), public parent: Environment | null = null) { }
+// Internal class for control flow (Return)
+class ReturnValue {
+    constructor(public value: any) { }
+}
 
-    get(name: string): any {
-        if (this.vars.has(name)) {
-            return this.vars.get(name);
-        }
-        if (this.parent) {
-            return this.parent.get(name);
-        }
-        throw new Error(`Undefined variable: ${name}`);
-    }
+// --------------------------------------------------------------------------
+// Evaluator
+// --------------------------------------------------------------------------
 
-    set(name: string, value: any) {
-        if (this.vars.has(name)) {
-            this.vars.set(name, value);
-            return;
-        }
-        if (this.parent && this.parent.has(name)) {
-            this.parent.set(name, value);
-            return;
-        }
-        // New variable (or implicit global if not found? Let's strictly require 'let' for new vars in current scope, 
-        // but the prompt implies 'let' for declaration. Reassignment implies existing.)
-        // For 'Let', we use define(). For 'Reassignment', we use set().
-        throw new Error(`Variable ${name} not declared. Use 'let' to declare it.`);
-    }
+export function evaluate(node: AST.BaseNode, env: Environment): any {
+    switch (node.kind) {
+        // --- Program ---
+        case 'Program':
+            return evalProgram(node as AST.Program, env);
 
-    define(name: string, value: any) {
-        this.vars.set(name, value);
-    }
+        // --- Statements ---
+        case 'LetStmt':
+            return evalLetStmt(node as AST.LetStmt, env);
+        case 'AssignStmt':
+            return evalAssignStmt(node as AST.AssignStmt, env);
+        case 'ShowStmt':
+            return evalShowStmt(node as AST.ShowStmt, env);
+        case 'IfStmt':
+            return evalIfStmt(node as AST.IfStmt, env);
+        case 'RepeatStmt':
+            return evalRepeatStmt(node as AST.RepeatStmt, env);
+        case 'WhileStmt':
+            return evalWhileStmt(node as AST.WhileStmt, env);
+        case 'FuncDecl':
+            return evalFuncDecl(node as AST.FuncDecl, env);
+        case 'ReturnStmt':
+            return evalReturnStmt(node as AST.ReturnStmt, env);
+        case 'ExprStmt':
+            return evaluate((node as AST.ExprStmt).expression, env);
+        case 'Block':
+            return evalBlock(node as AST.Block, env);
 
-    has(name: string): boolean {
-        if (this.vars.has(name)) return true;
-        if (this.parent) return this.parent.has(name);
-        return false;
+        // --- Expressions ---
+        case 'BinaryExpr':
+            return evalBinaryExpr(node as AST.BinaryExpr, env);
+        case 'UnaryExpr':
+            return evalUnaryExpr(node as AST.UnaryExpr, env);
+        case 'CallExpr':
+            return evalCallExpr(node as AST.CallExpr, env);
+        case 'Literal':
+            return (node as AST.Literal).value;
+        case 'Identifier':
+            return evalIdentifier(node as AST.Identifier, env);
+        case 'ArrayLiteral':
+            return evalArrayLiteral(node as AST.ArrayLiteral, env);
+        case 'ObjectLiteral':
+            return evalObjectLiteral(node as AST.ObjectLiteral, env);
+        case 'Property':
+            throw new Error("Property node should be handled by ObjectLiteral");
+
+        default:
+            throw new Error(`Unknown node kind: ${node.kind}`);
     }
 }
 
-// Global environment
-const globalEnv = new Environment();
+// --------------------------------------------------------------------------
+// Helpers
+// --------------------------------------------------------------------------
 
-// Semantics
-const semantics = grammar.createSemantics();
+function evalProgram(program: AST.Program, env: Environment): any {
+    let lastResult: any = null;
+    for (const stmt of program.body) {
+        lastResult = evaluate(stmt, env);
+    }
+    return lastResult;
+}
 
-semantics.addOperation('exec', {
-    Program(stmts) {
-        let lastResult;
-        for (const stmt of stmts.children) {
-            lastResult = stmt.exec();
+function evalLetStmt(stmt: AST.LetStmt, env: Environment): void {
+    const value = evaluate(stmt.value, env);
+    env.define(stmt.name.name, value);
+}
+
+function evalAssignStmt(stmt: AST.AssignStmt, env: Environment): void {
+    const value = evaluate(stmt.value, env);
+    env.assign(stmt.name.name, value);
+}
+
+function evalShowStmt(stmt: AST.ShowStmt, env: Environment): void {
+    const value = evaluate(stmt.expression, env);
+    // TODO: Use a configurable output stream instead of console.log directly?
+    // For now, console.log is fine for CLI.
+    console.log(value);
+}
+
+function evalIfStmt(stmt: AST.IfStmt, env: Environment): any {
+    const condition = evaluate(stmt.condition, env);
+    if (condition) {
+        return evaluate(stmt.thenBlock, env);
+    } else if (stmt.elseBlock) {
+        return evaluate(stmt.elseBlock, env);
+    }
+}
+
+function evalRepeatStmt(stmt: AST.RepeatStmt, env: Environment): any {
+    const count = evaluate(stmt.count, env);
+    if (typeof count !== 'number') {
+        throw new TypeMismatchError('number', typeof count);
+    }
+
+    let lastResult: any = null;
+    for (let i = 0; i < count; i++) {
+        lastResult = evaluate(stmt.body, env);
+        if (lastResult instanceof ReturnValue) return lastResult;
+    }
+    return lastResult;
+}
+
+function evalWhileStmt(stmt: AST.WhileStmt, env: Environment): any {
+    let lastResult: any = null;
+    while (evaluate(stmt.condition, env)) {
+        lastResult = evaluate(stmt.body, env);
+        if (lastResult instanceof ReturnValue) return lastResult;
+    }
+    return lastResult;
+}
+
+function evalFuncDecl(stmt: AST.FuncDecl, env: Environment): void {
+    const funcName = stmt.name.name;
+    const paramNames = stmt.params.map(p => p.name);
+
+    env.define(funcName, {
+        type: 'function',
+        name: funcName,
+        params: paramNames,
+        body: stmt.body, // Store AST Block
+        closure: env // Capture definition scope
+    });
+}
+
+function evalReturnStmt(stmt: AST.ReturnStmt, env: Environment): never {
+    let value = null;
+    if (stmt.argument) {
+        value = evaluate(stmt.argument, env);
+    }
+    throw new ReturnValue(value);
+}
+
+function evalBlock(block: AST.Block, env: Environment): any {
+    // strict: new environment for block
+    const blockEnv = new Environment(new Map(), env);
+    let lastResult: any = null;
+
+    try {
+        for (const stmt of block.body) {
+            lastResult = evaluate(stmt, blockEnv);
         }
-        return lastResult;
-    },
-    Statement(child) {
-        return child.exec();
-    },
-    LetDecl(_let, identifier, _eq, exp) {
-        const name = identifier.sourceString;
-        const value = exp.eval();
-        // Assuming 'let' declares in current scope
-        // We need a way to pass the current environment. 
-        // Ohm operations don't implicitly pass context efficiently without a global or extra args.
-        // For simplicity in this REPL, we'll use a module-level 'currentEnv' or pass it.
-        // Given the structure, let's use a module-level 'currentEnv' that we switch for functions.
-        currentEnv.define(name, value);
-    },
-    Reassignment(identifier, _eq, exp) {
-        const name = identifier.sourceString;
-        const value = exp.eval();
-        currentEnv.set(name, value);
-    },
-    ShowStmt(_show, exp) {
-        const val = exp.eval();
-        console.log(val);
-        // return val; // Don't return value to avoid double printing in REPL
-    },
-    AskStmt(_ask, str, _into, identifier) {
-        const prompt = str.eval(); // stringLiteral evaluates to string
+    } catch (e) {
+        // Propagate ReturnValue up
+        throw e;
+    }
+
+    return lastResult;
+}
+
+function evalBinaryExpr(expr: AST.BinaryExpr, env: Environment): any {
+    const left = evaluate(expr.left, env);
+    const right = evaluate(expr.right, env);
+
+    switch (expr.operator) {
+        case '+':
+            if (typeof left === 'string' || typeof right === 'string') {
+                return String(left) + String(right);
+            }
+            return left + right;
+        case '-': return left - right;
+        case '*': return left * right;
+        case '/': return left / right;
+        case '%': return left % right;
+        case '^': return Math.pow(left, right);
+        case '==': return left === right;
+        case '!=': return left !== right;
+        case '<': return left < right;
+        case '<=': return left <= right;
+        case '>': return left > right;
+        case '>=': return left >= right;
+        case 'or': return left || right;
+        case 'and': return left && right;
+        default:
+            throw new InvalidOperationError(expr.operator, "Unknown operator");
+    }
+}
+
+function evalUnaryExpr(expr: AST.UnaryExpr, env: Environment): any {
+    const val = evaluate(expr.argument, env);
+    if (expr.operator === '!') return !val;
+    if (expr.operator === '-') return -val;
+    throw new InvalidOperationError(expr.operator, "Unknown unary operator");
+}
+
+function evalCallExpr(expr: AST.CallExpr, env: Environment): any {
+    // Special handling for 'ask' if it was mapped to a CallExpr
+    // In our semantics.ts, we mapped AskStmt to a CallExpr to 'ask' inside an AssignStmt?
+    // Wait, semantics.ts Logic: 
+    // AskStmt -> AssignStmt(name, CallExpr('ask', [str]))
+    // So if the function name is 'ask', we can interception it here OR define it in stdlib.
+    // Let's intercept 'ask' here for now as it uses readlineSync (I/O).
+
+    // Evaluate callee. AST says callee is Expression.
+    // Usually Identifier('print') -> resolves to function object.
+
+    // Check if callee is identifier 'ask'
+    if (expr.callee.kind === 'Identifier' && (expr.callee as AST.Identifier).name === 'ask') {
+        // Native ASK implementation
+        if (expr.arguments.length !== 1) {
+            throw new Error("ask() requires exactly 1 argument (the prompt)");
+        }
+        const prompt = evaluate(expr.arguments[0]!, env);
         const answer = readlineSync.question(prompt + ' ');
-        // Try to parse number if possible, else string
         const num = parseFloat(answer);
-        currentEnv.define(identifier.sourceString, isNaN(num) ? answer : num);
-    },
-    IfStmt(_if, exp, block, _else, elseBlock) {
-        const cond = exp.eval();
-        if (cond) {
-            return block.exec();
-        } else {
-            if (elseBlock.numChildren > 0) {
-                return elseBlock.children[0]!.exec();
-            }
-        }
-    },
-    LoopStmt(_repeat, exp, _times, block) {
-        const count = exp.eval();
-        let last;
-        for (let i = 0; i < count; i++) {
-            last = block.exec();
-        }
-        return last;
-    },
-    WhileStmt(_while, exp, block) {
-        let last;
-        while (exp.eval()) {
-            last = block.exec();
-        }
-        return last;
-    },
-    FuncDecl(_func, identifier, _lp, params, _rp, block) {
-        const name = identifier.sourceString;
-        const paramNames = params.numChildren > 0 ? params.children[0]!.asIteration().children.map(c => c.sourceString) : [];
-
-        currentEnv.define(name, {
-            type: 'function',
-            params: paramNames,
-            body: block,
-            closure: currentEnv // Static scoping
-        });
-    },
-    CallStmt(callExp) {
-        return callExp.eval(); // CallExp is an expression, but here used as statement
-    },
-    Block(_lb, stmts, _rb) {
-        // Blocks could allow local scope for 'let'? 
-        // Prompt says "Variable declarations using let". 
-        // Usually blocks have scopes. Let's create a new scope.
-        const prevEnv = currentEnv;
-        currentEnv = new Environment(new Map(), prevEnv);
-        let last;
-        for (const stmt of stmts.children) {
-            last = stmt.exec();
-        }
-        currentEnv = prevEnv;
-        return last;
+        return isNaN(num) ? answer : num;
     }
-});
 
-semantics.addOperation('eval', {
-    Exp(child) {
-        return child.eval();
-    },
-    LogicOr_or(left, _op, right) {
-        return left.eval() || right.eval();
-    },
-    LogicAnd_and(left, _op, right) {
-        return left.eval() && right.eval();
-    },
-    LogicNot_not(_op, child) {
-        return !child.eval();
-    },
-    Compare_le(l, _op, r) { return l.eval() <= r.eval(); },
-    Compare_lt(l, _op, r) { return l.eval() < r.eval(); },
-    Compare_ge(l, _op, r) { return l.eval() >= r.eval(); },
-    Compare_gt(l, _op, r) { return l.eval() > r.eval(); },
-    Compare_eq(l, _op, r) { return l.eval() === r.eval(); },
-    Compare_neq(l, _op, r) { return l.eval() !== r.eval(); },
+    // Normal Function Call
+    let func: any;
 
-    AddExp_add(l, _op, r) { return l.eval() + r.eval(); },
-    AddExp_sub(l, _op, r) { return l.eval() - r.eval(); },
+    // Handle Member Expression hack (CallExpr calling AST.CallExpr?)
+    // In semantics.ts we mapped `Primary[Exp]` to `CallExpr(Primary, [Exp])` effectively?
+    // No, we mapped it to CallExpr where callee is Primary.
+    // If callee evaluates to an ARRAY, and args length is 1, treat as index access.
+    // If callee evaluates to an OBJECT, and args length is 1 (string), treat as prop access.
 
-    MulExp_mul(l, _op, r) { return l.eval() * r.eval(); },
-    MulExp_div(l, _op, r) { return l.eval() / r.eval(); },
-    MulExp_mod(l, _op, r) { return l.eval() % r.eval(); },
+    const calleeVal = evaluate(expr.callee, env);
 
-    ExpExp_power(l, _op, r) { return Math.pow(l.eval(), r.eval()); },
-
-    Primary_index(prim, _l, idx, _r) {
-        const obj = prim.eval();
-        const i = idx.eval();
-        return obj[i];
-    },
-    Primary_access(prim, _dot, id) {
-        const obj = prim.eval();
-        return obj[id.sourceString];
-    },
-    Atom_paren(_l, exp, _r) {
-        return exp.eval();
-    },
-
-    CallExp(identifier, _lp, args, _rp) {
-        const funcName = identifier.sourceString;
-        const func = currentEnv.get(funcName);
-
-        if (func.type !== 'function') {
-            throw new Error(`${funcName} is not a function`);
+    // 1. Array Indexing / Object Access handling (due to AST v0.1 hack)
+    if ((Array.isArray(calleeVal) || (typeof calleeVal === 'object' && calleeVal !== null && !calleeVal.type))) {
+        // It's a data object/array, not a function definition
+        if (expr.arguments.length === 1) {
+            const idx = evaluate(expr.arguments[0]!, env);
+            return calleeVal[idx];
         }
-
-        const argValues = args.numChildren > 0 ? args.children[0]!.asIteration().children.map(c => c.eval()) : [];
-
-        // Switch env to function closure
-        const prevEnv = currentEnv;
-        const funcEnv = new Environment(new Map(), func.closure); // Closure scope
-
-        // Bind args
-        func.params.forEach((param: string, i: number) => {
-            funcEnv.define(param, argValues[i]);
-        });
-
-        currentEnv = funcEnv;
-        let result;
-        try {
-            // Function body execution
-            // Note: Block.exec creates ANOTHER scope. That's fine.
-            result = func.body.exec();
-        } finally {
-            currentEnv = prevEnv;
-        }
-        return result;
-    },
-
-    List(_lb, elems, _rb) {
-        return elems.asIteration().children.map(c => c.eval());
-    },
-    Object(_lb, props, _rb) {
-        const obj: any = {};
-        props.asIteration().children.forEach(prop => {
-            // Prop = (identifier | stringLiteral) ":" Exp
-            // We need to access children of Prop
-            // prop is a Node. prop.child(0) is key, prop.child(2) is value.
-            // But we are in Object operation, accessing ListOf<Prop>.
-            // We can delegate or manually drill.
-            // Let's rely on Prop having an operation or drill down.
-            // Since Prop is not an alternative of Exp, we can't call eval() on it directly unless we define it.
-            // Let's drill. 
-            const propNode = prop;
-            const keyNode = propNode.child(0);
-            let key = keyNode.sourceString;
-            if (key.startsWith('"')) {
-                key = key.slice(1, -1);
-            }
-            const val = propNode.child(2).eval();
-            obj[key] = val;
-        });
-        return obj;
-    },
-
-    identifier(_1, _2) {
-        return currentEnv.get(this.sourceString);
-    },
-    number(_) {
-        return parseFloat(this.sourceString);
-    },
-    stringLiteral(_q1, text, _q2) {
-        return text.sourceString;
-    },
-    boolean(_) {
-        return this.sourceString === 'true';
     }
-});
 
-let currentEnv = globalEnv;
+    func = calleeVal;
 
-export function evaluate(match: any) {
-    // Reset env if needed? No, REPL should persist.
-    // But for 'evaluate', we just run.
-    const adapter = semantics(match);
-    return adapter.exec();
+    if (!func || func.type !== 'function') {
+        // Could be trying to call a non-function
+        // e.g. 10(20)
+        // Or our hack failed.
+        // Let's try to get a name if possible
+        const name = (expr.callee.kind === 'Identifier') ? (expr.callee as AST.Identifier).name : '<anonymous>';
+        throw new FunctionNotFoundError(name);
+    }
+
+    const args = expr.arguments.map(arg => evaluate(arg, env));
+
+    // Create scope
+    const funcEnv = new Environment(new Map(), func.closure);
+
+    // Bind
+    func.params.forEach((name: string, i: number) => {
+        funcEnv.define(name, args[i]);
+    });
+
+    // Exec
+    let result: any = null;
+    try {
+        result = evaluate(func.body, funcEnv);
+    } catch (e) {
+        if (e instanceof ReturnValue) return e.value;
+        throw e;
+    }
+
+    return result;
 }
 
-export function resetEnv() {
-    currentEnv = new Environment(); // Clear specific vars
-    // Or just clear globalEnv.vars
+function evalIdentifier(node: AST.Identifier, env: Environment): any {
+    return env.get(node.name);
+}
+
+function evalArrayLiteral(node: AST.ArrayLiteral, env: Environment): any {
+    return node.elements.map(e => evaluate(e, env));
+}
+
+function evalObjectLiteral(node: AST.ObjectLiteral, env: Environment): any {
+    const obj: any = {};
+    for (const prop of node.properties) {
+        const key = (prop.key.kind === 'Identifier')
+            ? (prop.key as AST.Identifier).name
+            : (prop.key as AST.Literal).value as string;
+
+        obj[key] = evaluate(prop.value, env);
+    }
+    return obj;
+}
+
+
+// --------------------------------------------------------------------------
+// Exports
+// --------------------------------------------------------------------------
+
+// Re-export Environment for convenience
+export { Environment };
+
+
+import { installStdlib } from './stdlib/index.js';
+
+// Global Environment Helper
+export const globalEnv = new Environment();
+installStdlib(globalEnv);
+
+// Reset for tests/REPL
+export function resetGlobalEnv() {
     globalEnv.vars.clear();
-    currentEnv = globalEnv;
+    installStdlib(globalEnv);
 }

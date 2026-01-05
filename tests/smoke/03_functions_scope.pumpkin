@@ -1,0 +1,31 @@
+# 03_functions_scope.pumpkin
+# Tests functions, parameters, and variable scope rules.
+
+let x = 100
+
+function printX() {
+    # Should print global x (100)
+    show x
+}
+
+function shadowed(x) {
+    # Should print local parameter x (passed value)
+    show x
+}
+
+printX()
+shadowed(50)
+
+# Closure Test
+function makeCounter(start) {
+    let count = start
+    function increment() {
+        count = count + 1
+        return count
+    }
+    return increment
+}
+
+let c = makeCounter(10)
+show c() # Should be 11
+show c() # Should be 12

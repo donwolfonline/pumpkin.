@@ -1,0 +1,32 @@
+// Pumpkin End-to-End Smoke Test
+// This program tests all core features of Pumpkin v0.1
+
+// Variables & Types
+let x = 42
+let name = "Pumpkin"
+let flag = true
+
+// Arithmetic
+let sum = 10 + 5
+let product = 3 * 7
+
+// Show Statement
+show "=== Pumpkin Smoke Test ==="
+show name
+show sum
+show product
+
+// Conditionals
+if x > 40 {
+    show "X is large"
+}
+
+// Loops
+let count = 0
+repeat 3 {
+    count = count + 1
+    show count
+}
+
+// Final Message
+show "Test Complete!"

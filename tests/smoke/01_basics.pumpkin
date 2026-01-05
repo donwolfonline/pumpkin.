@@ -1,0 +1,15 @@
+# 01_basics.pumpkin
+# Tests variables, arithmetic, strings, and printing.
+
+let greeting = "Hello, Smoke Test!"
+show greeting
+
+let a = 10
+let b = 5
+let sum = a + b
+show sum
+
+let isWorking = true
+if isWorking {
+    show "Math works."
+}

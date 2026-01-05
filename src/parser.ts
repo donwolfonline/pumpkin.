@@ -1,21 +1,24 @@
 
-import * as path from 'path';
-import * as fs from 'fs';
-import * as customUrl from 'url';
 import * as ohm from 'ohm-js';
-
-const __dirname = customUrl.fileURLToPath(new URL('.', import.meta.url));
-
-const grammarPath = path.join(__dirname, '..', 'pumpkin.ohm');
-const grammarSource = fs.readFileSync(grammarPath, 'utf-8');
-
-export const grammar = ohm.grammar(grammarSource);
+import { grammar } from './ohm_grammar.js';
 
 export interface ParseResult {
     match: ohm.MatchResult;
 }
 
+
+import semantics from './ast/semantics.js';
+import * as AST from './ast/nodes.js';
+
 export function parse(code: string): ParseResult {
     const match = grammar.match(code);
     return { match };
+}
+
+export function parseToAST(sourceCode: string): AST.Program {
+    const match = grammar.match(sourceCode);
+    if (match.failed()) {
+        throw new Error(match.message);
+    }
+    return semantics(match).toAST();
 }

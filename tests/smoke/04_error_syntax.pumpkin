@@ -1,0 +1,5 @@
+# 04_error_syntax.pumpkin
+# THIS TEST SHOULD FAIL
+# Missing closing quote
+
+show "This string never ends...

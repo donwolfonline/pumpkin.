@@ -1,102 +1,133 @@
-# 🎃 Pumpkin. - The Friendly Programming Language
+# 🎃 Pumpkin Programming Language
 
-> **Code for Humans, Not Robots.**
+> **A friendly, explorative language for learning to code.**
+> *v0.1.0 - The Foundation Release*
 
-Pumpkin. is a programming language designed from the ground up to be readable, friendly, and encouraging. It eliminates the fear of syntax errors and cryptic jargon, replacing them with clear logic and helpful feedback.
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+[![Version](https://img.shields.io/badge/version-0.1.0-orange.svg)]()
+[![Status](https://img.shields.io/badge/status-experimental-blue.svg)]()
 
-<img width="1423" height="662" alt="Screenshot 2026-01-05 at 10 21 14 AM" src="https://github.com/user-attachments/assets/41d7f413-a0a1-4479-b8b6-983a71c75353" />
+Pumpkin is a toy programming language designed to be the "Anti-Gatekeeper". It prioritizes friendly error messages, predictable behavior, and a zero-setup experience over raw performance or complex features.
 
+**[Try the Playground](https://pumpkin-lang.org/playground)** (Runs entirely in your browser!)
 
-## Why Pumpkin.?
+---
 
-Learning to code is hard. Most languages punish you for missing a semicolon or a bracket. Pumpkin. doesn't.
+## 🚀 Installation
 
-* **Friendly Errors**: Mistakes happen. When they do, Pumpkin. tells you *what* happened, *why*, and *how* to fix it.
-* **Natural Syntax**: Read code like English sentences.
-* **Zero Boilerplate**: No `public static void main`. Just write and run.
+### CLI (Mac, Linux, Windows)
 
-### Example
+You can install the Pumpkin CLI via npm. It works on any machine with Node.js installed.
 
-```Pumpkin.
-ask "What is your name?" into user
+```bash
+npm install -g pumpkin-lang
+```
 
-if user == "Pumpkin." {
-    show "That's my name too! 🎃"
-} else {
-    show "Nice to meet you, " + user
+Verify the installation:
+
+```bash
+pumpkin version
+# Output: 🎃 Pumpkin v0.1.0
+```
+
+---
+
+## ⚡ Quick Start
+
+### 1. Interactive REPL
+
+Just type `pumpkin repl` to start playing immediately.
+
+```bash
+$ pumpkin repl
+Welcome to Pumpkin v0.1.0 🎃
+> show "Hello World"
+"Hello World"
+> let x = 10
+> show x * 2
+20
+```
+
+### 2. Running a File
+
+Create a file named `hello.pumpkin`:
+
+```pumpkin
+// hello.pumpkin
+let name = "Developer"
+show "Hello, " + name + "!"
+
+let count = 0
+repeat 3 {
+    count = count + 1
+    show count
 }
 ```
 
----
-
-## 🚀 Getting Started
-
-### Installation
-
-(Coming Soon via NPM)
-For now, you can clone this repository to try it out.
-
-1. **Clone the repo**:
-
-    ```bash
-    git clone https://github.com/yourusername/Pumpkin..git
-    cd Pumpkin.
-    ```
-
-2. **Install dependencies**:
-
-    ```bash
-    npm install
-    ```
-
-### Interactive Mode (REPL)
-
-Want to play around? Start the interactive shell:
+Run it:
 
 ```bash
-node src/repl.js
-```
-
-You'll see the `🎃 >` prompt. Try typing `show "Hello!"`.
-
-### Running a File
-
-Write your code in a file (e.g., `my_script.Pumpkin.`) and run it:
-
-```bash
-node src/run.js my_script.Pumpkin.
+pumpkin run hello.pumpkin
 ```
 
 ---
 
-## 📚 Documentation
+## 🌟 Features (v0.1)
 
-We have comprehensive guides to help you learn:
+Pumpkin v0.1 allows you to write basic algorithmic logic.
 
-* **[The Pumpkin. Guide](docs/Pumpkin._guide.md)**: Start here! The official handbook for beginners.
-* **[Curriculum](docs/curriculum.md)**: A step-by-step learning path from zero to hero.
-* **[Syntax Diagrams](docs/syntax_diagrams.md)**: Visual guides for every command.
-* **[Brand Guide](docs/brand_guide.md)**: Our values, tone, and visual identity.
+* **Variables:** `let x = 10`, `let name = "Pumpkin"`
+* **Math:** `+`, `-`, `*`, `/`, `( )`
+* **Logic:** `if`, `else`, `and`, `or`, `not`
+* **Loops:** `while`, `repeat`
+* **Output:** `show "text"`
+* **Comments:** `// This is a comment`
 
----
+### What's Missing? (Known Limitations)
 
-## 🗺️ Roadmap
+To keep v0.1 stable, we intentionally excluded:
 
-We are just getting started! Here is what's coming next:
-* [x] Core Interpreter & REPL
-* [x] Friendly Error Messages
-* [x] Standard Library design
-* [ ] Web-based Playground
-* [ ] VS Code Extension
+* ❌ User-defined Functions
+* ❌ Arrays / Lists
+* ❌ File I/O
+* ❌ Imports
 
----
-
-## 🤝 Contributing
-
-We love contributors! Whether you're fixing a typo in the docs or building a new feature, you are welcome here.
-
-Please read our **[CONTRIBUTING.md](CONTRIBUTING.md)** guide to get started.
+These features are planned for **v0.2**.
 
 ---
 
-**Happy Coding! 🎃**
+## 🛠️ For Contributors
+
+We love contributors! This project is a great place to learn about language design, Rust, and WASM.
+
+### Architecture
+
+* **Core:** Written in **Rust** (`/pumpkin_core`). compiled to WASM.
+* **CLI:** Written in **TypeScript** (`/src/cli`). Wraps the WASM core.
+* **Website:** Next.js + React (`/website`). Hosted on Vercel.
+
+### Development Setup
+
+1. **Prerequisites:** Node.js (v18+), Rust (latest stable), `wasm-pack`.
+2. **Build Core:**
+
+    ```bash
+    cd pumpkin_core
+    wasm-pack build --target nodejs --out-dir ../dist/pkg
+    ```
+
+3. **Run Tests:**
+
+    ```bash
+    ./tests/run_smoke_test.sh
+    ```
+
+---
+
+## 📜 License
+
+Pumpkin is open-source software licensed under the [MIT license](LICENSE).
+
+---
+
+Made with 🧡 for the next generation of coders.

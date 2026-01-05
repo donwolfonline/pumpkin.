@@ -1,15 +1,33 @@
 {
-  "name": "pumpkin.",
-  "version": "1.0.0",
-  "main": "index.js",
+  "name": "pumpkin-lang",
+  "version": "0.1.0",
+  "main": "dist/src/index.js",
   "type": "module",
+  "bin": {
+    "pumpkin": "./dist/src/cli.js"
+  },
+  "files": [
+    "dist/",
+    "README.md",
+    "LICENSE"
+  ],
   "scripts": {
+    "prebuild": "cd pumpkin_core && wasm-pack build --target nodejs --out-dir ../dist/pkg",
+    "build": "tsc && cp -r grammar dist/",
+    "prepublishOnly": "npm run build",
+    "start": "npm run build && node dist/src/cli.js repl",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
-  "description": "",
+  "keywords": [
+    "pumpkin",
+    "language",
+    "interpreter",
+    "education",
+    "wasm"
+  ],
+  "author": "Pumpkin Team",
+  "license": "MIT",
+  "description": "A friendly, interpreted language designed for education.",
   "dependencies": {
     "@types/node": "^25.0.3",
     "@types/readline-sync": "^1.4.8",

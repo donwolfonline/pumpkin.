@@ -1,0 +1,22 @@
+# 02_flow_control.pumpkin
+# Tests loops and conditionals.
+
+let count = 0
+show "Starting Loop..."
+
+repeat 3 times {
+    count = count + 1
+    show count
+}
+
+if count == 3 {
+    show "Loop finished correctly."
+} else {
+    show "Loop failed."
+}
+
+let i = 0
+while i < 2 {
+    show "While loop running..."
+    i = i + 1
+}
