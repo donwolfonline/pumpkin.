@@ -32,10 +32,12 @@ export async function POST(request: NextRequest) {
         }
 
         // Convert file to buffer
+        console.log('Converting file to buffer...');
         const bytes = await file.arrayBuffer();
         const buffer = Buffer.from(bytes);
 
         // Upload to Cloudinary
+        console.log('Finalizing Cloudinary upload_stream...');
         const result = await new Promise<any>((resolve, reject) => {
             const uploadStream = cloudinary.uploader.upload_stream(
                 {
@@ -47,8 +49,13 @@ export async function POST(request: NextRequest) {
                     ],
                 },
                 (error, result) => {
-                    if (error) reject(error);
-                    else resolve(result);
+                    if (error) {
+                        console.error('Cloudinary stream error:', error);
+                        reject(error);
+                    } else {
+                        console.log('Cloudinary upload successful');
+                        resolve(result);
+                    }
                 }
             );
 
@@ -61,7 +68,7 @@ export async function POST(request: NextRequest) {
         });
 
     } catch (error) {
-        console.error('Upload error:', error);
+        console.error('SERVER-SIDE UPLOAD ERROR:', error);
         return NextResponse.json(
             {
                 error: 'Failed to upload image',
@@ -76,9 +83,3 @@ export async function POST(request: NextRequest) {
         );
     }
 }
-
-export const config = {
-    api: {
-        bodyParser: false,
-    },
-};
