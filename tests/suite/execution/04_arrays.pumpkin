@@ -1,0 +1,9 @@
+# EXPECT: success
+# OUTPUT: 2
+# OUTPUT: 100
+
+let arr = [10, 20]
+show arr.length
+
+arr[0] = 100
+show arr[0]

@@ -1,0 +1,11 @@
+[package]
+name = "my-app"
+version = "1.0.0"
+authors = ["Alice <alice@example.com>"]
+description = "A simple Pumpkin application demonstrating packages"
+
+[dependencies]
+# All dependencies must be declared explicitly
+# Only exact versions allowed (no ^ or ~)
+math-utils = "1.0.0"
+json-parser = "2.1.0"

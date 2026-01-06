@@ -21,18 +21,18 @@ Pumpkin {
 
   // return value
   ReturnStmt
-    = "return" Exp
+    = "return" Exp?
 
     // Note: We deliberately exclude bare expressions (like "1 + 1") as statements
     // to encourage clear imperative code, unless it's a function call.
 
-  // let variable = value
+  // let variable: type = value (type annotation optional)
   LetDecl
-    = "let" identifier "=" Exp
+    = "let" identifier (":" Type)? "=" Exp
 
   // variable = value
   Reassignment
-    = identifier "=" Exp
+    = Primary "=" Exp
 
   // show "Hello", show 1 + 2
   ShowStmt
@@ -55,9 +55,9 @@ Pumpkin {
   WhileStmt
     = "while" Exp Block
 
-  // function name(p1, p2) { ... }
+  // function name(p1: type, p2) { ... } or function name(): type { ... }
   FuncDecl
-    = "function" identifier "(" ParamList? ")" Block
+    = "function" identifier "(" ParamList? ")" (":" Type)? Block
 
   // For calling functions as a standalone statement: printLine()
   CallStmt
@@ -67,9 +67,16 @@ Pumpkin {
   Block
     = "{" Statement* "}"
 
-  // Argument definitions: name, name, name
+  // Argument definitions with optional types: name: type, name
   ParamList
-    = NonemptyListOf<identifier, ",">
+    = NonemptyListOf<Param, ",">
+  
+  Param
+    = identifier (":" Type)?
+  
+  // Type annotations
+  Type
+    = "number" | "string" | "boolean" | "array"
 
   // --- Expressions ---
   // Operator precedence from lowest to highest:
@@ -143,7 +150,7 @@ Pumpkin {
     = identifier "(" ArgList? ")"
 
   ArgList
-    = NonemptyListOf<Exp, ",">
+    = ListOf<Exp, ",">
 
   // Lists: [1, 2, 3]
   List
@@ -163,7 +170,7 @@ Pumpkin {
     = ~keyword letter (alnum | "_")*
 
   keyword
-    = "let" | "show" | "ask" | "into" | "if" | "else" | "repeat" | "times" | "while" | "function" | "true" | "false" | "and" | "or" | "not"
+    = ("let" | "show" | "ask" | "into" | "if" | "else" | "repeat" | "times" | "while" | "function" | "return" | "true" | "false" | "and" | "or" | "not" | "number" | "string" | "boolean" | "array") ~alnum
 
   // Numbers: 123, 12.34
   number

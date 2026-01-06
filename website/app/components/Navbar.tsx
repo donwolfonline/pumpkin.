@@ -10,10 +10,13 @@ export default function Navbar() {
     const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
     const links = [
-        { href: '#learn', label: 'Learn' },
-        { href: '#docs', label: 'Docs' },
+        { href: '/learn', label: 'Learn' },
+        { href: '/docs', label: 'Docs' },
+        { href: '/cases', label: 'Use Cases' },
         { href: '/playground', label: 'Playground' },
         { href: '/community', label: 'Community' },
+        { href: '/contributing', label: 'Contributing' },
+        { href: '/roadmap', label: 'Roadmap' },
     ];
 
     return (
@@ -32,29 +35,29 @@ export default function Navbar() {
                     </Link>
 
                     {/* Desktop Navigation */}
-                    <ul className="hidden md:flex gap-8">
+                    <ul className="hidden lg:flex gap-8">
                         {links.map((link) => (
                             <li key={link.href}>
-                                <a
+                                <Link
                                     href={link.href}
                                     className="font-bold text-gray-700 relative group transition-colors hover:text-pumpkin-orange"
                                 >
                                     {link.label}
                                     <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-pumpkin-orange transition-all duration-300 group-hover:w-full" />
-                                </a>
+                                </Link>
                             </li>
                         ))}
                     </ul>
 
                     {/* Desktop CTA */}
-                    <a href="#get-started" className="hidden md:block btn btn-primary text-sm shadow-[4px_4px_0px_rgba(0,0,0,1)] hover:shadow-none hover:translate-y-[2px] transition-all border-2 border-gray-900">
+                    <Link href="/docs" className="hidden lg:block btn btn-primary text-sm shadow-[4px_4px_0px_rgba(0,0,0,1)] hover:shadow-none hover:translate-y-[2px] transition-all border-2 border-gray-900">
                         Get Started
-                    </a>
+                    </Link>
 
                     {/* Mobile Menu Button */}
                     <button
                         onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-                        className="md:hidden p-2 rounded-lg hover:bg-black/5 text-gray-900 transition-colors"
+                        className="lg:hidden p-2 rounded-lg hover:bg-black/5 text-gray-900 transition-colors"
                         aria-label="Toggle menu"
                     >
                         {mobileMenuOpen ? <X size={24} /> : <Menu size={24} />}
@@ -90,9 +93,8 @@ export default function Navbar() {
                             className="absolute top-full left-0 right-0 mt-4 mx-2 p-4 bg-white border-2 border-gray-900 rounded-[2rem] shadow-[8px_8px_0px_rgba(0,0,0,0.2)] overflow-hidden flex flex-col gap-3"
                         >
                             {links.map((link, index) => (
-                                <motion.a
+                                <motion.div
                                     key={link.href}
-                                    href={link.href}
                                     initial={{ opacity: 0, x: -50 }}
                                     animate={{ opacity: 1, x: 0 }}
                                     exit={{ opacity: 0, x: -20 }}
@@ -102,30 +104,26 @@ export default function Navbar() {
                                         stiffness: 300,
                                         damping: 20
                                     }}
-                                    className="flex items-center justify-center w-full py-3 px-6 rounded-full bg-gray-50 border-2 border-transparent hover:border-pumpkin-orange hover:bg-pumpkin-orange/10 transition-all duration-300 group"
-                                    onClick={() => setMobileMenuOpen(false)}
+                                    className="w-full"
                                 >
-                                    <span className="font-bold text-gray-900 text-lg group-hover:scale-105 transition-transform duration-300">
-                                        {link.label}
-                                    </span>
-                                </motion.a>
+                                    <Link
+                                        href={link.href}
+                                        className="flex items-center justify-center w-full py-3 px-6 rounded-full bg-gray-50 border-2 border-transparent hover:border-pumpkin-orange hover:bg-pumpkin-orange/10 transition-all duration-300 group"
+                                        onClick={() => setMobileMenuOpen(false)}
+                                    >
+                                        <span className="font-bold text-gray-900 text-lg group-hover:scale-105 transition-transform duration-300">
+                                            {link.label}
+                                        </span>
+                                    </Link>
+                                </motion.div>
                             ))}
-                            <motion.a
-                                href="#get-started"
-                                initial={{ opacity: 0, scale: 0.8 }}
-                                animate={{ opacity: 1, scale: 1 }}
-                                exit={{ opacity: 0, scale: 0.8 }}
-                                transition={{
-                                    delay: links.length * 0.05,
-                                    type: "spring",
-                                    stiffness: 300,
-                                    damping: 15
-                                }}
+                            <Link
+                                href="/docs"
                                 className="flex items-center justify-center w-full py-4 px-6 mt-2 rounded-full bg-pumpkin-orange text-white font-black border-2 border-gray-900 shadow-[4px_4px_0px_rgba(0,0,0,1)] hover:shadow-none hover:translate-y-[2px] transition-all duration-300"
                                 onClick={() => setMobileMenuOpen(false)}
                             >
                                 Get Started 🚀
-                            </motion.a>
+                            </Link>
                         </motion.div>
                     </>
                 )}

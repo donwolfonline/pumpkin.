@@ -1,0 +1,9 @@
+# EXPECT: success
+# OUTPUT: 15
+# OUTPUT: 2.5
+
+let sum = 5 + 10
+show sum
+
+let div = 5 / 2
+show div

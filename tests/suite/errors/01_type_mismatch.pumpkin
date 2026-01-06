@@ -1,0 +1,3 @@
+# EXPECT: error Type Error
+
+let x = 10 + true

@@ -118,28 +118,28 @@ export default function CommentSection({ postId, currentUserId, onCommentAdded }
     }
 
     return (
-        <div className="space-y-4">
+        <div className="space-y-6">
             {/* Comment List */}
             {comments.length > 0 && (
-                <div className="space-y-3">
+                <div className="space-y-4 max-h-[400px] overflow-y-auto pr-2 custom-scrollbar">
                     {comments.map((comment) => (
-                        <div key={comment.id} className="bg-gray-50 rounded-xl p-4 border-2 border-gray-200">
-                            <div className="flex items-start gap-3">
-                                <div className="w-8 h-8 bg-teal-accent rounded-full flex items-center justify-center font-bold text-white text-sm border-2 border-gray-900 flex-shrink-0">
+                        <div key={comment.id} className="bg-white/40 backdrop-blur-md rounded-[24px] p-5 border border-white/40 shadow-sm group/comment transition-all hover:bg-white/60">
+                            <div className="flex items-start gap-4">
+                                <div className="w-10 h-10 bg-gradient-to-br from-teal-mid to-teal-accent rounded-xl flex items-center justify-center font-crazy font-extrabold text-white text-sm border border-white/20 flex-shrink-0 shadow-md group-hover/comment:rotate-3 transition-transform">
                                     {comment.username[0].toUpperCase()}
                                 </div>
                                 <div className="flex-1 min-w-0">
-                                    <div className="flex items-center gap-2 mb-1">
-                                        <p className="font-bold text-gray-900 text-sm">{comment.username}</p>
-                                        <p className="text-xs text-gray-500">{formatDate(comment.created_at)}</p>
+                                    <div className="flex items-center justify-between mb-2">
+                                        <p className="font-heading font-black text-gray-900 text-sm tracking-tight">@{comment.username}</p>
+                                        <p className="text-[10px] text-gray-400 font-bold uppercase tracking-widest">{formatDate(comment.created_at)}</p>
                                     </div>
-                                    <p className="text-gray-800 text-sm mb-2 leading-relaxed">{comment.content}</p>
+                                    <p className="text-gray-800 text-sm mb-4 leading-relaxed font-bold opacity-80">{comment.content}</p>
                                     <button
                                         onClick={() => handleLike(comment.id)}
                                         disabled={!currentUserId}
-                                        className="flex items-center gap-1 text-gray-600 hover:text-red-500 transition-colors text-sm"
+                                        className="inline-flex items-center gap-2 text-gray-500 hover:text-red-500 transition-colors text-xs font-black bg-white/40 px-3 py-1.5 rounded-full border border-white/40 hover:bg-white/80"
                                     >
-                                        <Heart size={14} />
+                                        <Heart size={12} className="group-hover/comment:scale-110 transition-transform" />
                                         <span>{comment.likes_count}</span>
                                     </button>
                                 </div>
@@ -151,28 +151,30 @@ export default function CommentSection({ postId, currentUserId, onCommentAdded }
 
             {/* Add Comment Form */}
             {currentUserId ? (
-                <form onSubmit={handleSubmit} className="flex gap-3">
+                <form onSubmit={handleSubmit} className="flex gap-3 relative">
                     <input
                         type="text"
                         value={newComment}
                         onChange={(e) => setNewComment(e.target.value)}
-                        placeholder="Add a comment..."
-                        className="flex-1 px-4 py-2 border-2 border-gray-900 rounded-xl font-medium focus:outline-none focus:ring-2 focus:ring-pumpkin-orange"
+                        placeholder="Say something human..."
+                        className="flex-1 px-6 py-4 bg-white/60 backdrop-blur-md border border-white/40 rounded-full font-bold text-gray-800 placeholder-gray-400 focus:outline-none focus:ring-4 focus:ring-pumpkin-orange/20 transition-all text-sm shadow-inner"
                         maxLength={200}
                         disabled={submitting}
                     />
                     <button
                         type="submit"
                         disabled={!newComment.trim() || submitting}
-                        className="px-4 py-2 bg-pumpkin-orange text-white font-bold rounded-xl border-2 border-gray-900 hover:bg-orange-600 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+                        className="w-14 h-14 bg-pumpkin-orange text-white rounded-full flex items-center justify-center shadow-lg hover:shadow-pumpkin-orange/40 hover:-translate-y-1 transition-all disabled:opacity-50 disabled:cursor-not-allowed group"
                     >
-                        <Send size={20} />
+                        <Send size={20} className="group-hover:translate-x-1 group-hover:-translate-y-1 transition-transform" />
                     </button>
                 </form>
             ) : (
-                <p className="text-center text-gray-500 text-sm py-4">
-                    Create a post to comment
-                </p>
+                <div className="text-center bg-gray-900/5 rounded-3xl py-6 border border-gray-900/5">
+                    <p className="text-gray-400 font-black text-xs uppercase tracking-widest">
+                        Join the patch to comment
+                    </p>
+                </div>
             )}
         </div>
     );

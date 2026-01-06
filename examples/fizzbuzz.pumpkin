@@ -1,0 +1,28 @@
+# FizzBuzz
+# Print numbers 1-20, but:
+# - "Fizz" for multiples of 3
+# - "Buzz" for multiples of 5
+# - "FizzBuzz" for multiples of both
+
+let i = 1
+
+while i <= 20 {
+    let is_fizz = i % 3 == 0
+    let is_buzz = i % 5 == 0
+    
+    if is_fizz and is_buzz {
+        show "FizzBuzz"
+    } else {
+        if is_fizz {
+            show "Fizz"
+        } else {
+            if is_buzz {
+                show "Buzz"
+            } else {
+                show i
+            }
+        }
+    }
+    
+    i = i + 1
+}

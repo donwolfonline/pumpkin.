@@ -1,0 +1,4 @@
+# EXPECT: error expected '}'
+
+if true {
+    show "Unclosed"

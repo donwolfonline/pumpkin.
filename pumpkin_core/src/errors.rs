@@ -26,6 +26,10 @@ pub enum PumpkinError {
     DivisionByZeroError {
          location: Option<SourceLocation>,
     },
+    ResourceExhausted {
+        message: String,
+        location: Option<SourceLocation>,
+    },
 }
 
 impl PumpkinError {
@@ -61,6 +65,9 @@ impl PumpkinError {
             },
             PumpkinError::DivisionByZeroError { location } => {
                 format!("🚨 Math Error: Division by zero is not allowed.\n{}", self.format_loc(location, &None))
+            }
+            PumpkinError::ResourceExhausted { message, location } => {
+                format!("🛑 Resource Limits: {}\n{}", message, self.format_loc(location, &None))
             }
         }
     }

@@ -35,7 +35,9 @@ export type Expression =
     | Literal
     | Identifier
     | ArrayLiteral
-    | ObjectLiteral;
+    | ObjectLiteral
+    | IndexExpr
+    | MemberExpr;
 
 // --------------------
 // Program
@@ -58,7 +60,7 @@ export interface LetStmt extends BaseNode {
 
 export interface AssignStmt extends BaseNode {
     kind: 'AssignStmt';
-    name: Identifier;
+    target: Expression;
     value: Expression;
 }
 

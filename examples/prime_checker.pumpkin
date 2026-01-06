@@ -1,0 +1,30 @@
+# Prime Number Checker
+# Check if a number is prime (only divisible by 1 and itself)
+
+let number = 17
+let is_prime = true
+
+# Numbers less than 2 are not prime
+if number < 2 {
+    is_prime = false
+}
+
+# Check divisibility from 2 up to number-1
+let divisor = 2
+while divisor < number {
+    let remainder = number % divisor
+    
+    if remainder == 0 {
+        # Found a divisor, not prime
+        is_prime = false
+    }
+    
+    divisor = divisor + 1
+}
+
+# Show result
+if is_prime {
+    show "Prime!"
+} else {
+    show "Not prime"
+}

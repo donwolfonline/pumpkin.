@@ -30,41 +30,44 @@ export default function CompactPostCard({ post, onClick }: CompactPostCardProps)
     return (
         <motion.div
             onClick={onClick}
-            whileHover={{ y: -5, scale: 1.05 }}
-            className="aspect-square rounded-2xl border-2 md:border-4 border-gray-900 shadow-[4px_4px_0px_rgba(0,0,0,1)] hover:shadow-[6px_6px_0px_rgba(0,0,0,1)] overflow-hidden relative group cursor-pointer bg-white"
+            whileHover={{ y: -8, scale: 1.05 }}
+            className="aspect-square rounded-[30px] border border-white/20 bg-white/5 backdrop-blur-xl shadow-card hover:shadow-hero overflow-hidden relative group cursor-pointer"
         >
             {post.image_url ? (
-                <Image
-                    src={post.image_url}
-                    alt="Post"
-                    fill
-                    className="object-cover group-hover:scale-110 transition-transform duration-300"
-                />
+                <div className="w-full h-full relative">
+                    <Image
+                        src={post.image_url}
+                        alt="Post"
+                        fill
+                        className="object-cover group-hover:scale-110 transition-transform duration-500"
+                    />
+                    <div className="absolute inset-0 bg-gradient-to-t from-burgundy-dark/80 via-transparent to-transparent opacity-60 group-hover:opacity-80 transition-opacity" />
+                </div>
             ) : (
-                <div className={`w-full h-full ${bgColor} p-3 flex flex-col justify-center items-center text-center overflow-hidden`}>
-                    <p className="text-[10px] md:text-xs font-bold text-white leading-tight line-clamp-4">
+                <div className={`w-full h-full ${bgColor}/20 backdrop-blur-md p-4 flex flex-col justify-center items-center text-center overflow-hidden border-2 border-white/10`}>
+                    <p className="text-[10px] md:text-sm font-bold text-gray-800 leading-tight line-clamp-4 px-2">
                         {post.content}
                     </p>
                 </div>
             )}
 
             {/* Overlay Info */}
-            <div className="absolute inset-x-0 bottom-0 p-2 bg-gradient-to-t from-black/80 to-transparent opacity-0 group-hover:opacity-100 transition-opacity">
-                <p className="text-[10px] text-white font-bold truncate">@{post.username}</p>
-                <div className="flex items-center gap-2 mt-1">
-                    <div className="flex items-center gap-1 text-[8px] text-white font-bold">
+            <div className="absolute inset-x-0 bottom-0 p-3 bg-white/10 backdrop-blur-lg border-t border-white/10 translate-y-full group-hover:translate-y-0 transition-transform duration-300">
+                <p className="text-[10px] text-gray-900 font-heading font-black truncate">@{post.username}</p>
+                <div className="flex items-center gap-3 mt-1.5">
+                    <div className="flex items-center gap-1 text-[8px] text-gray-800 font-bold bg-white/40 px-2 py-0.5 rounded-full border border-white/40">
                         <Heart size={8} className="fill-red-500 text-red-500" />
                         {post.likes_count}
                     </div>
-                    <div className="flex items-center gap-1 text-[8px] text-white font-bold">
-                        <MessageCircle size={8} className="text-teal-400" />
+                    <div className="flex items-center gap-1 text-[8px] text-gray-800 font-bold bg-white/40 px-2 py-0.5 rounded-full border border-white/40">
+                        <MessageCircle size={8} className="text-teal-600" />
                         {post.comments_count}
                     </div>
                 </div>
             </div>
 
-            {/* Mini Category Tag (Fixed) */}
-            <div className="absolute top-1 right-1 px-1.5 py-0.5 bg-white border border-gray-900 rounded-md text-[8px] font-bold text-gray-900 shadow-[1px_1px_0px_rgba(0,0,0,1)]">
+            {/* Mini Category Tag (Premium) */}
+            <div className="absolute top-2 right-2 px-2.5 py-1 bg-white/80 backdrop-blur-md border border-white/20 rounded-full text-[7px] font-heading font-black text-pumpkin-orange shadow-sm uppercase tracking-widest group-hover:bg-pumpkin-orange group-hover:text-white transition-all">
                 {post.category || 'General'}
             </div>
         </motion.div>

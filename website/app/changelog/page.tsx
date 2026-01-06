@@ -1,12 +1,24 @@
 'use client';
 
 import { motion } from 'framer-motion';
-import Image from 'next/image';
 import Link from 'next/link';
 import Navbar from '../components/Navbar';
 import Footer from '../components/Footer';
 
 const logs = [
+    {
+        date: 'Jan 6, 2026',
+        version: 'v1.3.0',
+        title: 'The Pumpkin Language Features',
+        changes: [
+            'Global installation via `npm install -g pumpkin-lang` now supported.',
+            'Interactive REPL available via `pumpkin repl` command.',
+            'New tour script `pumpkin run examples/tour.pumpkin` added.',
+            'Added standard library examples: Guessing Game, Hello World, Daily Routine.',
+            'Core language features: `show` for output, `let` for variables, human-readable math.',
+        ],
+        icon: '🎃'
+    },
     {
         date: 'Jan 5, 2026',
         version: 'v1.2.0',
@@ -60,7 +72,7 @@ const logs = [
 
 export default function ChangeLogPage() {
     return (
-        <div className="min-h-screen bg-[#FFFBF5] pt-32 pb-20 px-4 relative overflow-hidden">
+        <div className="min-h-screen bg-[#FFFBF5] pt-32 pb-24 px-4 relative overflow-hidden">
             <Navbar />
 
             <div className="max-w-4xl mx-auto relative z-10">
@@ -68,20 +80,24 @@ export default function ChangeLogPage() {
                 <motion.div
                     initial={{ opacity: 0, y: -20 }}
                     animate={{ opacity: 1, y: 0 }}
-                    className="text-center mb-16"
+                    className="text-center mb-24"
                 >
-                    <h1 className="text-6xl md:text-7xl font-crazy font-extrabold text-gray-900 mb-6 drop-shadow-[4px_4px_0px_#fff]">
-                        📜 Change Log
+                    <div className="inline-flex items-center gap-3 bg-pumpkin-orange/10 px-6 py-2 rounded-full mb-6 border-2 border-pumpkin-orange/20 shadow-sm">
+                        <span className="text-xl">📜</span>
+                        <span className="font-heading font-black text-pumpkin-orange tracking-tight uppercase text-sm">Development Arc</span>
+                    </div>
+                    <h1 className="text-5xl md:text-8xl font-crazy font-extrabold text-gray-900 mb-8 drop-shadow-[2px_2px_0px_#FF8C1A]">
+                        Change Log
                     </h1>
-                    <p className="text-2xl text-gray-700 font-bold max-w-2xl mx-auto leading-relaxed">
-                        Tracking every seed we plant in the Pumpkin patch.
+                    <p className="text-xl md:text-3xl text-gray-800 font-bold max-w-2xl mx-auto leading-relaxed">
+                        Tracking every <span className="text-teal-accent underline decoration-wavy">seed we plant</span> in the Pumpkin patch.
                     </p>
                 </motion.div>
 
                 {/* Timeline */}
-                <div className="space-y-12 relative">
+                <div className="space-y-16 relative">
                     {/* Vertical Line */}
-                    <div className="absolute left-6 md:left-1/2 top-0 bottom-0 w-1 bg-gray-900/10 -translate-x-1/2 hidden md:block" />
+                    <div className="absolute left-6 md:left-1/2 top-0 bottom-0 w-1 bg-gradient-to-b from-pumpkin-orange/40 via-teal-accent/40 to-burgundy-dark/10 -translate-x-1/2 hidden md:block" />
 
                     {logs.map((log, index) => (
                         <motion.div
@@ -95,30 +111,36 @@ export default function ChangeLogPage() {
                         >
                             {/* Content Card */}
                             <div className="w-full md:w-[45%]">
-                                <div className="bg-white p-6 md:p-8 rounded-3xl border-4 border-gray-900 shadow-[8px_8px_0px_rgba(0,0,0,1)] hover:shadow-[12px_12px_0px_rgba(0,0,0,1)] transition-all group">
-                                    <div className="flex items-center justify-between mb-4">
-                                        <span className="px-3 py-1 bg-pumpkin-orange text-white font-bold rounded-lg text-sm border-2 border-gray-900 shadow-[2px_2px_0px_rgba(0,0,0,1)] group-hover:scale-110 transition-transform">
-                                            {log.version}
-                                        </span>
-                                        <span className="text-gray-500 font-bold text-sm">{log.date}</span>
+                                <div className="content-card group hover:-translate-y-2 transition-all duration-500 overflow-hidden relative border-white/20">
+                                    <div className="flex items-center justify-between mb-6">
+                                        <div className="flex flex-col">
+                                            <span className="text-4xl font-crazy font-extrabold text-gray-900 leading-none">{log.version}</span>
+                                            <span className="text-pumpkin-orange font-heading font-black text-xs uppercase tracking-widest mt-1">Release</span>
+                                        </div>
+                                        <span className="text-gray-500 font-bold text-sm bg-gray-100/50 px-4 py-1 rounded-full border border-gray-200">{log.date}</span>
                                     </div>
-                                    <h3 className="text-2xl font-crazy font-bold text-gray-900 mb-4 flex items-center gap-2">
-                                        <span>{log.icon}</span> {log.title}
+                                    <h3 className="text-2xl font-crazy font-extrabold text-gray-900 mb-6 flex items-center gap-3">
+                                        <span className="text-3xl group-hover:rotate-12 transition-transform">{log.icon}</span>
+                                        {log.title}
                                     </h3>
-                                    <ul className="space-y-3">
+                                    <ul className="space-y-4">
                                         {log.changes.map((change, i) => (
-                                            <li key={i} className="flex gap-3 text-gray-700 font-medium leading-relaxed">
-                                                <span className="text-pumpkin-orange">●</span>
-                                                {change}
+                                            <li key={i} className="flex gap-4 text-gray-700 font-bold leading-relaxed items-start">
+                                                <div className="w-2 h-2 bg-teal-accent rounded-full mt-2.5 shadow-[0_0_8px_#3B8B8B]"></div>
+                                                <span className="flex-1 opacity-90 group-hover:opacity-100 transition-opacity">{change}</span>
                                             </li>
                                         ))}
                                     </ul>
+
+                                    {/* Abstract glow */}
+                                    <div className={`absolute -bottom-10 -right-10 w-32 h-32 rounded-full blur-2xl opacity-10 transition-colors ${index % 2 === 0 ? 'bg-pumpkin-orange' : 'bg-teal-accent'
+                                        }`} />
                                 </div>
                             </div>
 
                             {/* Center Icon */}
-                            <div className="hidden md:flex absolute left-1/2 -translate-x-1/2 w-12 h-12 bg-white border-4 border-gray-900 rounded-full items-center justify-center z-20 shadow-[4px_4px_0px_rgba(0,0,0,1)]">
-                                <span className="text-xl">{log.icon}</span>
+                            <div className="hidden md:flex absolute left-1/2 -translate-x-1/2 w-16 h-16 bg-white/40 backdrop-blur-xl border-4 border-white/50 rounded-[24px] items-center justify-center z-20 shadow-xl group hover:scale-110 transition-transform">
+                                <span className="text-3xl group-hover:animate-float">{log.icon}</span>
                             </div>
 
                             <div className="flex-1 hidden md:block" />
@@ -130,16 +152,27 @@ export default function ChangeLogPage() {
                 <motion.div
                     initial={{ opacity: 0 }}
                     whileInView={{ opacity: 1 }}
-                    className="text-center mt-24"
+                    className="text-center mt-32"
                 >
-                    <Link
-                        href="/playground"
-                        className="inline-flex items-center gap-3 bg-teal-accent text-white font-black py-4 px-10 rounded-full border-4 border-gray-900 shadow-[8px_8px_0px_rgba(0,0,0,1)] hover:shadow-none hover:translate-x-[4px] hover:translate-y-[4px] transition-all text-xl"
-                    >
-                        Go Build Something 🚀
-                    </Link>
+                    <div className="pill-section py-16 px-8 bg-white/10 backdrop-blur-2xl inline-block border-white/20 shadow-hero max-w-2xl">
+                        <h2 className="text-3xl md:text-5xl font-crazy font-extrabold text-gray-900 mb-8">Ready to plant your own ideas?</h2>
+                        <p className="text-xl font-bold text-gray-700 mb-10 max-w-md mx-6">
+                            Grab the current build and start building something human-first today.
+                        </p>
+                        <Link
+                            href="/playground"
+                            className="btn btn-primary px-12 py-5 text-2xl"
+                        >
+                            Go Build Something 🚀
+                        </Link>
+                    </div>
                 </motion.div>
             </div>
+
+            {/* Background Blobs */}
+            <div className="absolute top-0 right-0 w-96 h-96 bg-pumpkin-orange/15 rounded-full blur-[100px] -z-0" />
+            <div className="absolute top-1/2 left-0 w-[500px] h-[500px] bg-teal-accent/10 rounded-full blur-[120px] -z-0" />
+            <div className="absolute bottom-0 right-1/4 w-96 h-96 bg-burgundy-dark/10 rounded-full blur-[100px] -z-0" />
 
             <Footer />
         </div>

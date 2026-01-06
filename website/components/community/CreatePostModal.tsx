@@ -163,93 +163,102 @@ export default function CreatePostModal({
 
     return (
         <AnimatePresence>
-            <div className="fixed inset-0 bg-black/50 backdrop-blur-sm flex items-center justify-center p-4 z-50">
+            <div className="fixed inset-0 bg-burgundy-dark/60 backdrop-blur-md flex items-center justify-center p-4 z-50">
                 <motion.div
-                    initial={{ opacity: 0, scale: 0.9 }}
-                    animate={{ opacity: 1, scale: 1 }}
-                    exit={{ opacity: 0, scale: 0.9 }}
-                    className="bg-white rounded-3xl p-8 max-w-2xl w-full max-h-[90vh] overflow-y-auto border-4 border-gray-900 shadow-[8px_8px_0px_rgba(0,0,0,1)]"
+                    initial={{ opacity: 0, scale: 0.9, y: 20 }}
+                    animate={{ opacity: 1, scale: 1, y: 0 }}
+                    exit={{ opacity: 0, scale: 0.9, y: 20 }}
+                    className="bg-white/20 backdrop-blur-3xl rounded-[40px] p-8 md:p-12 max-w-2xl w-full max-h-[90vh] overflow-y-auto border border-white/20 shadow-2xl relative"
                 >
-                    <div className="flex justify-between items-center mb-6">
-                        <h2 className="text-3xl font-crazy font-bold text-gray-900">
+                    {/* Background Blobs */}
+                    <div className="absolute top-0 right-0 w-64 h-64 bg-pumpkin-orange/10 rounded-full blur-[80px] -z-10" />
+                    <div className="absolute bottom-0 left-0 w-64 h-64 bg-teal-accent/10 rounded-full blur-[80px] -z-10" />
+
+                    <div className="flex justify-between items-center mb-10 relative z-10">
+                        <h2 className="text-4xl md:text-5xl font-crazy font-extrabold text-gray-900 drop-shadow-sm">
                             {step === 'username' ? '👋 Welcome!' : '✨ Create Post'}
                         </h2>
                         <button
                             onClick={onClose}
-                            className="p-2 hover:bg-gray-100 rounded-full transition-colors"
+                            className="p-3 hover:bg-white/40 rounded-full transition-all border border-white/20 shadow-sm"
                         >
-                            <X size={24} />
+                            <X size={24} className="text-gray-900" />
                         </button>
                     </div>
 
                     {error && (
-                        <div className="mb-6 p-4 bg-red-100 border-2 border-red-600 rounded-xl text-red-700 font-semibold">
+                        <motion.div
+                            initial={{ opacity: 0, x: -20 }}
+                            animate={{ opacity: 1, x: 0 }}
+                            className="mb-8 p-5 bg-red-500/10 border-2 border-red-500/20 rounded-3xl text-red-700 font-bold text-sm"
+                        >
                             {error}
-                        </div>
+                        </motion.div>
                     )}
 
                     {step === 'username' && (
-                        <form onSubmit={handleUsernameSubmit} className="space-y-6">
+                        <form onSubmit={handleUsernameSubmit} className="space-y-8 relative z-10">
                             <div>
-                                <label className="block text-gray-700 font-semibold mb-3">
-                                    Choose a username (this will be your identity)
+                                <label className="block text-gray-900 font-heading font-black text-sm uppercase tracking-widest mb-4">
+                                    Identity Profile
                                 </label>
                                 <input
                                     type="text"
                                     value={newUsername}
                                     onChange={(e) => setNewUsername(e.target.value)}
-                                    placeholder="coolpumpkin123"
-                                    className="w-full px-4 py-3 border-2 border-gray-900 rounded-xl font-medium focus:outline-none focus:ring-2 focus:ring-pumpkin-orange"
+                                    placeholder="Enter username..."
+                                    className="w-full px-8 py-5 bg-white/40 backdrop-blur-md border border-white/40 rounded-full font-bold text-gray-900 placeholder-gray-400 focus:outline-none focus:ring-4 focus:ring-pumpkin-orange/20 transition-all shadow-inner"
                                     maxLength={20}
                                     required
                                 />
-                                <p className="text-sm text-gray-500 mt-2">
-                                    3-20 characters, letters, numbers, and underscores only
+                                <p className="text-xs text-gray-400 font-bold mt-3 ml-4">
+                                    3-20 characters: letters, numbers, and underscores only.
                                 </p>
                             </div>
 
                             <button
                                 type="submit"
-                                className="w-full bg-pumpkin-orange text-white font-bold py-3 px-6 rounded-xl border-2 border-gray-900 shadow-[4px_4px_0px_rgba(0,0,0,1)] hover:shadow-none hover:translate-y-[4px] transition-all"
+                                className="btn btn-primary w-full py-5 text-xl relative group overflow-hidden"
                             >
-                                Continue
+                                <span className="relative z-10">Plant Your Roots</span>
+                                <div className="absolute inset-0 bg-white/20 opacity-0 group-hover:opacity-100 transition-opacity" />
                             </button>
                         </form>
                     )}
 
                     {step === 'post' && (
-                        <form onSubmit={handleSubmit} className="space-y-6">
+                        <form onSubmit={handleSubmit} className="space-y-8 relative z-10">
                             <div>
-                                <label className="block text-gray-700 font-semibold mb-3">
-                                    What&apos;s on your mind?
+                                <label className="block text-gray-900 font-heading font-black text-sm uppercase tracking-widest mb-4">
+                                    Your Thoughts
                                 </label>
                                 <textarea
                                     value={content}
                                     onChange={(e) => setContent(e.target.value)}
-                                    placeholder="Share your thoughts, ideas, or a cool Pumpkin project..."
-                                    className="w-full px-4 py-3 border-2 border-gray-900 rounded-xl font-medium resize-none focus:outline-none focus:ring-2 focus:ring-pumpkin-orange"
-                                    rows={6}
+                                    placeholder="Share your seeds with the world..."
+                                    className="w-full px-8 py-6 bg-white/40 backdrop-blur-md border border-white/40 rounded-[30px] font-bold text-gray-900 placeholder-gray-400 resize-none focus:outline-none focus:ring-4 focus:ring-pumpkin-orange/20 transition-all shadow-inner"
+                                    rows={5}
                                     maxLength={500}
                                     required
                                 />
-                                <p className="text-sm text-gray-500 mt-2 text-right">
-                                    {content.length}/500 characters
+                                <p className="text-[10px] text-gray-400 font-black mt-2 text-right uppercase tracking-widest">
+                                    {content.length} / 500
                                 </p>
                             </div>
 
                             <div>
-                                <label className="block text-gray-700 font-semibold mb-3">
-                                    Category
+                                <label className="block text-gray-900 font-heading font-black text-sm uppercase tracking-widest mb-4">
+                                    Select Category
                                 </label>
-                                <div className="flex flex-wrap gap-2">
+                                <div className="flex flex-wrap gap-3">
                                     {categories.map((cat) => (
                                         <button
                                             key={cat}
                                             type="button"
                                             onClick={() => setCategory(cat)}
-                                            className={`px-4 py-2 rounded-xl text-sm font-bold border-2 border-gray-900 transition-all ${category === cat
-                                                ? 'bg-pumpkin-orange text-white shadow-[2px_2px_0px_rgba(0,0,0,1)] -translate-x-0.5 -translate-y-0.5'
-                                                : 'bg-white text-gray-600 hover:bg-orange-50'
+                                            className={`px-5 py-2.5 rounded-full text-xs font-black transition-all border-2 ${category === cat
+                                                ? 'bg-pumpkin-orange text-white border-pumpkin-orange shadow-lg shadow-pumpkin-orange/20'
+                                                : 'bg-white/40 text-gray-600 border-white/40 hover:bg-white/60'
                                                 }`}
                                         >
                                             {cat}
@@ -259,8 +268,8 @@ export default function CreatePostModal({
                             </div>
 
                             <div>
-                                <label className="block text-gray-700 font-semibold mb-3">
-                                    Add an image (optional)
+                                <label className="block text-gray-900 font-heading font-black text-sm uppercase tracking-widest mb-4">
+                                    Visual Media
                                 </label>
                                 <input
                                     type="file"
@@ -269,28 +278,30 @@ export default function CreatePostModal({
                                     className="hidden"
                                     id="image-upload"
                                 />
-                                <label
-                                    htmlFor="image-upload"
-                                    className="flex items-center justify-center gap-3 p-6 border-2 border-dashed border-gray-300 rounded-xl cursor-pointer hover:border-pumpkin-orange hover:bg-orange-50 transition-colors"
-                                >
-                                    <Upload size={24} className="text-gray-400" />
-                                    <span className="text-gray-600 font-medium">
-                                        {imageFile ? imageFile.name : 'Click to upload image'}
-                                    </span>
-                                </label>
-
-                                {imagePreview && (
+                                {!imagePreview ? (
+                                    <label
+                                        htmlFor="image-upload"
+                                        className="flex flex-col items-center justify-center gap-4 p-10 border-2 border-dashed border-white/40 rounded-[30px] cursor-pointer hover:border-pumpkin-orange/40 hover:bg-white/40 transition-all group"
+                                    >
+                                        <div className="w-16 h-16 bg-white rounded-2xl flex items-center justify-center shadow-lg group-hover:rotate-6 transition-transform">
+                                            <Upload size={32} className="text-pumpkin-orange" />
+                                        </div>
+                                        <span className="text-gray-500 font-bold uppercase tracking-widest text-[10px]">
+                                            Click to Upload
+                                        </span>
+                                    </label>
+                                ) : (
                                     <motion.div
                                         initial={{ opacity: 0, scale: 0.9 }}
                                         animate={{ opacity: 1, scale: 1 }}
-                                        className="mt-4 relative"
+                                        className="relative group/preview"
                                     >
                                         <Image
                                             src={imagePreview}
                                             alt="Preview"
                                             width={600}
                                             height={400}
-                                            className="w-full rounded-xl border-4 border-gray-900 object-cover max-h-64 shadow-[4px_4px_0px_rgba(0,0,0,1)]"
+                                            className="w-full rounded-[30px] border-2 border-white/20 object-cover max-h-64 shadow-hero"
                                         />
                                         <motion.button
                                             type="button"
@@ -301,9 +312,9 @@ export default function CreatePostModal({
                                             }}
                                             whileHover={{ scale: 1.1 }}
                                             whileTap={{ scale: 0.9 }}
-                                            className="absolute top-2 right-2 p-2 bg-white rounded-full border-2 border-gray-900 hover:bg-red-100 hover:border-red-500 transition-colors"
+                                            className="absolute top-4 right-4 p-3 bg-red-500 text-white rounded-full shadow-xl hover:bg-red-600 transition-colors"
                                         >
-                                            <X size={16} />
+                                            <X size={20} />
                                         </motion.button>
                                     </motion.div>
                                 )}
@@ -312,9 +323,10 @@ export default function CreatePostModal({
                             <button
                                 type="submit"
                                 disabled={uploading}
-                                className="w-full bg-pumpkin-orange text-white font-bold py-3 px-6 rounded-xl border-2 border-gray-900 shadow-[4px_4px_0px_rgba(0,0,0,1)] hover:shadow-none hover:translate-y-[4px] transition-all disabled:opacity-50 disabled:cursor-not-allowed"
+                                className={`btn btn-primary w-full py-5 text-xl flex items-center justify-center gap-3 relative group overflow-hidden ${uploading ? 'opacity-50' : ''}`}
                             >
-                                {uploading ? 'Posting...' : 'Post'}
+                                <span className="relative z-10">{uploading ? 'Processing...' : 'Share with Community'}</span>
+                                {!uploading && <div className="absolute inset-0 bg-white/20 opacity-0 group-hover:opacity-100 transition-opacity" />}
                             </button>
                         </form>
                     )}

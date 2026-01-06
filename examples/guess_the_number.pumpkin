@@ -1,0 +1,36 @@
+# Guess-the-Number Game Logic
+# The secret number is 42
+# This demonstrates comparison and feedback
+
+let secret = 42
+let guess = 30
+
+show "Guessing..."
+show guess
+
+# Check if guess is correct
+if guess == secret {
+    show "Correct! You win!"
+} else {
+    # Provide hints
+    if guess < secret {
+        show "Too low! Try higher."
+    } else {
+        show "Too high! Try lower."
+    }
+}
+
+# Simulate another guess
+guess = 50
+show "Guessing..."
+show guess
+
+if guess == secret {
+    show "Correct! You win!"
+} else {
+    if guess < secret {
+        show "Too low! Try higher."
+    } else {
+        show "Too high! Try lower."
+    }
+}

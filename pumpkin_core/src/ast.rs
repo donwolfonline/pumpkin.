@@ -31,6 +31,8 @@ pub enum Statement {
     ReturnStmt(ReturnStmt),
     ExprStmt(ExprStmt),
     Block(Block),
+    ImportStmt(ImportStmt),
+    ExportStmt(ExportStmt),
 }
 
 #[derive(Debug, Clone, PartialEq, Serialize, Deserialize)]
@@ -43,6 +45,8 @@ pub enum Expression {
     Identifier(Identifier),
     ArrayLiteral(ArrayLiteral),
     ObjectLiteral(ObjectLiteral),
+    IndexExpr(IndexExpr),
+    MemberExpr(MemberExpr),
 }
 
 // --- Statements ---
@@ -56,7 +60,7 @@ pub struct LetStmt {
 
 #[derive(Debug, Clone, PartialEq, Serialize, Deserialize)]
 pub struct AssignStmt {
-    pub name: Identifier,
+    pub target: Expression,
     pub value: Expression,
     pub loc: Option<SourceLocation>,
 }
@@ -178,4 +182,18 @@ pub struct Property {
 pub enum PropertyKey {
     Identifier(Identifier),
     Literal(Literal),
+}
+
+#[derive(Debug, Clone, PartialEq, Serialize, Deserialize)]
+pub struct IndexExpr {
+    pub object: Box<Expression>,
+    pub index: Box<Expression>,
+    pub loc: Option<SourceLocation>,
+}
+
+#[derive(Debug, Clone, PartialEq, Serialize, Deserialize)]
+pub struct MemberExpr {
+    pub object: Box<Expression>,
+    pub property: Identifier,
+    pub loc: Option<SourceLocation>,
 }

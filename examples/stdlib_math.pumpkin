@@ -1,0 +1,43 @@
+# Math Library Examples
+# Demonstrates mathematical operations from the stdlib
+
+# Absolute values
+let negative = -42
+let positive = math.abs(negative)
+show "Absolute value of -42:"
+show positive  # 42
+
+# Rounding operations
+let pi = 3.14159
+show "Floor of pi:"
+show math.floor(pi)  # 3
+show "Ceiling of pi:"
+show math.ceil(pi)   # 4
+show "Rounded pi:"
+show math.round(pi)  # 3
+
+# Square root
+let number = 16
+show "Square root of 16:"
+show math.sqrt(number)  # 4
+
+# Power
+let base = 2
+let exponent = 10
+let result = math.pow(base, exponent)
+show "2 to the power of 10:"
+show result  # 1024
+
+# Min and Max
+let a = 15
+let b = 7
+show "Min of 15 and 7:"
+show math.min(a, b)  # 7
+show "Max of 15 and 7:"
+show math.max(a, b)  # 15
+
+# Clamp (restrict to range)
+let value = 150
+let clamped = math.clamp(value, 0, 100)
+show "150 clamped to [0, 100]:"
+show clamped  # 100

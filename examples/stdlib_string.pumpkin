@@ -1,0 +1,48 @@
+# String Library Examples
+# Demonstrates text manipulation from the stdlib
+
+# Length
+let message = "Hello World"
+show "Length of 'Hello World':"
+show string.length(message)  # 11
+
+# Case conversion
+show "Uppercase:"
+show string.upper(message)  # "HELLO WORLD"
+show "Lowercase:"
+show string.lower(message)  # "hello world"
+
+# Trimming whitespace
+let messy = "  trim me  "
+show "Original:"
+show messy
+show "Trimmed:"
+show string.trim(messy)  # "trim me"
+
+# Substring extraction
+let text = "Pumpkin Language"
+let sub = string.substring(text, 0, 7)
+show "First 7 characters:"
+show sub  # "Pumpkin"
+
+# Character access
+let word = "Hello"
+show "First character:"
+show string.at(word, 0)  # "H"
+show "Last character:"
+show string.at(word, 4)  # "o"
+
+# Concatenation
+let first = "Hello"
+let second = " World"
+let combined = string.concat(first, second)
+show combined  # "Hello World"
+
+# Searching
+let haystack = "The quick brown fox"
+show "Contains 'quick':"
+show string.contains(haystack, "quick")  # true
+show "Starts with 'The':"
+show string.starts_with(haystack, "The")  # true
+show "Ends with 'fox':"
+show string.ends_with(haystack, "fox")  # true

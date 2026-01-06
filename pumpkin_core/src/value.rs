@@ -6,7 +6,7 @@ use std::cell::RefCell;
 use std::collections::HashMap;
 use std::fmt;
 use crate::errors::PumpkinError;
-use crate::ast::SourceLocation;
+use crate::ast::{SourceLocation, Block};
 
 use serde::{Deserialize, Serialize}; // Added imports
 
@@ -14,12 +14,19 @@ use serde::{Deserialize, Serialize}; // Added imports
 #[serde(tag = "type", content = "value", rename_all = "lowercase")] // Matches TS interface
 pub enum PumpkinValue {
     Number(f64),
-    String(String),
+    String(Rc<String>),
     Boolean(bool),
     Null,
-    Function(String), 
+    Function(Rc<crate::value::PumpkinFunction>),
     List(Rc<RefCell<Vec<PumpkinValue>>>),
     Object(Rc<RefCell<HashMap<String, PumpkinValue>>>),
+}
+
+#[derive(Debug, Clone, PartialEq, Serialize, Deserialize)]
+pub struct PumpkinFunction {
+    pub arity: usize,
+    pub chunk: crate::chunk::Chunk,
+    pub name: String,
 }
 
 impl fmt::Display for PumpkinValue {
@@ -29,7 +36,7 @@ impl fmt::Display for PumpkinValue {
             PumpkinValue::String(s) => write!(f, "\"{}\"", s),
             PumpkinValue::Boolean(b) => write!(f, "{}", b),
             PumpkinValue::Null => write!(f, "null"),
-            PumpkinValue::Function(name) => write!(f, "<function {}>", name),
+            PumpkinValue::Function(f) => write!(f, "<fn {}>", f.name),
             PumpkinValue::List(l) => {
                  let v = l.borrow();
                  write!(f, "[")?;
@@ -68,9 +75,9 @@ impl PumpkinValue {
     pub fn add(&self, other: &Self) -> Result<PumpkinValue, PumpkinError> {
         match (self, other) {
             (PumpkinValue::Number(a), PumpkinValue::Number(b)) => Ok(PumpkinValue::Number(a + b)),
-            (PumpkinValue::String(a), PumpkinValue::String(b)) => Ok(PumpkinValue::String(format!("{}{}", a, b))),
-            (PumpkinValue::String(a), b) => Ok(PumpkinValue::String(format!("{}{}", a, b))),
-            (a, PumpkinValue::String(b)) => Ok(PumpkinValue::String(format!("{}{}", a, b))),
+            (PumpkinValue::String(a), PumpkinValue::String(b)) => Ok(PumpkinValue::String(Rc::new(format!("{}{}", a, b)))),
+            (PumpkinValue::String(a), b) => Ok(PumpkinValue::String(Rc::new(format!("{}{}", a, b)))),
+            (a, PumpkinValue::String(b)) => Ok(PumpkinValue::String(Rc::new(format!("{}{}", a, b)))),
             
             _ => Err(PumpkinError::type_mismatch(
                 "number or string", 

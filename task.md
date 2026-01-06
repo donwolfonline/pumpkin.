@@ -17,6 +17,12 @@
 - [x] Define Canonical Rust AST (Execution AST) <!-- id: 210 -->
   - [x] Create `docs/rust_ast_definition.md` <!-- id: 211 -->
 
+- [x] Fix IDE Execution Hang <!-- id: 1600 -->
+  - [x] Resolve "ohm.grammar is not a function" error <!-- id: 1601 -->
+  - [x] Implement JS Fallback Interpreter for broken WASM environments <!-- id: 1602 -->
+  - [x] Verify AST compatibility for JS and Rust engines <!-- id: 1603 -->
+  - [x] Synchronize worker grammar with canonical Ohm file <!-- id: 1604 -->
+
 - [x] Implement Environment & Scope System (Rust) <!-- id: 220 -->
   - [x] Initialize `pumpkin_core` crate <!-- id: 221 -->
   - [x] Implement `src/value.rs` <!-- id: 222 -->

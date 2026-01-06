@@ -1,0 +1,44 @@
+# Logic Library Examples
+# Demonstrates type checking and utilities from the stdlib
+
+# Type checking functions
+let num = 42
+let text = "hello"
+let flag = true
+let items = [1, 2, 3]
+
+show "Is 42 a number?"
+show logic.is_number(num)  # true
+
+show "Is 'hello' a string?"
+show logic.is_string(text)  # true
+
+show "Is true a boolean?"
+show logic.is_boolean(flag)  # true
+
+show "Is [1,2,3] an array?"
+show logic.is_array(items)  # true
+
+# Practical use: Type-safe operations
+let value = 100
+
+if logic.is_number(value) {
+    show "It's a number, safe to do math:"
+    show math.sqrt(value)
+}
+
+# Deep equality
+let arr1 = [1, 2, 3]
+let arr2 = [1, 2, 3]
+let arr3 = [1, 2, 4]
+
+show "Are [1,2,3] and [1,2,3] equal?"
+show logic.equals(arr1, arr2)  # true
+
+show "Are [1,2,3] and [1,2,4] equal?"
+show logic.equals(arr1, arr3)  # false
+
+# Null checking
+let maybe_null = "not null"
+show "Is value null?"
+show logic.is_null(maybe_null)  # false

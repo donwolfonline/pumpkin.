@@ -1,0 +1,9 @@
+# EXPECT: success
+# OUTPUT: true
+# OUTPUT: false
+
+let a = true
+let b = false
+
+show a or b
+show a and b

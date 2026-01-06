@@ -30,23 +30,23 @@ export default function PostExpandedModal({ post, currentUserId, onClose }: Post
                     animate={{ opacity: 1 }}
                     exit={{ opacity: 0 }}
                     onClick={onClose}
-                    className="absolute inset-0 bg-black/60 backdrop-blur-sm"
+                    className="absolute inset-0 bg-burgundy-dark/60 backdrop-blur-md"
                 />
 
                 <motion.div
                     initial={{ opacity: 0, scale: 0.9, y: 20 }}
                     animate={{ opacity: 1, scale: 1, y: 0 }}
                     exit={{ opacity: 0, scale: 0.9, y: 20 }}
-                    className="relative w-full max-w-2xl max-h-[90vh] overflow-y-auto no-scrollbar"
+                    className="relative w-full max-w-2xl max-h-[90vh] overflow-y-auto no-scrollbar rounded-[40px] shadow-2xl"
                 >
                     <button
                         onClick={onClose}
-                        className="absolute -top-2 -right-2 z-[110] bg-white text-gray-900 p-2 rounded-full border-4 border-gray-900 shadow-[4px_4px_0px_rgba(0,0,0,1)] hover:scale-110 active:scale-95 transition-transform"
+                        className="absolute top-4 right-4 z-[110] bg-white/40 backdrop-blur-md text-gray-900 p-3 rounded-full border border-white/20 shadow-lg hover:bg-white/60 hover:scale-110 active:scale-95 transition-all"
                     >
                         <X size={24} />
                     </button>
 
-                    <div className="p-2">
+                    <div className="p-1">
                         <PostCard
                             post={post}
                             currentUserId={currentUserId}

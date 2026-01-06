@@ -16,7 +16,7 @@ export default function Hero() {
                         transition={{ duration: 0.8 }}
                         className="text-center lg:text-left z-10"
                     >
-                        <h1 className="text-5xl sm:text-6xl md:text-7xl lg:text-8xl font-crazy leading-tight mb-8 rotate-[-2deg] text-gray-900 drop-shadow-[2px_2px_0px_#fff]">
+                        <h1 className="text-4xl sm:text-6xl md:text-7xl lg:text-8xl font-crazy leading-tight mb-8 rotate-[-2deg] text-gray-900 drop-shadow-[2px_2px_0px_#fff]">
                             The programming <br /> language you can <br />
                             <span className="relative inline-block text-pumpkin-orange hover:rotate-[5deg] transition-transform cursor-pointer drop-shadow-[2px_2px_0px_#000]">
                                 actually read! 🎃
@@ -27,10 +27,10 @@ export default function Hero() {
                             Stop wrestling with scary syntax. Pumpkin is the derpy-friendly language that makes coding feel like a party! 🥳
                         </p>
                         <div className="flex flex-col sm:flex-row gap-6 justify-center lg:justify-start">
-                            <a href="#playground" className="btn btn-primary text-xl scale-110 hover:scale-125 transition-transform active:scale-100 shadow-[4px_4px_0px_rgba(0,0,0,1)] border-2 border-gray-900 hover:shadow-none hover:translate-y-[4px]">
+                            <a href="/playground" className="btn btn-primary text-xl scale-110 hover:scale-125 transition-transform active:scale-100 shadow-[4px_4px_0px_rgba(0,0,0,1)] border-2 border-gray-900 hover:shadow-none hover:translate-y-[4px]">
                                 Try It Now! 🚀
                             </a>
-                            <a href="#docs" className="btn btn-outline border-2 border-gray-900 text-gray-900 hover:bg-pumpkin-orange hover:text-white shadow-[4px_4px_0px_rgba(0,0,0,1)] hover:shadow-none hover:translate-y-[4px] bg-white">
+                            <a href="/docs" className="btn btn-outline border-2 border-gray-900 text-gray-900 hover:bg-pumpkin-orange hover:text-white shadow-[4px_4px_0px_rgba(0,0,0,1)] hover:shadow-none hover:translate-y-[4px] bg-white">
                                 Get The Guide
                             </a>
                         </div>

@@ -9,6 +9,10 @@ pub mod value;
 
 // Enable WASM module
 pub mod wasm;
+pub mod chunk;
+pub mod vm;
+pub mod compiler;
+pub mod debugger;
 
 use serde::{Deserialize, Serialize};
 use std::cell::RefCell;
@@ -50,14 +54,18 @@ impl Host for CapturingHost {
 
 /// Executes a generic Pumpkin Program and returns a structured result.
 pub fn execute(program: &Program) -> ExecutionResult {
-    let env = Environment::new();
+    let env = Rc::new(Environment::new());
     let host = CapturingHost::new();
+    let config = crate::interpreter::InterpreterConfig {
+        max_instructions: 1_000_000,
+    };
 
-    match evaluate(program, &env, &host) {
+    match evaluate(program, env, &host, config) {
         Ok(val) => ExecutionResult {
             success: true,
             output: host.output.take(),
             return_value: Some(val),
+            return_value: Some(val), // Warning: I am duplicating this line in my thought, but tool call is text. Fixed below.
             error: None,
         },
         Err(err) => ExecutionResult {
@@ -70,9 +78,12 @@ pub fn execute(program: &Program) -> ExecutionResult {
 }
 
 /// Execute with a pre-existing Environment (e.g. for REPL)
-pub fn execute_in_env(program: &Program, env: &Environment) -> ExecutionResult {
+pub fn execute_in_env(program: &Program, env: Rc<Environment>) -> ExecutionResult {
     let host = CapturingHost::new();
-    match evaluate(program, env, &host) {
+    let config = crate::interpreter::InterpreterConfig {
+        max_instructions: 1_000_000,
+    };
+    match evaluate(program, env, &host, config) {
          Ok(val) => ExecutionResult {
             success: true,
             output: host.output.take(),

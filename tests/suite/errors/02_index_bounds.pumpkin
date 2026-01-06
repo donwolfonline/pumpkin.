@@ -1,0 +1,4 @@
+# EXPECT: error Index out of bounds
+
+let a = [1]
+show a[5]

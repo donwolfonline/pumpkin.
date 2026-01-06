@@ -6,17 +6,20 @@ import { CodeEditor } from './CodeEditor';
 import { Console } from './Console';
 import { Play, RotateCcw } from 'lucide-react';
 
-const DEFAULT_CODE = `// Welcome to Pumpkin 🎃
-// A friendly language for learning.
+const DEFAULT_CODE = `# Welcome to Pumpkin 🎃
+# A language for safety and delight.
 
+# Let's start with a variable
 let name = "Pumpkin"
-show "Hello " + name
 
-// Try changing the number below:
-let count = 0
-repeat 3 {
-    count = count + 1
-    show count
+# Show something in the console
+show "Hello from " + name + "!"
+
+# Try a loop
+let i = 1
+while i <= 5 {
+    show "Line " + i
+    i = i + 1
 }
 `;
 
@@ -25,6 +28,7 @@ export function PumpkinIDE() {
     const [output, setOutput] = useState<string[]>([]);
     const [error, setError] = useState<{ message: string; line?: number } | null>(null);
     const [isRunning, setIsRunning] = useState(false);
+    const isRunningRef = useRef(false);
     const workerRef = useRef<Worker | null>(null);
 
     // Initial Worker Setup
@@ -34,6 +38,7 @@ export function PumpkinIDE() {
         workerRef.current.onmessage = (e) => {
             const { type, payload } = e.data;
             setIsRunning(false);
+            isRunningRef.current = false;
 
             if (type === 'SUCCESS') {
                 setOutput(payload.output || []);
@@ -55,26 +60,35 @@ export function PumpkinIDE() {
     const handleRun = useCallback(() => {
         if (!workerRef.current) return;
         setIsRunning(true);
+        isRunningRef.current = true;
         setError(null);
         setOutput([]); // Clear previous output
 
-        // Timeout protection (5s watchdog)
-        // eslint-disable-next-line @typescript-eslint/no-unused-vars
-        const timeoutId = setTimeout(() => {
-            if (isRunning) {
+        // Timeout protection (10s watchdog for safety)
+        setTimeout(() => {
+            if (isRunningRef.current) {
                 setIsRunning(false);
+                isRunningRef.current = false;
                 setError({ message: "Execution timed out (Infinite loop?) 🕒" });
                 workerRef.current?.terminate();
                 // Re-init worker
                 workerRef.current = new Worker('/workers/pumpkin.worker.js', { type: 'module' });
+                // Re-attach message handler (same as useEffect)
+                workerRef.current.onmessage = (e) => {
+                    const { type, payload } = e.data;
+                    setIsRunning(false);
+                    isRunningRef.current = false;
+                    if (type === 'SUCCESS') { setOutput(payload.output || []); setError(null); }
+                    else if (type === 'ERROR') { setOutput(payload.output || []); setError({ message: payload.error, line: payload.line }); }
+                };
             }
-        }, 5000);
+        }, 10000);
 
         workerRef.current.postMessage({
             type: 'EXECUTE',
             source: code
         });
-    }, [code, isRunning]);
+    }, [code]);
 
     const handleReset = () => {
         setCode(DEFAULT_CODE);
@@ -83,18 +97,22 @@ export function PumpkinIDE() {
     };
 
     return (
-        <div className="flex flex-col h-[85vh] w-full max-w-6xl mx-auto border-4 border-gray-900 rounded-3xl shadow-[8px_8px_0px_0px_rgba(0,0,0,1)] overflow-hidden bg-white">
+        <div className="flex flex-col h-[85vh] w-full max-w-6xl mx-auto bg-white/40 backdrop-blur-3xl rounded-[40px] border border-white/20 shadow-2xl overflow-hidden relative group">
+            {/* Decorative Glows */}
+            <div className="absolute -top-24 -left-24 w-48 h-48 bg-pumpkin-orange/10 blur-[100px] pointer-events-none rounded-full" />
+            <div className="absolute -bottom-24 -right-24 w-48 h-48 bg-teal-accent/10 blur-[100px] pointer-events-none rounded-full" />
+
             {/* Header / Toolbar */}
-            <div className="bg-pumpkin-orange p-3 md:p-4 flex flex-wrap gap-4 items-center justify-between border-b-4 border-gray-900 shrink-0">
-                <div className="flex items-center gap-3 bg-white px-4 py-2 rounded-full border-2 border-gray-900 shadow-[2px_2px_0px_0px_rgba(0,0,0,1)]">
+            <div className="bg-white/10 backdrop-blur-md p-4 md:p-6 flex flex-wrap gap-4 items-center justify-between border-b border-white/10 shrink-0 relative z-10">
+                <div className="flex items-center gap-4 bg-white/40 px-5 py-2.5 rounded-full border border-white/40 shadow-sm transition-all hover:bg-white/60">
                     <span className="text-2xl animate-bounce">🎃</span>
-                    <span className="font-black text-gray-900 tracking-tight">Pumpkin IDE</span>
+                    <span className="font-heading font-black text-gray-900 tracking-tight">Pumpkin IDE</span>
                 </div>
 
-                <div className="flex gap-3">
+                <div className="flex gap-4">
                     <button
                         onClick={handleReset}
-                        className="flex items-center gap-2 px-4 py-2 font-bold text-gray-700 bg-white border-2 border-gray-900 rounded-xl shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] hover:translate-y-[2px] hover:shadow-[2px_2px_0px_0px_rgba(0,0,0,1)] active:translate-y-[4px] active:shadow-none transition-all"
+                        className="flex items-center gap-2 px-5 py-2.5 font-bold text-gray-700 bg-white/40 backdrop-blur-md border border-white/40 rounded-full shadow-sm hover:bg-white/60 hover:-translate-y-0.5 active:translate-y-0 transition-all"
                         title="Reset Code"
                     >
                         <RotateCcw size={18} />
@@ -104,41 +122,49 @@ export function PumpkinIDE() {
                     <button
                         onClick={handleRun}
                         disabled={isRunning}
-                        className={`flex items-center gap-2 px-6 py-2 font-black text-white border-2 border-gray-900 rounded-xl shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] transition-all
-                            ${isRunning
-                                ? 'bg-gray-400 cursor-not-allowed translate-y-[2px] shadow-[2px_2px_0px_0px_rgba(0,0,0,1)]'
-                                : 'bg-green-500 hover:bg-green-400 hover:translate-y-[2px] hover:shadow-[2px_2px_0px_0px_rgba(0,0,0,1)] active:translate-y-[4px] active:shadow-none'
-                            }`}
+                        className={`btn btn-primary px-8 py-2.5 flex items-center gap-2 group transition-all
+                            ${isRunning ? 'opacity-50 cursor-not-allowed translate-y-0' : 'hover:-translate-y-1 active:translate-y-0'}`}
                     >
                         {isRunning ? (
-                            <div className="animate-spin h-5 w-5 border-4 border-white border-t-transparent rounded-full" />
+                            <div className="animate-spin h-5 w-5 border-4 border-white/30 border-t-white rounded-full" />
                         ) : (
-                            <Play size={20} fill="currentColor" />
+                            <Play size={20} fill="currentColor" className="group-hover:scale-110 transition-transform" />
                         )}
-                        {isRunning ? 'RUNNING...' : 'RUN CODE'}
+                        <span>{isRunning ? 'RUNNING...' : 'RUN CODE'}</span>
+                        <div className="absolute inset-0 bg-white/20 opacity-0 group-hover:opacity-100 transition-opacity" />
                     </button>
                 </div>
             </div>
 
             {/* Split View */}
-            <div className="flex-1 flex flex-col lg:flex-row min-h-0 bg-gray-100">
+            <div className="flex-1 flex flex-col lg:flex-row min-h-0 bg-gray-50/10 relative z-10">
                 {/* Editor Pane */}
-                <div className="flex-1 border-b-4 lg:border-b-0 lg:border-r-4 border-gray-900 relative min-h-[50vh] lg:min-h-full">
-                    <CodeEditor code={code} onChange={setCode} />
+                <div className="flex-1 border-b lg:border-b-0 lg:border-r border-white/10 relative min-h-[50vh] lg:min-h-full">
+                    <CodeEditor code={code} onChange={setCode} error={error} />
                 </div>
 
                 {/* Console Pane */}
-                <div className="flex-1 min-h-[35vh] lg:min-h-full bg-gray-900 p-2 md:p-4 overflow-hidden">
-                    <Console output={output} error={error} />
+                <div className="flex-1 min-h-[35vh] lg:min-h-full bg-burgundy-dark/95 backdrop-blur-xl p-4 md:p-8 overflow-hidden relative">
+                    {/* Console Inner Glow */}
+                    <div className="absolute inset-0 bg-teal-accent/5 pointer-events-none blur-3xl opacity-50" />
+                    <div className="relative z-10 h-full">
+                        <Console output={output} error={error} />
+                    </div>
                 </div>
             </div>
 
             {/* Footer */}
-            <div className="bg-white border-t-4 border-gray-900 p-2 text-xs font-mono font-bold text-gray-500 flex justify-between uppercase tracking-wider shrink-0">
-                <span>pumpkin v0.1.0</span>
-                <span className={isRunning ? 'text-green-600 animate-pulse' : 'text-gray-400'}>
-                    {isRunning ? '● BUSY' : '○ READY'}
-                </span>
+            <div className="bg-white/20 backdrop-blur-md border-t border-white/10 p-4 text-[10px] md:text-xs font-heading font-black text-gray-500 flex justify-between uppercase tracking-[0.2em] shrink-0 relative z-10">
+                <div className="flex items-center gap-3">
+                    <span className="w-2 h-2 rounded-full bg-pumpkin-orange shadow-[0_0_10px_rgba(255,140,26,0.5)]" />
+                    <span>pumpkin runtime v0.1.0</span>
+                </div>
+                <div className="flex items-center gap-4">
+                    <span className={isRunning ? 'text-teal-accent animate-pulse flex items-center gap-2' : 'text-gray-400 flex items-center gap-2'}>
+                        <span className={`w-1.5 h-1.5 rounded-full ${isRunning ? 'bg-teal-accent shadow-[0_0_8px_#4FD1C5]' : 'bg-gray-400'}`} />
+                        {isRunning ? 'EXECUTING' : 'READY'}
+                    </span>
+                </div>
             </div>
         </div>
     );

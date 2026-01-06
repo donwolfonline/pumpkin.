@@ -84,39 +84,36 @@ export default function PostCard({ post, currentUserId, delay = 0 }: PostCardPro
             initial={{ opacity: 0, y: 20, scale: 0.95 }}
             animate={{ opacity: 1, y: 0, scale: 1 }}
             transition={{ delay, type: "spring", stiffness: 200, damping: 20 }}
-            whileHover={{ y: -4, transition: { duration: 0.2 } }}
-            className="bg-white rounded-3xl p-6 md:p-8 border-4 border-gray-900 shadow-[8px_8px_0px_rgba(0,0,0,1)] hover:shadow-[12px_12px_0px_rgba(0,0,0,1)] transition-all relative overflow-visible group"
+            whileHover={{ y: -4 }}
+            className="content-card group relative overflow-visible flex flex-col transition-all duration-300 border-white/20"
         >
-            {/* Decorative corner accent */}
-            <div className="absolute -top-2 -right-2 w-8 h-8 bg-pumpkin-orange rounded-full border-4 border-gray-900 opacity-0 group-hover:opacity-100 transition-opacity" />
-
             {/* Header */}
-            <div className="flex items-center justify-between mb-4">
+            <div className="flex items-center justify-between mb-8">
                 <motion.div
-                    className="flex items-center gap-3"
+                    className="flex items-center gap-4"
                     whileHover={{ x: 4 }}
                     transition={{ type: "spring", stiffness: 300 }}
                 >
-                    <div className="w-12 h-12 bg-gradient-to-br from-pumpkin-orange to-orange-600 rounded-full flex items-center justify-center font-bold text-white border-4 border-gray-900 text-lg shadow-[2px_2px_0px_rgba(0,0,0,1)]">
+                    <div className="w-14 h-14 bg-gradient-to-br from-pumpkin-orange to-orange-600 rounded-2xl flex items-center justify-center font-crazy font-extrabold text-white border-2 border-white/20 text-2xl shadow-lg group-hover:rotate-3 transition-transform">
                         {post.username[0].toUpperCase()}
                     </div>
                     <div>
-                        <p className="font-bold text-gray-900 text-lg">{post.username}</p>
-                        <p className="text-sm text-gray-500 font-semibold">{formatDate(post.created_at)}</p>
+                        <p className="font-heading font-black text-gray-900 text-xl tracking-tight">@{post.username}</p>
+                        <p className="text-xs text-gray-400 font-bold uppercase tracking-widest">{formatDate(post.created_at)}</p>
                     </div>
                 </motion.div>
             </div>
 
             {/* Content */}
-            <p className="text-gray-800 mb-4 whitespace-pre-wrap leading-relaxed text-lg font-medium">
+            <p className="text-gray-800 mb-8 whitespace-pre-wrap leading-relaxed text-xl font-bold opacity-90">
                 {post.content}
             </p>
 
             {/* Image */}
             {post.image_url && (
                 <motion.div
-                    className="mb-4 rounded-2xl overflow-hidden border-4 border-gray-900 shadow-[4px_4px_0px_rgba(0,0,0,1)]"
-                    whileHover={{ scale: 1.02 }}
+                    className="mb-8 rounded-3xl overflow-hidden border-2 border-white/10 shadow-hero relative group/img"
+                    whileHover={{ scale: 1.01 }}
                     transition={{ type: "spring", stiffness: 300 }}
                 >
                     <Image
@@ -124,24 +121,25 @@ export default function PostCard({ post, currentUserId, delay = 0 }: PostCardPro
                         alt="Post image"
                         width={600}
                         height={400}
-                        className="w-full h-auto object-cover"
+                        className="w-full h-auto object-cover transition-transform duration-700 group-hover/img:scale-105"
                     />
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent pointer-events-none" />
                 </motion.div>
             )}
 
             {/* Actions */}
-            <div className="flex items-center gap-4 pt-4 border-t-4 border-gray-200">
+            <div className="flex items-center gap-6 pt-8 border-t border-white/10 mt-auto">
                 <motion.button
                     onClick={handleLike}
                     disabled={!currentUserId || isLiking}
-                    whileHover={{ scale: 1.1, rotate: isLiked ? 0 : 10 }}
+                    whileHover={{ scale: 1.1 }}
                     whileTap={{ scale: 0.9 }}
-                    className={`flex items-center gap-2 px-5 py-3 rounded-xl font-bold transition-all border-2 ${isLiked
-                        ? 'bg-red-500 text-white border-gray-900 shadow-[2px_2px_0px_rgba(0,0,0,1)]'
-                        : 'bg-white hover:bg-red-50 text-gray-700 border-gray-300 hover:border-red-300'
+                    className={`flex items-center gap-3 px-6 py-3 rounded-2xl font-black text-sm tracking-tight transition-all border-2 ${isLiked
+                        ? 'bg-red-500/10 text-red-600 border-red-500/20 shadow-[0_0_20px_rgba(239,68,68,0.1)]'
+                        : 'bg-white/40 text-gray-600 border-white/40 hover:bg-white/60'
                         } ${!currentUserId ? 'opacity-50 cursor-not-allowed' : 'cursor-pointer'}`}
                 >
-                    <Heart className={isLiked ? 'fill-current' : ''} size={20} />
+                    <Heart className={isLiked ? 'fill-current' : ''} size={18} />
                     <span>{likesCount}</span>
                 </motion.button>
 
@@ -149,12 +147,12 @@ export default function PostCard({ post, currentUserId, delay = 0 }: PostCardPro
                     onClick={() => setShowComments(!showComments)}
                     whileHover={{ scale: 1.05 }}
                     whileTap={{ scale: 0.95 }}
-                    className={`flex items-center gap-2 px-5 py-3 rounded-xl font-bold transition-all border-2 ${showComments
-                        ? 'bg-teal-accent text-white border-gray-900 shadow-[2px_2px_0px_rgba(0,0,0,1)]'
-                        : 'bg-white hover:bg-teal-50 text-gray-700 border-gray-300 hover:border-teal-300'
+                    className={`flex items-center gap-3 px-6 py-3 rounded-2xl font-black text-sm tracking-tight transition-all border-2 ${showComments
+                        ? 'bg-teal-accent/10 text-teal-700 border-teal-accent/20 shadow-[0_0_20px_rgba(59,139,139,0.1)]'
+                        : 'bg-white/40 text-gray-600 border-white/40 hover:bg-white/60'
                         }`}
                 >
-                    <MessageCircle size={20} />
+                    <MessageCircle size={18} />
                     <span>{commentsCount}</span>
                 </motion.button>
             </div>
@@ -166,14 +164,21 @@ export default function PostCard({ post, currentUserId, delay = 0 }: PostCardPro
                     animate={{ opacity: 1, height: 'auto' }}
                     exit={{ opacity: 0, height: 0 }}
                     transition={{ type: "spring", stiffness: 200, damping: 20 }}
-                    className="mt-6 pt-6 border-t-4 border-gray-200"
+                    className="mt-8 pt-8 border-t border-white/10"
                 >
                     <CommentSection
                         postId={post.id}
                         currentUserId={currentUserId}
                         onCommentAdded={() => {
                             setCommentsCount(commentsCount + 1);
-                            toast.success('Comment added! 💬', { duration: 1500 });
+                            toast.success('Nice thought! 💬', {
+                                style: {
+                                    borderRadius: '50px',
+                                    background: '#333',
+                                    color: '#fff',
+                                    fontWeight: 'bold'
+                                }
+                            });
                         }}
                     />
                 </motion.div>

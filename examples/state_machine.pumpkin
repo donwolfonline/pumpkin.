@@ -1,0 +1,28 @@
+# Traffic Light State Machine
+# Cycles through: Green -> Yellow -> Red -> Green
+
+let state = "green"
+let cycles = 0
+
+# Run for 6 state changes
+while cycles < 6 {
+    show "Light is:"
+    show state
+    
+    # Transition to next state
+    if state == "green" {
+        state = "yellow"
+    } else {
+        if state == "yellow" {
+            state = "red"
+        } else {
+            # state is red
+            state = "green"
+        }
+    }
+    
+    cycles = cycles + 1
+}
+
+show "Light is:"
+show state

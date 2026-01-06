@@ -1,0 +1,18 @@
+# Factorial (Iterative)
+# Calculate n! = n * (n-1) * (n-2) * ... * 1
+# Example: 5! = 5 * 4 * 3 * 2 * 1 = 120
+
+let n = 5
+let result = 1
+let counter = n
+
+# Multiply result by each number from n down to 1
+while counter > 0 {
+    result = result * counter
+    counter = counter - 1
+}
+
+show "Factorial of"
+show n
+show "is"
+show result

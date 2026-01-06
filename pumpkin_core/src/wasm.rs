@@ -7,7 +7,7 @@ use crate::{Environment, execute_in_env, ExecutionResult, Program};
 #[wasm_bindgen]
 pub struct PumpkinVM {
     // Persistent environment across calls
-    env: Environment,
+    env: std::rc::Rc<Environment>,
 }
 
 #[wasm_bindgen]
@@ -16,7 +16,7 @@ impl PumpkinVM {
     pub fn new() -> PumpkinVM {
         utils::set_panic_hook();
         PumpkinVM {
-            env: Environment::new(),
+            env: std::rc::Rc::new(Environment::new()),
         }
     }
 
@@ -41,7 +41,50 @@ impl PumpkinVM {
         };
 
         // 2. Execute in persistent environment
-        let result = execute_in_env(&program, &self.env);
+        // Set hard limit of 1,000,000 instructions for security
+        let config = crate::interpreter::InterpreterConfig {
+            max_instructions: 1_000_000,
+        };
+
+        // We need to implement Host trait for PumpkinVM or pass a temporary host
+        // Since PumpkinVM doesn't implement Host yet, we need to handle output capture.
+        // For now, let's create a temporary Host implementation that captures to a Vec.
+        // Wait, execute_in_env was a helper in lib.rs. I need to check lib.rs or update this to call evaluate directly.
+        // Assuming execute_in_env is updated or we call evaluate directly.
+        
+        // Let's call evaluate directly since we just changed its signature.
+        // However, we need a Host.
+        // In the previous code, execute_in_env was used. Let's assume we update execute_in_env in lib.rs?
+        // No, I only touched interpreter.rs. I should check lib.rs OR instantiate a host here.
+        
+        // Let's implement a simple struct that implements Host
+        struct WasmHost {
+             output: std::cell::RefCell<Vec<String>>,
+        }
+        impl crate::interpreter::Host for WasmHost {
+             fn show(&self, msg: &str) {
+                 self.output.borrow_mut().push(msg.to_string());
+             }
+        }
+        
+        let host = WasmHost { output: std::cell::RefCell::new(vec![]) };
+        
+        let exec_result = crate::interpreter::evaluate(&program, self.env.clone(), &host, config);
+        
+        let result = match exec_result {
+            Ok(val) => ExecutionResult {
+                success: true,
+                output: host.output.into_inner(),
+                return_value: Some(format!("{}", val)), // simplistic for now
+                error: None,
+            },
+            Err(e) => ExecutionResult {
+                 success: false,
+                 output: host.output.into_inner(), // Return partial output
+                 return_value: None,
+                 error: Some(e),
+            }
+        };
 
         // 3. Return Serialized Result (JsValue object)
         serde_wasm_bindgen::to_value(&result).unwrap()

@@ -1,0 +1,48 @@
+# Array Library Examples
+# Demonstrates list manipulation from the stdlib
+
+# Length
+let numbers = [10, 20, 30, 40]
+show "Length of array:"
+show array.length(numbers)  # 4
+
+# Adding elements (returns new array)
+let extended = array.push(numbers, 50)
+show "After push:"
+show extended  # [10, 20, 30, 40, 50]
+
+# Removing elements
+let shortened = array.pop(numbers)
+show "After pop:"
+show shortened  # [10, 20, 30]
+
+# Accessing elements
+show "Element at index 2:"
+show array.get(numbers, 2)  # 30
+
+# Slicing
+let middle = array.slice(numbers, 1, 3)
+show "Slice [1:3]:"
+show middle  # [20, 30]
+
+# Concatenation
+let more = [5, 6, 7]
+let combined = array.concat([1, 2, 3], more)
+show "Concatenated:"
+show combined  # [1, 2, 3, 5, 6, 7]
+
+# Reverse
+let reversed = array.reverse(numbers)
+show "Reversed:"
+show reversed  # [40, 30, 20, 10]
+
+# Searching
+show "Contains 30:"
+show array.contains(numbers, 30)  # true
+show "Contains 99:"
+show array.contains(numbers, 99)  # false
+
+show "Index of 30:"
+show array.index_of(numbers, 30)  # 2
+show "Index of 99:"
+show array.index_of(numbers, 99)  # -1

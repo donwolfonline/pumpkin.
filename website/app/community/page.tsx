@@ -33,6 +33,9 @@ function CompactSkeleton() {
     );
 }
 
+import Navbar from '../components/Navbar';
+import Footer from '../components/Footer';
+
 export default function CommunityPage() {
     const [posts, setPosts] = useState<Post[]>([]);
     const [loading, setLoading] = useState(true);
@@ -144,7 +147,9 @@ export default function CommunityPage() {
     }
 
     return (
-        <>
+        <div className="min-h-screen bg-[#FFFBF5] flex flex-col">
+            <Navbar />
+
             <Toaster
                 position="top-center"
                 toastOptions={{
@@ -157,9 +162,8 @@ export default function CommunityPage() {
                 }}
             />
 
-            <main className="min-h-screen bg-[#FFFBF5] py-20 px-4 relative overflow-hidden">
+            <main className="flex-1 py-32 px-4 relative overflow-hidden">
                 {/* Dynamic hurricane background is handled by InteractiveBackground in layout.tsx */}
-
 
                 {/* Vine Decorations */}
                 <VineDecoration className="top-10 right-10 opacity-40" rotate={120} delay={0.5} />
@@ -168,25 +172,6 @@ export default function CommunityPage() {
                 <VineDecoration className="bottom-10 right-1/4 opacity-30" rotate={-120} delay={2} />
 
                 <div className="max-w-[1400px] mx-auto relative z-10 px-4">
-                    {/* Logo Header - Back to Home */}
-                    <motion.div
-                        initial={{ opacity: 0, y: -20 }}
-                        animate={{ opacity: 1, y: 0 }}
-                        className="mb-8"
-                    >
-                        <Link
-                            href="/"
-                            className="inline-flex items-center gap-2 hover:scale-105 transition-transform"
-                        >
-                            <Image
-                                src="/pumpkin-dot-logo.png"
-                                alt="Pumpkin"
-                                width={180}
-                                height={45}
-                                className="h-11 w-auto"
-                            />
-                        </Link>
-                    </motion.div>
 
 
 
@@ -209,22 +194,26 @@ export default function CommunityPage() {
                         initial={{ opacity: 0, y: -30, scale: 0.9 }}
                         animate={{ opacity: 1, y: 0, scale: 1 }}
                         transition={{ type: "spring", stiffness: 200, damping: 15 }}
-                        className="text-center mb-12"
+                        className="text-center mb-16"
                     >
+                        <div className="inline-flex items-center gap-3 bg-pumpkin-orange/10 px-6 py-2 rounded-full mb-6 border-2 border-pumpkin-orange/20 shadow-sm mx-auto">
+                            <span className="text-xl">✨</span>
+                            <span className="font-heading font-black text-pumpkin-orange tracking-tight uppercase text-sm">Community Lounge</span>
+                        </div>
                         <motion.h1
-                            className="text-6xl md:text-7xl font-crazy font-extrabold text-gray-900 mb-4 drop-shadow-[4px_4px_0px_#fff]"
-                            animate={{ rotate: [-2, 2, -2] }}
-                            transition={{ duration: 3, repeat: Infinity, ease: "easeInOut" }}
+                            className="text-6xl md:text-8xl font-crazy font-extrabold text-gray-900 mb-6 drop-shadow-[2px_2px_0px_#FF8C1A]"
+                            animate={{ rotate: [-1, 1, -1] }}
+                            transition={{ duration: 5, repeat: Infinity, ease: "easeInOut" }}
                         >
-                            🎃 Community Feed
+                            Community Feed
                         </motion.h1>
                         <motion.p
                             initial={{ opacity: 0 }}
                             animate={{ opacity: 1 }}
                             transition={{ delay: 0.3 }}
-                            className="text-2xl text-gray-700 font-bold"
+                            className="text-2xl text-gray-800 font-bold max-w-2xl mx-auto leading-relaxed"
                         >
-                            Share, Connect, and Vibe! ✨
+                            Share your seeds, connect with growers, and <span className="text-teal-accent underline decoration-wavy">vibe with the patch</span>.
                         </motion.p>
                     </motion.div>
 
@@ -233,19 +222,14 @@ export default function CommunityPage() {
                         initial={{ opacity: 0, scale: 0.8 }}
                         animate={{ opacity: 1, scale: 1 }}
                         transition={{ delay: 0.4, type: "spring", stiffness: 200 }}
-                        whileHover={{ scale: 1.02, rotate: 1 }}
-                        whileTap={{ scale: 0.98 }}
-                        className="mb-8"
+                        className="mb-16 max-w-xl mx-auto"
                     >
                         <button
                             onClick={handleCreateClick}
-                            className="w-full bg-gradient-to-r from-pumpkin-orange to-orange-600 text-white font-bold py-6 px-8 rounded-3xl border-4 border-gray-900 shadow-[8px_8px_0px_rgba(0,0,0,1)] hover:shadow-[4px_4px_0px_rgba(0,0,0,1)] hover:translate-x-[4px] hover:translate-y-[4px] transition-all text-xl relative overflow-hidden group"
+                            className="btn btn-primary w-full py-6 text-2xl group relative overflow-hidden flex items-center justify-center gap-4"
                         >
-                            <span className="relative z-10 flex items-center justify-center gap-3">
-                                <span className="text-3xl">✨</span>
-                                <span>Create Your Post</span>
-                                <span className="text-3xl">✨</span>
-                            </span>
+                            <span className="text-3xl group-hover:animate-jitter transition-transform">➕</span>
+                            <span>Share Something New</span>
                             <div className="absolute inset-0 bg-white/20 opacity-0 group-hover:opacity-100 transition-opacity" />
                         </button>
                     </motion.div>
@@ -352,6 +336,8 @@ export default function CommunityPage() {
                     onClose={() => setSelectedPost(null)}
                 />
             )}
-        </>
+
+            <Footer />
+        </div>
     );
 }

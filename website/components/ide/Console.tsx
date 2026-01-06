@@ -13,7 +13,8 @@ export function Console({ output, error }: ConsoleProps) {
 
     // Auto-scroll to bottom on new output
     useEffect(() => {
-        bottomRef.current?.scrollIntoView({ behavior: 'smooth' });
+        if (output.length === 0 && !error) return;
+        bottomRef.current?.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
     }, [output, error]);
 
     return (
