@@ -35,7 +35,6 @@ export const metadata: Metadata = {
 };
 
 import InteractiveBackground from "./components/InteractiveBackground";
-import { ThemeProvider } from "@/components/ThemeProvider";
 
 export default function RootLayout({
   children,
@@ -48,10 +47,8 @@ export default function RootLayout({
         suppressHydrationWarning
         className={`${nunito.variable} ${permanentMarker.variable} ${openSans.variable} ${firaCode.variable} font-body antialiased overflow-x-hidden`}
       >
-        <ThemeProvider>
-          <InteractiveBackground />
-          {children}
-        </ThemeProvider>
+        <InteractiveBackground />
+        {children}
       </body>
     </html>
   );

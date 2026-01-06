@@ -103,7 +103,7 @@ export function PumpkinIDE() {
             <div className="absolute -bottom-24 -right-24 w-48 h-48 bg-teal-accent/10 blur-[100px] pointer-events-none rounded-full" />
 
             {/* Header / Toolbar */}
-            <div className="bg-white/10 backdrop-blur-md p-4 md:p-6 flex flex-wrap gap-4 items-center justify-between border-b border-white/10 shrink-0 relative z-10">
+            <div className="bg-white/10 backdrop-blur-md p-4 md:p-6 flex flex-wrap gap-4 items-center justify-between border-b border-gray-200 shrink-0 relative z-10">
                 <div className="flex items-center gap-4 bg-white/40 px-5 py-2.5 rounded-full border border-white/40 shadow-sm transition-all hover:bg-white/60">
                     <span className="text-2xl animate-bounce">🎃</span>
                     <span className="font-heading font-black text-gray-900 tracking-tight">Pumpkin IDE</span>
@@ -139,12 +139,12 @@ export function PumpkinIDE() {
             {/* Split View */}
             <div className="flex-1 flex flex-col lg:flex-row min-h-0 bg-gray-50/10 relative z-10">
                 {/* Editor Pane */}
-                <div className="flex-1 border-b lg:border-b-0 lg:border-r border-white/10 relative min-h-[50vh] lg:min-h-full">
+                <div className="flex-1 border-b lg:border-b-0 lg:border-r border-gray-200 relative min-h-[50vh] lg:min-h-full">
                     <CodeEditor code={code} onChange={setCode} error={error} />
                 </div>
 
                 {/* Console Pane */}
-                <div className="flex-1 min-h-[35vh] lg:min-h-full bg-burgundy-dark/95 backdrop-blur-xl p-4 md:p-8 overflow-hidden relative">
+                <div className="flex-1 min-h-[35vh] lg:min-h-full bg-white p-4 md:p-8 overflow-hidden relative">
                     {/* Console Inner Glow */}
                     <div className="absolute inset-0 bg-teal-accent/5 pointer-events-none blur-3xl opacity-50" />
                     <div className="relative z-10 h-full">
@@ -154,7 +154,7 @@ export function PumpkinIDE() {
             </div>
 
             {/* Footer */}
-            <div className="bg-white/20 backdrop-blur-md border-t border-white/10 p-4 text-[10px] md:text-xs font-heading font-black text-gray-500 flex justify-between uppercase tracking-[0.2em] shrink-0 relative z-10">
+            <div className="bg-white/20 backdrop-blur-md border-t border-gray-200 p-4 text-[10px] md:text-xs font-heading font-black text-gray-500 flex justify-between uppercase tracking-[0.2em] shrink-0 relative z-10">
                 <div className="flex items-center gap-3">
                     <span className="w-2 h-2 rounded-full bg-pumpkin-orange shadow-[0_0_10px_rgba(255,140,26,0.5)]" />
                     <span>pumpkin runtime v0.1.0</span>

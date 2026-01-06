@@ -1,7 +1,6 @@
 import type { Config } from "tailwindcss";
 
 export default {
-    darkMode: 'class',
     content: [
         "./pages/**/*.{js,ts,jsx,tsx,mdx}",
         "./components/**/*.{js,ts,jsx,tsx,mdx}",
@@ -11,17 +10,20 @@ export default {
         extend: {
             colors: {
                 burgundy: {
-                    dark: '#2B1B2E',
+                    DEFAULT: '#520E38',
                     mid: '#3D1F32',
+                    light: '#7A1F55',
                 },
                 teal: {
-                    dark: '#1E4D4D',
-                    mid: '#2A6565',
-                    accent: '#3B8B8B',
+                    DEFAULT: '#266150',
+                    mid: '#327A66',
+                    accent: '#4FD1AC',
+                    light: '#3A8A73',
                 },
                 pumpkin: {
+                    light: '#FFAC59',
                     orange: '#FF8C1A',
-                    dark: '#CC5E13',
+                    DEFAULT: '#FF8C1A',
                 },
             },
             fontFamily: {

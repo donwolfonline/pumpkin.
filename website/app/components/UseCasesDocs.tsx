@@ -62,12 +62,12 @@ export default function UseCasesDocs() {
                 </div>
 
                 {/* Anti-Patterns (What it is NOT) */}
-                <div className="content-card bg-burgundy-dark/95 border-white/20 shadow-hero p-8 md:p-16 relative overflow-hidden group">
+                <div className="content-card bg-white border-gray-200 shadow-hero p-8 md:p-16 relative overflow-hidden group">
                     <div className="flex items-center gap-6 mb-12 relative z-10">
-                        <div className="w-16 h-16 bg-red-500/10 rounded-3xl flex items-center justify-center border-2 border-red-500/20 shadow-lg">
-                            <XCircle className="w-10 h-10 text-red-400 animate-pulse" />
+                        <div className="w-16 h-16 bg-red-100/50 rounded-3xl flex items-center justify-center border-2 border-red-200 shadow-lg">
+                            <XCircle className="w-10 h-10 text-red-500 animate-pulse" />
                         </div>
-                        <h2 className="text-3xl md:text-5xl font-crazy font-extrabold text-white">Non-Goals & Anti-Patterns</h2>
+                        <h2 className="text-3xl md:text-5xl font-crazy font-extrabold text-gray-900">Non-Goals & Anti-Patterns</h2>
                     </div>
 
                     <div className="grid md:grid-cols-2 gap-12 relative z-10">
@@ -77,9 +77,9 @@ export default function UseCasesDocs() {
                             { title: "System Programming", desc: "No manual memory management or low-level drivers. Pumpkin is a high-level managed language." },
                             { title: "Large Scale Apps", desc: "Managing 100k lines without classes or modules would be painful. Use Pumpkin for targeted logic." }
                         ].map((item, idx) => (
-                            <div key={idx} className="bg-white/5 border border-white/10 p-6 rounded-[40px] hover:bg-white/10 transition-all group/item shadow-inner">
+                            <div key={idx} className="bg-gray-50 border border-gray-100 p-6 rounded-[40px] hover:bg-white transition-all group/item shadow-inner hover:shadow-md">
                                 <h3 className="text-2xl font-crazy font-extrabold text-pumpkin-orange mb-3 group-hover/item:translate-x-1 transition-transform">{item.title}</h3>
-                                <p className="text-gray-300 font-medium leading-relaxed">
+                                <p className="text-gray-700 font-medium leading-relaxed">
                                     {item.desc}
                                 </p>
                             </div>

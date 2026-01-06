@@ -62,7 +62,7 @@ export default function RoadmapDocs() {
                 </div>
 
                 {/* Philosophy */}
-                <div className="content-card bg-burgundy-dark/95 border-white/20 shadow-hero p-8 md:p-12 mb-20 relative overflow-hidden group">
+                <div className="content-card !bg-[#111] border-white/20 shadow-hero p-8 md:p-12 mb-20 relative overflow-hidden group">
                     <h2 className="text-3xl font-crazy font-extrabold text-white mb-8 border-b-2 border-white/10 pb-4">Design Philosophy</h2>
                     <div className="grid md:grid-cols-3 gap-10 text-base relative z-10">
                         {[
@@ -83,9 +83,9 @@ export default function RoadmapDocs() {
                 <div className="space-y-12 mb-24">
                     {versions.map((v, i) => (
                         <div key={i} className={`content-card transition-all duration-500 hover:-translate-y-2 flex flex-col md:flex-row gap-10 items-start overflow-hidden relative ${v.color === 'green' ? 'border-l-8 border-l-green-500' :
-                                v.color === 'blue' ? 'border-l-8 border-l-blue-500' :
-                                    v.color === 'purple' ? 'border-l-8 border-l-purple-500' :
-                                        'border-l-8 border-l-orange-500'
+                            v.color === 'blue' ? 'border-l-8 border-l-blue-500' :
+                                v.color === 'purple' ? 'border-l-8 border-l-purple-500' :
+                                    'border-l-8 border-l-orange-500'
                             }`}>
                             <div className="flex items-center gap-6 md:w-[30%]">
                                 <div className="bg-white/40 backdrop-blur-md p-5 rounded-[30px] border border-white/40 shadow-lg group-hover:scale-110 transition-transform">
@@ -94,9 +94,9 @@ export default function RoadmapDocs() {
                                 <div className="flex flex-col">
                                     <h3 className="text-5xl font-crazy font-extrabold text-gray-900 leading-none">{v.version}</h3>
                                     <div className={`font-heading font-black uppercase tracking-[3px] text-xs mt-2 ${v.color === 'green' ? 'text-green-600' :
-                                            v.color === 'blue' ? 'text-blue-600' :
-                                                v.color === 'purple' ? 'text-purple-600' :
-                                                    'text-orange-600'
+                                        v.color === 'blue' ? 'text-blue-600' :
+                                            v.color === 'purple' ? 'text-purple-600' :
+                                                'text-orange-600'
                                         }`}>{v.status}</div>
                                 </div>
                             </div>

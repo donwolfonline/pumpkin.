@@ -163,24 +163,24 @@ export default function CreatePostModal({
 
     return (
         <AnimatePresence>
-            <div className="fixed inset-0 bg-burgundy-dark/60 backdrop-blur-md flex items-center justify-center p-4 z-50">
+
+            <div className="fixed inset-0 bg-black/40 backdrop-blur-sm flex items-center justify-center p-4 z-50">
                 <motion.div
                     initial={{ opacity: 0, scale: 0.9, y: 20 }}
                     animate={{ opacity: 1, scale: 1, y: 0 }}
                     exit={{ opacity: 0, scale: 0.9, y: 20 }}
-                    className="bg-white/20 backdrop-blur-3xl rounded-[40px] p-8 md:p-12 max-w-2xl w-full max-h-[90vh] overflow-y-auto border border-white/20 shadow-2xl relative"
+                    className="bg-white rounded-[30px] p-6 md:p-8 max-w-lg w-full max-h-[90vh] overflow-y-auto border-4 border-gray-900 shadow-[8px_8px_0px_#111] relative"
                 >
-                    {/* Background Blobs */}
-                    <div className="absolute top-0 right-0 w-64 h-64 bg-pumpkin-orange/10 rounded-full blur-[80px] -z-10" />
-                    <div className="absolute bottom-0 left-0 w-64 h-64 bg-teal-accent/10 rounded-full blur-[80px] -z-10" />
+                    {/* Background Pattern - Optional subtle noise could go here, but keeping it clean for now */}
 
-                    <div className="flex justify-between items-center mb-10 relative z-10">
-                        <h2 className="text-4xl md:text-5xl font-crazy font-extrabold text-gray-900 drop-shadow-sm">
+
+                    <div className="flex justify-between items-center mb-6 relative z-10">
+                        <h2 className="text-3xl md:text-4xl font-crazy font-extrabold text-gray-900">
                             {step === 'username' ? '👋 Welcome!' : '✨ Create Post'}
                         </h2>
                         <button
                             onClick={onClose}
-                            className="p-3 hover:bg-white/40 rounded-full transition-all border border-white/20 shadow-sm"
+                            className="p-2 hover:bg-gray-100 rounded-full transition-all border-2 border-transparent hover:border-gray-200"
                         >
                             <X size={24} className="text-gray-900" />
                         </button>
@@ -207,7 +207,7 @@ export default function CreatePostModal({
                                     value={newUsername}
                                     onChange={(e) => setNewUsername(e.target.value)}
                                     placeholder="Enter username..."
-                                    className="w-full px-8 py-5 bg-white/40 backdrop-blur-md border border-white/40 rounded-full font-bold text-gray-900 placeholder-gray-400 focus:outline-none focus:ring-4 focus:ring-pumpkin-orange/20 transition-all shadow-inner"
+                                    className="w-full px-6 py-4 bg-gray-50 border-2 border-gray-200 rounded-2xl font-bold text-gray-900 placeholder-gray-400 focus:outline-none focus:border-pumpkin-orange focus:ring-4 focus:ring-pumpkin-orange/10 transition-all"
                                     maxLength={20}
                                     required
                                 />
@@ -236,8 +236,8 @@ export default function CreatePostModal({
                                     value={content}
                                     onChange={(e) => setContent(e.target.value)}
                                     placeholder="Share your seeds with the world..."
-                                    className="w-full px-8 py-6 bg-white/40 backdrop-blur-md border border-white/40 rounded-[30px] font-bold text-gray-900 placeholder-gray-400 resize-none focus:outline-none focus:ring-4 focus:ring-pumpkin-orange/20 transition-all shadow-inner"
-                                    rows={5}
+                                    className="w-full px-6 py-4 bg-gray-50 border-2 border-gray-200 rounded-2xl font-bold text-gray-900 placeholder-gray-400 resize-none focus:outline-none focus:border-pumpkin-orange focus:ring-4 focus:ring-pumpkin-orange/10 transition-all"
+                                    rows={4}
                                     maxLength={500}
                                     required
                                 />
@@ -256,9 +256,9 @@ export default function CreatePostModal({
                                             key={cat}
                                             type="button"
                                             onClick={() => setCategory(cat)}
-                                            className={`px-5 py-2.5 rounded-full text-xs font-black transition-all border-2 ${category === cat
-                                                ? 'bg-pumpkin-orange text-white border-pumpkin-orange shadow-lg shadow-pumpkin-orange/20'
-                                                : 'bg-white/40 text-gray-600 border-white/40 hover:bg-white/60'
+                                            className={`px-4 py-2 rounded-xl text-xs font-black transition-all border-2 ${category === cat
+                                                ? 'bg-pumpkin-orange text-white border-pumpkin-orange shadow-md'
+                                                : 'bg-gray-50 text-gray-600 border-gray-200 hover:border-gray-300 hover:bg-gray-100'
                                                 }`}
                                         >
                                             {cat}
@@ -281,9 +281,9 @@ export default function CreatePostModal({
                                 {!imagePreview ? (
                                     <label
                                         htmlFor="image-upload"
-                                        className="flex flex-col items-center justify-center gap-4 p-10 border-2 border-dashed border-white/40 rounded-[30px] cursor-pointer hover:border-pumpkin-orange/40 hover:bg-white/40 transition-all group"
+                                        className="flex flex-col items-center justify-center gap-4 p-8 border-2 border-dashed border-gray-300 rounded-2xl cursor-pointer hover:border-pumpkin-orange hover:bg-orange-50/50 transition-all group"
                                     >
-                                        <div className="w-16 h-16 bg-white rounded-2xl flex items-center justify-center shadow-lg group-hover:rotate-6 transition-transform">
+                                        <div className="w-12 h-12 bg-gray-100 rounded-xl flex items-center justify-center group-hover:scale-110 transition-transform">
                                             <Upload size={32} className="text-pumpkin-orange" />
                                         </div>
                                         <span className="text-gray-500 font-bold uppercase tracking-widest text-[10px]">

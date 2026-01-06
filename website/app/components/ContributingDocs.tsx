@@ -86,7 +86,7 @@ export default function ContributingDocs() {
                 </div>
 
                 {/* Build Instructions */}
-                <div className="content-card bg-burgundy-dark/95 border-white/10 shadow-hero p-10 md:p-12 mb-20 overflow-hidden group">
+                <div className="content-card !bg-[#111] border-white/10 shadow-hero p-10 md:p-12 mb-20 overflow-hidden group">
                     <div className="flex items-center gap-4 mb-8">
                         <Terminal className="w-10 h-10 text-emerald-400" />
                         <h3 className="text-3xl font-crazy font-extrabold text-white">Quick Build Lab</h3>
@@ -96,7 +96,7 @@ export default function ContributingDocs() {
                             <div className="flex gap-4"><span className="text-white/20 select-none">$</span> <span className="text-emerald-400">git clone https://github.com/donwolfonline/pumpkin.git</span></div>
                             <div className="flex gap-4"><span className="text-white/20 select-none">$</span> <span className="text-emerald-400">cd pumpkin && npm install</span></div>
                             <div className="flex gap-4"><span className="text-white/20 select-none">$</span> <span className="text-emerald-400">cd pumpkin_core && cargo build --release</span></div>
-                            <div className="text-white/30 mt-6 md:mt-10 py-2 border-t border-white/5 text-sm font-heading"># Verify with Smoke Tests</div>
+                            <div className="text-gray-500 mt-6 md:mt-10 py-2 border-t border-white/5 text-sm font-heading"># Verify with Smoke Tests</div>
                             <div className="flex gap-4"><span className="text-white/20 select-none">$</span> <span className="text-pumpkin-orange font-black">./run_smoke_tests.sh</span></div>
                         </div>
                     </div>
