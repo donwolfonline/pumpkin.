@@ -22,16 +22,37 @@ export async function POST(request: NextRequest) {
         `;
 
         if (existingUser.length > 0) {
-            // Update last_active
-            await sql`
-                UPDATE users 
-                SET last_active = CURRENT_TIMESTAMP 
-                WHERE id = ${existingUser[0].id}
-            `;
+            let finalUsername = existingUser[0].username;
+
+            // If a new username is provided and it's different, try to update it
+            if (username && username !== finalUsername) {
+                // Validate format first
+                if (username.length >= 3 && username.length <= 20 && /^[a-zA-Z0-9_]+$/.test(username)) {
+                    // Check availability
+                    const contentCheck = await sql`
+                        SELECT id FROM users WHERE username = ${username} AND id != ${existingUser[0].id} LIMIT 1
+                    `;
+
+                    if (contentCheck.length === 0) {
+                        await sql`
+                            UPDATE users 
+                            SET username = ${username}, last_active = CURRENT_TIMESTAMP 
+                            WHERE id = ${existingUser[0].id}
+                        `;
+                        finalUsername = username;
+                    }
+                }
+            } else {
+                await sql`
+                    UPDATE users 
+                    SET last_active = CURRENT_TIMESTAMP 
+                    WHERE id = ${existingUser[0].id}
+                `;
+            }
 
             return NextResponse.json({
                 userId: existingUser[0].id,
-                username: existingUser[0].username,
+                username: finalUsername,
                 isNew: false,
             });
         }
