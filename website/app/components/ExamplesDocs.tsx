@@ -116,7 +116,7 @@ while cycles < 6 {
                                     <Play className="w-6 h-6 text-white ml-1" />
                                 </div>
                             </div>
-                            <div className="bg-burgundy-dark/95 p-8 relative overflow-hidden">
+                            <div className="!bg-[#111] p-8 relative overflow-hidden">
                                 <pre className="text-base font-code text-emerald-400 overflow-x-auto leading-loose relative z-10">
                                     {ex.code}
                                 </pre>
@@ -131,7 +131,7 @@ while cycles < 6 {
                 <div className="mt-20 text-center">
                     <div className="pill-section py-12 px-8 bg-white/10 backdrop-blur-2xl inline-block border-white/20 shadow-hero">
                         <p className="text-2xl font-bold text-gray-900 mb-8">Hungry for more code?</p>
-                        <a href="https://github.com/donwolfonline/pumpkin/tree/main/examples" className="btn btn-primary px-10 py-5 text-xl">
+                        <a href="https://github.com/donwolfonline/pumpkin" className="btn btn-primary px-10 py-5 text-xl">
                             Browse GitHub Examples
                         </a>
                     </div>

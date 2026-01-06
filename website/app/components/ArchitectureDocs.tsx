@@ -62,7 +62,7 @@ export default function ArchitectureDocs() {
                     ))}
                 </div>
 
-                <div className="mt-20 content-card bg-burgundy-dark/95 border-white/10 shadow-hero relative overflow-hidden group">
+                <div className="mt-20 content-card !bg-[#111] border-white/10 shadow-hero relative overflow-hidden group">
                     <div className="relative z-10">
                         <h3 className="text-3xl font-crazy font-extrabold text-white mb-8 text-center drop-shadow-sm">The Compilation Pipeline</h3>
                         <div className="flex flex-col lg:flex-row items-center justify-center gap-6 text-sm font-code">
