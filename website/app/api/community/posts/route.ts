@@ -171,3 +171,24 @@ export async function POST(request: NextRequest) {
 }
 
 
+// DELETE /api/community/posts - Delete ALL posts (and related data)
+export async function DELETE(request: NextRequest) {
+    try {
+        // Delete all likes (dependencies first)
+        await sql`DELETE FROM likes`;
+
+        // Delete all comments
+        await sql`DELETE FROM comments`;
+
+        // Delete all posts
+        await sql`DELETE FROM posts`;
+
+        return NextResponse.json({ message: 'All posts, comments, and likes deleted successfully' });
+    } catch (error) {
+        console.error('Delete all posts error:', error);
+        return NextResponse.json(
+            { error: 'Failed to delete data', details: String(error) },
+            { status: 500 }
+        );
+    }
+}
