@@ -5,6 +5,10 @@ import { Menu, X } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import Image from 'next/image';
 import Link from 'next/link';
+import dynamic from 'next/dynamic';
+
+const ThemeToggle = dynamic(() => import('@/components/ThemeToggle'), { ssr: false });
+
 
 export default function Navbar() {
     const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
@@ -20,7 +24,7 @@ export default function Navbar() {
     ];
 
     return (
-        <nav className="fixed top-4 md:top-8 left-4 md:left-8 lg:left-12 right-4 md:right-8 lg:right-12 z-50 bg-white/80 backdrop-blur-2xl border-2 border-gray-900/10 rounded-full shadow-xl overflow-visible">
+        <nav className="fixed top-4 md:top-8 left-4 md:left-8 lg:left-12 right-4 md:right-8 lg:right-12 z-50 bg-white/80 dark:bg-gray-800/80 backdrop-blur-2xl border-2 border-gray-900/10 dark:border-white/10 rounded-full shadow-xl overflow-visible">
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                 <div className="flex justify-between items-center py-4">
                     <Link href="/" className="flex items-center gap-2 group transition-transform hover:scale-105 active:scale-95">
@@ -40,7 +44,7 @@ export default function Navbar() {
                             <li key={link.href}>
                                 <Link
                                     href={link.href}
-                                    className="font-bold text-gray-700 relative group transition-colors hover:text-pumpkin-orange"
+                                    className="font-bold text-gray-700 dark:text-gray-200 relative group transition-colors hover:text-pumpkin-orange"
                                 >
                                     {link.label}
                                     <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-pumpkin-orange transition-all duration-300 group-hover:w-full" />
@@ -49,10 +53,13 @@ export default function Navbar() {
                         ))}
                     </ul>
 
-                    {/* Desktop CTA */}
-                    <Link href="/docs" className="hidden lg:block btn btn-primary text-sm shadow-[4px_4px_0px_rgba(0,0,0,1)] hover:shadow-none hover:translate-y-[2px] transition-all border-2 border-gray-900">
-                        Get Started
-                    </Link>
+                    {/* Theme Toggle + Desktop CTA */}
+                    <div className="hidden lg:flex items-center gap-4">
+                        <ThemeToggle />
+                        <Link href="/docs" className="btn btn-primary text-sm shadow-[4px_4px_0px_rgba(0,0,0,1)] hover:shadow-none hover:translate-y-[2px] transition-all border-2 border-gray-900">
+                            Get Started
+                        </Link>
+                    </div>
 
                     {/* Mobile Menu Button */}
                     <button

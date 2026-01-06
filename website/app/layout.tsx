@@ -30,11 +30,12 @@ export const metadata: Metadata = {
   title: "Pumpkin - Code for Humans",
   description: "The programming language you can actually read. Built for beginners, designed for clarity.",
   icons: {
-    icon: '/favicon.ico',
+    icon: '/favicon.png',
   },
 };
 
 import InteractiveBackground from "./components/InteractiveBackground";
+import { ThemeProvider } from "@/components/ThemeProvider";
 
 export default function RootLayout({
   children,
@@ -47,8 +48,10 @@ export default function RootLayout({
         suppressHydrationWarning
         className={`${nunito.variable} ${permanentMarker.variable} ${openSans.variable} ${firaCode.variable} font-body antialiased overflow-x-hidden`}
       >
-        <InteractiveBackground />
-        {children}
+        <ThemeProvider>
+          <InteractiveBackground />
+          {children}
+        </ThemeProvider>
       </body>
     </html>
   );
