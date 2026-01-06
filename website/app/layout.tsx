@@ -29,6 +29,9 @@ const firaCode = Fira_Code({
 export const metadata: Metadata = {
   title: "Pumpkin - Code for Humans",
   description: "The programming language you can actually read. Built for beginners, designed for clarity.",
+  icons: {
+    icon: '/favicon.ico',
+  },
 };
 
 import InteractiveBackground from "./components/InteractiveBackground";
