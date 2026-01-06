@@ -24,7 +24,7 @@ interface PostExpandedModalProps {
 export default function PostExpandedModal({ post, currentUserId, onClose }: PostExpandedModalProps) {
     return (
         <AnimatePresence>
-            <div className="fixed inset-0 z-[100] flex items-center justify-center p-4">
+            <div className="fixed inset-0 z-[100] flex items-center justify-center p-6 md:p-4">
                 <motion.div
                     initial={{ opacity: 0 }}
                     animate={{ opacity: 1 }}
@@ -37,7 +37,7 @@ export default function PostExpandedModal({ post, currentUserId, onClose }: Post
                     initial={{ opacity: 0, scale: 0.9, y: 20 }}
                     animate={{ opacity: 1, scale: 1, y: 0 }}
                     exit={{ opacity: 0, scale: 0.9, y: 20 }}
-                    className="relative w-full max-w-2xl max-h-[90vh] overflow-y-auto no-scrollbar rounded-[40px] shadow-2xl"
+                    className="relative w-full max-w-lg md:max-w-2xl max-h-[80vh] md:max-h-[90vh] overflow-y-auto no-scrollbar rounded-[30px] md:rounded-[40px] shadow-2xl"
                 >
                     <button
                         onClick={onClose}
