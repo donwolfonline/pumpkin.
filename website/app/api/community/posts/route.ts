@@ -183,7 +183,13 @@ export async function DELETE(request: NextRequest) {
         // Delete all posts
         await sql`DELETE FROM posts`;
 
-        return NextResponse.json({ message: 'All posts, comments, and likes deleted successfully' });
+        // Delete all rate limits
+        await sql`DELETE FROM rate_limits`;
+
+        // Delete all users
+        await sql`DELETE FROM users`;
+
+        return NextResponse.json({ message: 'All community data (posts, comments, likes, users) deleted successfully' });
     } catch (error) {
         console.error('Delete all posts error:', error);
         return NextResponse.json(
