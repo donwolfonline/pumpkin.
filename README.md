@@ -117,7 +117,7 @@ To keep v0.1 stable, we intentionally excluded:
 * ❌ File I/O
 * ❌ Imports (Partially supported in standard lib)
 
-These are actively being worked on! See our **[Roadmap](/roadmap)**.
+These are actively being worked on! See our **[Roadmap](./ROADMAP.md)**.
 
 ---
 
