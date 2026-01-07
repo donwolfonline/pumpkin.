@@ -93,7 +93,7 @@ export default function ContributingDocs() {
                     </div>
                     <div className="bg-black/40 rounded-3xl p-8 font-code text-base border-2 border-white/5 shadow-inner relative z-10">
                         <div className="space-y-3">
-                            <div className="flex gap-4"><span className="text-white/20 select-none">$</span> <span className="text-emerald-400">git clone https://github.com/donwolfonline/pumpkin.git</span></div>
+                            <div className="flex gap-4"><span className="text-white/20 select-none">$</span> <span className="text-emerald-400">git clone https://github.com/donwolfonline/pumpkin..git</span></div>
                             <div className="flex gap-4"><span className="text-white/20 select-none">$</span> <span className="text-emerald-400">cd pumpkin && npm install</span></div>
                             <div className="flex gap-4"><span className="text-white/20 select-none">$</span> <span className="text-emerald-400">cd pumpkin_core && cargo build --release</span></div>
                             <div className="text-gray-500 mt-6 md:mt-10 py-2 border-t border-white/5 text-sm font-heading"># Verify with Smoke Tests</div>
