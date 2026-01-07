@@ -7,6 +7,18 @@ import Footer from '../components/Footer';
 
 const logs = [
     {
+        date: 'Jan 7, 2026',
+        version: 'v1.4.0',
+        title: 'Open Source & Polish',
+        changes: [
+            'Implemented Dual Licensing: MIT and GNU GPL v3 for greater freedom.',
+            'Refined website footer with a compact, single-line layout.',
+            'Updated logo and trademark guidelines for clarity.',
+            'General UI polish and responsive design improvements.',
+        ],
+        icon: '⚖️'
+    },
+    {
         date: 'Jan 6, 2026',
         version: 'v1.3.0',
         title: 'The Pumpkin Language Features',
