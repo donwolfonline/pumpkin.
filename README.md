@@ -13,14 +13,25 @@ Pumpkin is a programming language built for **humans**, not robots. It removes t
 
 ---
 
+## 🛠️ Built With
+
+Pumpkin is powered by modern, safe, and high-performance technologies:
+
+- ![Rust](https://img.shields.io/badge/Rust-black?logo=rust&logoColor=E57324) **Core Engine:** A high-performance bytecode VM and compiler.
+- ![TypeScript](https://img.shields.io/badge/TypeScript-007ACC?logo=typescript&logoColor=white) **CLI & REPL:** Providing a friendly and stable developer interface.
+- ![WebAssembly](https://img.shields.io/badge/WebAssembly-654FF0?logo=webassembly&logoColor=white) **WASM Bridge:** Seamless execution in both Node.js and the browser.
+- ![Next.js](https://img.shields.io/badge/Next.js-black?logo=next.js&logoColor=white) **Website:** A lightning-fast documentation and playground site.
+
+---
+
 ## 🎨 What can I build?
 
 Pumpkin is designed for **Creative Coding**, **Learning**, and **Exploration**.
 
-* **Algorithmic Art:** Generate patterns which you can see in our "Use Cases" page.
-* **Text Adventures:** Create interactive stories with simple logic.
-* **Math Experiments:** Visualize algorithms and solve problems playfully.
-* **Learning Basics:** Master loops, variables, and conditions without the headache.
+- **Algorithmic Art:** Generate patterns which you can see in our "Use Cases" page.
+- **Text Adventures:** Create interactive stories with simple logic.
+- **Math Experiments:** Visualize algorithms and solve problems playfully.
+- **Learning Basics:** Master loops, variables, and conditions without the headache.
 
 ---
 
@@ -97,22 +108,22 @@ npx pumpkin run hello.pumpkin
 
 Pumpkin allows you to write basic algorithmic logic with a smile.
 
-* **Variables:** `let x = 10`, `let name = "Pumpkin"`
-* **Math:** `+`, `-`, `*`, `/`, `( )` (Human-readable math)
-* **Logic:** `if`, `else`, `and`, `or`, `not`
-* **Loops:** `while`, `repeat`
-* **Output:** `show "text"`
-* **Standard Lib:** Basic math and logic modules.
-* **Comments:** `// This is a comment`
+- **Variables:** `let x = 10`, `let name = "Pumpkin"`
+- **Math:** `+`, `-`, `*`, `/`, `( )` (Human-readable math)
+- **Logic:** `if`, `else`, `and`, `or`, `not`
+- **Loops:** `while`, `repeat`
+- **Output:** `show "text"`
+- **Standard Lib:** Basic math and logic modules.
+- **Comments:** `// This is a comment`
 
 ### What's Missing? (Known Limitations)
 
 To keep v0.1 stable, we intentionally excluded:
 
-* ❌ User-defined Functions
-* ❌ Arrays / Lists
-* ❌ File I/O
-* ❌ Imports (Partially supported in standard lib)
+- ❌ User-defined Functions
+- ❌ Arrays / Lists
+- ❌ File I/O
+- ❌ Imports (Partially supported in standard lib)
 
 These are actively being worked on! See our **[Roadmap](./ROADMAP.md)**.
 
@@ -124,9 +135,9 @@ We love contributors! This project is a great place to learn about language desi
 
 ### Architecture
 
-* **Core:** Written in **Rust** (`/pumpkin_core`). compiled to WASM.
-* **CLI:** Written in **TypeScript** (`/src/cli`). Wraps the WASM core.
-* **Website:** Next.js + React (`/website`). Hosted on Vercel.
+- **Core:** Written in **Rust** (`/pumpkin_core`). compiled to WASM.
+- **CLI:** Written in **TypeScript** (`/src/cli`). Wraps the WASM core.
+- **Website:** Next.js + React (`/website`). Hosted on Vercel.
 
 ### Development Setup
 
