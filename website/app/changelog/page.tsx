@@ -5,6 +5,28 @@ import Link from 'next/link';
 import Navbar from '../components/Navbar';
 import Footer from '../components/Footer';
 
+// Helper to render text with markdown-style links [text](url)
+const renderTextWithLinks = (text: string) => {
+    const parts = text.split(/(\[.*?\]\(.*?\))/g);
+    return parts.map((part, i) => {
+        const match = part.match(/\[(.*?)\]\((.*?)\)/);
+        if (match) {
+            return (
+                <a
+                    key={i}
+                    href={match[2]}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="text-teal-accent font-black hover:underline decoration-wavy underline-offset-4"
+                >
+                    {match[1]}
+                </a>
+            );
+        }
+        return part;
+    });
+};
+
 const logs = [
     {
         date: 'Jan 7, 2026',
@@ -215,7 +237,9 @@ export default function ChangeLogPage() {
                                         {log.changes.map((change, i) => (
                                             <li key={i} className="flex gap-4 text-gray-700 font-bold leading-relaxed items-start">
                                                 <div className="w-2 h-2 bg-teal-accent rounded-full mt-2.5 shadow-[0_0_8px_#3B8B8B]"></div>
-                                                <span className="flex-1 opacity-90 group-hover:opacity-100 transition-opacity">{change}</span>
+                                                <span className="flex-1 opacity-90 group-hover:opacity-100 transition-opacity">
+                                                    {renderTextWithLinks(change)}
+                                                </span>
                                             </li>
                                         ))}
                                     </ul>
