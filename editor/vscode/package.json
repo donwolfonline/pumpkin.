@@ -3,7 +3,7 @@
   "displayName": "Pumpkin Language Support",
   "description": "Syntax highlighting and official file icon for the Pumpkin programming language.",
   "version": "0.1.0",
-  "publisher": "citrullix",
+  "publisher": "FrederickDineen",
   "engines": {
     "vscode": "^1.75.0"
   },
