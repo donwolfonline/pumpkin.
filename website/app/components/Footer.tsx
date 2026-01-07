@@ -13,6 +13,15 @@ export default function Footer() {
                         <Link href="/changelog" className="text-pumpkin-orange font-bold text-xs md:text-sm hover:underline decoration-wavy underline-offset-4">
                             Change Log
                         </Link>
+                        <div className="hidden md:block w-1.5 h-1.5 rounded-full bg-gray-300"></div>
+                        <a
+                            href="https://github.com/donwolfonline/pumpkin/blob/main/LICENSE"
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="text-gray-500 font-medium text-xs md:text-sm hover:text-pumpkin-orange transition-colors"
+                        >
+                            Released under MIT License
+                        </a>
                     </div>
 
                     {/* Center: Founder Info */}
@@ -71,6 +80,12 @@ export default function Footer() {
                             <Github size={16} className="md:w-5 md:h-5" />
                         </a>
                     </div>
+                </div>
+
+                <div className="mt-6 md:mt-8 pt-6 border-t border-gray-900/5">
+                    <p className="text-[10px] md:text-xs leading-relaxed text-gray-400 text-center max-w-4xl mx-auto">
+                        <span className="font-bold text-gray-500">Trademark Notice:</span> The name "Pumpkin", and the "Pumpkin." logo are trademarks of Citrullix Inc. Use of these marks in derivative works requires explicit permission to avoid community confusion.
+                    </p>
                 </div>
             </div>
         </footer>
