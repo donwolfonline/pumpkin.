@@ -28,14 +28,14 @@ export default function InstallationDocs() {
                         </div>
 
                         <div className="bg-burgundy-dark rounded-[30px] p-6 text-emerald-400 font-code text-lg mb-6 relative shadow-inner border-2 border-white/5">
-                            <span className="text-white/40 select-none">$</span> npm install -g pumpkin-lang
+                            <span className="text-white/40 select-none">$</span> npm install pumpkin-lang
                         </div>
                         <p className="text-gray-700 mb-6 font-medium leading-relaxed">
-                            Requires Node.js v14+. Use <code className="bg-pumpkin-orange/10 px-2 py-0.5 rounded border border-pumpkin-orange/20 text-pumpkin-orange font-bold">sudo</code> if you hit permission errors.
+                            Requires Node.js v14+. Add <code className="bg-pumpkin-orange/10 px-2 py-0.5 rounded border border-pumpkin-orange/20 text-pumpkin-orange font-bold">-g</code> for global (may require sudo).
                         </p>
                         <div className="bg-white/5 rounded-[20px] p-4 text-sm font-code text-gray-600 border border-white/10">
                             <span className="text-gray-400"># Verify the install</span><br />
-                            <span className="text-pumpkin-orange font-bold">$</span> pumpkin --version
+                            <span className="text-pumpkin-orange font-bold">$</span> npx pumpkin --version
                         </div>
                     </div>
                 </div>

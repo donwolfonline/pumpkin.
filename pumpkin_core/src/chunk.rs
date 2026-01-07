@@ -1,8 +1,8 @@
-use serde::{Deserialize, Serialize};
 use crate::value::PumpkinValue;
+use serde::{Deserialize, Serialize};
 use std::fmt;
 
-#[derive(Debug, Clone, Copy, PartialEq, Serialize, Deserialize)]
+#[derive(Debug, Clone, PartialEq, Serialize)]
 #[repr(u8)]
 pub enum OpCode {
     // 0x00 - 0x0F: Stack & Constants
@@ -19,7 +19,7 @@ pub enum OpCode {
     SetLocal = 0x11,
     GetGlobal = 0x12,
     SetGlobal = 0x13,
-    
+
     // 0x30 - 0x4F: Arithmetic & Logic
     Add = 0x30,
     Sub = 0x31,
@@ -29,16 +29,18 @@ pub enum OpCode {
     Greater = 0x35,
     Less = 0x36,
     Not = 0x37,
-    
+
     // 0x50 - 0x6F: Control Flow
     Jump = 0x50,
     JumpIfFalse = 0x51,
     Loop = 0x52,
     Call = 0x53,
-    
+    RepeatStart = 0x54,
+    RepeatEnd = 0x55,
+
     // 0x70+: Extensions
     ArrayLit = 0x70,
-    ArrayLit = 0x70,
+
     IndexGet = 0x71,
     IndexSet = 0x72,
     GetProp = 0x73,
@@ -52,7 +54,7 @@ impl From<u8> for OpCode {
     }
 }
 
-#[derive(Debug, Clone, Serialize, Deserialize)]
+#[derive(Debug, Clone, Serialize, PartialEq)]
 pub struct Chunk {
     pub code: Vec<u8>,
     pub constants: Vec<PumpkinValue>,
@@ -72,7 +74,7 @@ impl Chunk {
         self.code.push(byte);
         self.lines.push(line);
     }
-    
+
     pub fn write_op(&mut self, op: OpCode, line: usize) {
         self.code.push(op as u8);
         self.lines.push(line);
@@ -99,10 +101,10 @@ impl fmt::Display for Chunk {
                     i += 2;
                 }
                 OpCode::Jump | OpCode::JumpIfFalse | OpCode::Loop => {
-                     // 16-bit operand
-                     let offset = ((self.code[i+1] as u16) << 8) | (self.code[i+2] as u16);
-                     writeln!(f, "{:?} {}", op, offset)?;
-                     i += 3;
+                    // 16-bit operand
+                    let offset = ((self.code[i + 1] as u16) << 8) | (self.code[i + 2] as u16);
+                    writeln!(f, "{:?} {}", op, offset)?;
+                    i += 3;
                 }
                 _ => {
                     writeln!(f, "{:?}", op)?;

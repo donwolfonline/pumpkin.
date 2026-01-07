@@ -163,3 +163,15 @@ export interface Property extends BaseNode {
     key: Identifier | Literal; // Key can be ident or string
     value: Expression;
 }
+
+export interface IndexExpr extends BaseNode {
+    kind: 'IndexExpr';
+    object: Expression;
+    index: Expression;
+}
+
+export interface MemberExpr extends BaseNode {
+    kind: 'MemberExpr';
+    object: Expression;
+    property: Identifier;
+}

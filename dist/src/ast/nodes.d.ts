@@ -9,7 +9,7 @@ export interface BaseNode {
     loc?: SourceLocation;
 }
 export type Statement = LetStmt | AssignStmt | ShowStmt | IfStmt | RepeatStmt | WhileStmt | FuncDecl | ReturnStmt | ExprStmt;
-export type Expression = BinaryExpr | UnaryExpr | CallExpr | Literal | Identifier | ArrayLiteral | ObjectLiteral;
+export type Expression = BinaryExpr | UnaryExpr | CallExpr | Literal | Identifier | ArrayLiteral | ObjectLiteral | IndexExpr | MemberExpr;
 export interface Program extends BaseNode {
     kind: 'Program';
     body: Statement[];
@@ -21,7 +21,7 @@ export interface LetStmt extends BaseNode {
 }
 export interface AssignStmt extends BaseNode {
     kind: 'AssignStmt';
-    name: Identifier;
+    target: Expression;
     value: Expression;
 }
 export interface ShowStmt extends BaseNode {
@@ -99,5 +99,15 @@ export interface Property extends BaseNode {
     kind: 'Property';
     key: Identifier | Literal;
     value: Expression;
+}
+export interface IndexExpr extends BaseNode {
+    kind: 'IndexExpr';
+    object: Expression;
+    index: Expression;
+}
+export interface MemberExpr extends BaseNode {
+    kind: 'MemberExpr';
+    object: Expression;
+    property: Identifier;
 }
 //# sourceMappingURL=nodes.d.ts.map

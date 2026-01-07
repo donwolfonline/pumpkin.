@@ -157,7 +157,7 @@ export function PumpkinIDE() {
             <div className="bg-white/20 backdrop-blur-md border-t border-gray-200 p-4 text-[10px] md:text-xs font-heading font-black text-gray-500 flex justify-between uppercase tracking-[0.2em] shrink-0 relative z-10">
                 <div className="flex items-center gap-3">
                     <span className="w-2 h-2 rounded-full bg-pumpkin-orange shadow-[0_0_10px_rgba(255,140,26,0.5)]" />
-                    <span>pumpkin runtime v0.1.0</span>
+                    <span>pumpkin runtime v0.1.6</span>
                 </div>
                 <div className="flex items-center gap-4">
                     <span className={isRunning ? 'text-teal-accent animate-pulse flex items-center gap-2' : 'text-gray-400 flex items-center gap-2'}>

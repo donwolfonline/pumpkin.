@@ -8,11 +8,75 @@ import Footer from '../components/Footer';
 const logs = [
     {
         date: 'Jan 7, 2026',
+        version: 'v0.1.6',
+        title: 'Hotfix: Documentation Sync',
+        changes: [
+            'Synchronized all version references in README and CLI output.',
+            'Ensured npm landing page correctly reflects the latest release.',
+        ],
+        icon: '🩹'
+    },
+    {
+        date: 'Jan 7, 2026',
+        version: 'v0.1.5',
+        title: 'Hotfix: Grammar Refinement',
+        changes: [
+            'Added support for `//` style comments alongside `#`.',
+            'Made `times` keyword optional in `repeat` loops (e.g. `repeat 3 { ... }`).',
+            'Fixed parsing errors in examples provided in documentation.',
+        ],
+        icon: '🩹'
+    },
+    {
+        date: 'Jan 7, 2026',
+        version: 'v0.1.4',
+        title: 'Hotfix: ESM Compatibility',
+        changes: [
+            'Fixed `ReferenceError: __dirname is not defined` in CLI and REPL.',
+            'Synchronized versioning across CLI, README, and website IDE components.',
+            'Standardized npx instructions for easier local exploration.',
+        ],
+        icon: '🩹'
+    },
+    {
+        date: 'Jan 7, 2026',
+        version: 'v0.1.3',
+        title: 'Hotfix: WASM Engine Inclusion',
+        changes: [
+            'Fixed critical issue where the WASM core engine was excluded from npm packages.',
+            'Restructured build pipeline to automatically remove hidden gitignore files from distribution.',
+            'Ensured full offline capability for CLI and local installations.',
+        ],
+        icon: '📦'
+    },
+    {
+        date: 'Jan 7, 2026',
+        version: 'v0.1.2',
+        title: 'Hotfix: CLI Entry Point',
+        changes: [
+            'Added `#!/usr/bin/env node` hashbang to CLI entry point to fix execution errors on POSIX systems.',
+            'Ensured `npx pumpkin` and global installation execute correctly.',
+        ],
+        icon: '🩹'
+    },
+    {
+        date: 'Jan 7, 2026',
+        version: 'v0.1.1',
+        title: 'Hotfix: Distribution Paths',
+        changes: [
+            'Fixed `unresolved module` error in CLI runtime by correcting WASM build output path.',
+            'Ensured `npm install pumpkin-lang` works out of the box.',
+        ],
+        icon: '🚑'
+    },
+    {
+        date: 'Jan 7, 2026',
         version: 'v1.4.0',
         title: 'Open Source & Polish',
         changes: [
             'Implemented Dual Licensing: MIT and GNU GPL v3 for greater freedom.',
             'Refined website footer with a compact, single-line layout.',
+            'Added npm registry link to footer.',
             'Updated logo and trademark guidelines for clarity.',
             'General UI polish and responsive design improvements.',
         ],
@@ -23,7 +87,7 @@ const logs = [
         version: 'v1.3.0',
         title: 'The Pumpkin Language Features',
         changes: [
-            'Global installation via `npm install -g pumpkin-lang` now supported.',
+            'Installation via `npm install pumpkin-lang` now supported.',
             'Interactive REPL available via `pumpkin repl` command.',
             'New tour script `pumpkin run examples/tour.pumpkin` added.',
             'Added standard library examples: Guessing Game, Hello World, Daily Routine.',

@@ -49,7 +49,7 @@ Pumpkin {
 
   // repeat N times { ... }
   LoopStmt
-    = "repeat" Exp "times" Block
+    = "repeat" Exp "times"? Block
 
   // while condition { ... }
   WhileStmt
@@ -186,7 +186,7 @@ Pumpkin {
 
   // Comments: # until end of line
   comment
-    = "#" (~"\n" any)*
+    = ("//" | "#") (~"\n" any)*
 
   // Spaces include comments
   space

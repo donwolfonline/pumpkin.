@@ -1,10 +1,10 @@
 # 🎃 Pumpkin: Code for Humans
 
 > **The programming language that grows your ideas.**
-> *v0.1.0 - The Foundation Release*
+> *v0.1.6 - The Foundation Release*
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
-[![Version](https://img.shields.io/badge/version-0.1.0-orange.svg)]()
+[![Version](https://img.shields.io/badge/version-0.1.6-orange.svg)]()
 [![Status](https://img.shields.io/badge/status-experimental-blue.svg)]()
 
 Pumpkin is a programming language built for **humans**, not robots. It removes the scary symbols and confusing jargon, replacing them with clear instructions that make sense the first time you read them.
@@ -31,14 +31,14 @@ Pumpkin is designed for **Creative Coding**, **Learning**, and **Exploration**.
 You can install the Pumpkin CLI via npm. It works on any machine with Node.js installed.
 
 ```bash
-npm install -g pumpkin-lang
+npm install pumpkin-lang
 ```
 
 Verify the installation:
 
 ```bash
-pumpkin version
-# Output: 🎃 Pumpkin v0.1.0
+npx pumpkin --version
+# Output: 🎃 Pumpkin v0.1.6
 ```
 
 ---
@@ -47,11 +47,11 @@ pumpkin version
 
 ### 1. Interactive REPL
 
-Just type `pumpkin repl` to start playing immediately.
+Just type `npx pumpkin repl` to start playing immediately.
 
 ```bash
-$ pumpkin repl
-Welcome to Pumpkin v0.1.0 🎃
+$ npx pumpkin repl
+Welcome to Pumpkin v0.1.6 🎃
 > show "Hello World"
 "Hello World"
 > let x = 10
@@ -78,7 +78,7 @@ repeat 3 {
 Run it:
 
 ```bash
-pumpkin run hello.pumpkin
+npx pumpkin run hello.pumpkin
 ```
 
 ---

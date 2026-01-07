@@ -1,8 +1,9 @@
 use crate::chunk::{Chunk, OpCode};
-use crate::value::{PumpkinValue, PumpkinFunction};
 use crate::errors::PumpkinError;
-use std::rc::Rc;
+use crate::value::{PumpkinFunction, PumpkinValue};
+use std::cell::RefCell;
 use std::collections::HashMap;
+use std::rc::Rc;
 
 pub enum StepResult {
     Continue,
@@ -21,13 +22,13 @@ struct CallFrame {
 pub struct VM {
     frames: Vec<CallFrame>,
     stack: Vec<PumpkinValue>,
-    globals: Rc<crate::env::Environment>, 
+    globals: Rc<crate::env::Environment>,
     trace: bool,
     output_buffer: Vec<String>,
-    
+
     // Module System
-    pub module_registry: HashMap<String, PumpkinValue>, 
-    pub current_exports: HashMap<String, PumpkinValue>, 
+    pub module_registry: HashMap<String, PumpkinValue>,
+    pub current_exports: HashMap<String, PumpkinValue>,
 }
 
 impl VM {
@@ -55,21 +56,25 @@ impl VM {
             current_exports: HashMap::new(),
         }
     }
-    
+
     pub fn with_tracing(mut self, trace: bool) -> Self {
         self.trace = trace;
         self
     }
-    
+
     pub fn get_output(&self) -> Vec<String> {
         self.output_buffer.clone()
     }
-    
+
     // Debugger Accessors
-    pub fn ip(&self) -> usize { 
-        if let Some(frame) = self.frames.last() { frame.ip } else { 0 }
+    pub fn ip(&self) -> usize {
+        if let Some(frame) = self.frames.last() {
+            frame.ip
+        } else {
+            0
+        }
     }
-    
+
     pub fn chunk(&self) -> &Chunk {
         if let Some(frame) = self.frames.last() {
             &frame.function.chunk
@@ -81,7 +86,7 @@ impl VM {
             panic!("VM has no frames");
         }
     }
-     pub fn get_stack_names(&self) -> Vec<String> {
+    pub fn get_stack_names(&self) -> Vec<String> {
         self.stack.iter().map(|v| format!("{}", v)).collect()
     }
 
@@ -97,7 +102,7 @@ impl VM {
 
     pub fn step(&mut self) -> Result<StepResult, PumpkinError> {
         if self.frames.is_empty() {
-             return Ok(StepResult::Done);
+            return Ok(StepResult::Done);
         }
 
         if self.trace {
@@ -110,158 +115,181 @@ impl VM {
         // Actually read_byte returns 0 if OOB. But we should check frame.ip vs len.
         // Let's assume valid bytecode structure or handle 0 as Return/Error?
         // Better: check bounds inside read_byte logic relative to frame.
-        
+
         // Note: OpCode::from(0) is Return. So EOF implicit return.
-        
+
         let op = OpCode::from(byte);
-        
+
         match op {
             OpCode::Return => {
                 let result = self.safe_pop().unwrap_or(PumpkinValue::Null);
-                
+
                 let frame = self.frames.pop().unwrap(); // Pop current frame
-                
+
                 if self.frames.is_empty() {
                     // Script finished
                     return Ok(StepResult::Return(result));
                 }
-                
+
                 // Discard locals: remove everything from stack >= frame.bp
-                // Note: bp includes arguments? 
+                // Note: bp includes arguments?
                 // Usually arguments are below BP or at BP.
                 // In my design: stack: [arg1, arg2, BP_start_locals...]
                 // We should pop args too usually.
                 self.stack.truncate(frame.bp);
-                
+
                 // Push result back for the caller
                 self.push(result);
-                
+
                 Ok(StepResult::Continue)
-            },
+            }
             OpCode::Call => {
                 let arg_count = self.read_byte() as usize;
-                
+
                 // Callee is at stack[len - 1 - arg_count]
                 // e.g. [func, arg1] (count=1). len=2. index=2-1-1=0.
-                let callee_idx = self.stack.len().checked_sub(1 + arg_count)
+                let callee_idx = self
+                    .stack
+                    .len()
+                    .checked_sub(1 + arg_count)
                     .ok_or(self.runtime_error("Stack underflow calling function"))?;
-                    
+
                 let callee = &self.stack[callee_idx];
-                
+
                 if let PumpkinValue::Function(func_rc) = callee {
                     let func = func_rc.clone(); // Clone RC
-                    
+
                     if arg_count != func.arity {
-                        return Err(self.runtime_error(&format!("Expected {} args, got {}", func.arity, arg_count)));
+                        return Err(self.runtime_error(&format!(
+                            "Expected {} args, got {}",
+                            func.arity, arg_count
+                        )));
                     }
-                    
+
                     // Create new frame
-                    // BP points to where args start (or func?). 
+                    // BP points to where args start (or func?).
                     // Usually BP points to slot 0 of the function's window.
                     // If we treat 'callee' slot as slot 0? Or arg1 as slot 0?
                     // Let's say locals 0..N are args.
                     // So BP = callee_idx + 1.
                     // This creates a window [arg1, arg2...].
-                    // The function value itself stays on stack "below" window? 
+                    // The function value itself stays on stack "below" window?
                     // Or we replace function slot with return value later?
                     // Let's set BP = callee_idx. The function is local 0 ??
                     // No, usually args are locals 0..N-1.
                     // Let's set BP at `callee_idx + 1`. slot 0 = arg 1.
                     let bp = callee_idx + 1;
-                    
+
                     let new_frame = CallFrame {
                         function: func,
                         ip: 0,
                         bp,
                     };
-                    
+
                     if self.frames.len() >= 64 {
                         return Err(self.runtime_error("Stack overflow"));
                     }
-                    
+
                     self.frames.push(new_frame);
                     Ok(StepResult::Continue)
-                    
                 } else {
-                     return Err(self.runtime_error("Can only call functions"));
+                    return Err(self.runtime_error("Can only call functions"));
                 }
-            },
+            }
             OpCode::Print => {
                 let val = self.safe_pop()?;
                 let output = format!("{}", val);
-                if self.trace { println!("> {}", output); }
+                if self.trace {
+                    println!("> {}", output);
+                }
                 self.output_buffer.push(output);
-                 Ok(StepResult::Continue)
-            },
+                Ok(StepResult::Continue)
+            }
             OpCode::Constant => {
                 let constant_idx = self.read_byte() as usize;
                 let frame = self.frames.last().unwrap();
                 if constant_idx >= frame.function.chunk.constants.len() {
-                        return Err(self.runtime_error("Constant index out of bounds"));
+                    return Err(self.runtime_error("Constant index out of bounds"));
                 }
                 let constant = frame.function.chunk.constants[constant_idx].clone();
                 self.push(constant);
-                 Ok(StepResult::Continue)
-            },
-            OpCode::Nil => { self.push(PumpkinValue::Null); Ok(StepResult::Continue) },
-            OpCode::True => { self.push(PumpkinValue::Boolean(true)); Ok(StepResult::Continue) },
-            OpCode::False => { self.push(PumpkinValue::Boolean(false)); Ok(StepResult::Continue) },
-            OpCode::Pop => { self.safe_pop()?; Ok(StepResult::Continue) },
-            
+                Ok(StepResult::Continue)
+            }
+            OpCode::Nil => {
+                self.push(PumpkinValue::Null);
+                Ok(StepResult::Continue)
+            }
+            OpCode::True => {
+                self.push(PumpkinValue::Boolean(true));
+                Ok(StepResult::Continue)
+            }
+            OpCode::False => {
+                self.push(PumpkinValue::Boolean(false));
+                Ok(StepResult::Continue)
+            }
+            OpCode::Pop => {
+                self.safe_pop()?;
+                Ok(StepResult::Continue)
+            }
+
             OpCode::Add => {
                 let b = self.safe_pop()?;
                 let a = self.safe_pop()?;
                 self.push(a.add(&b)?);
                 Ok(StepResult::Continue)
-            },
+            }
             OpCode::Sub => {
                 let b = self.safe_pop()?;
                 let a = self.safe_pop()?;
                 self.push(a.sub(&b)?);
                 Ok(StepResult::Continue)
-            },
+            }
             OpCode::Mul => {
                 let b = self.safe_pop()?;
                 let a = self.safe_pop()?;
                 self.push(a.mul(&b)?);
                 Ok(StepResult::Continue)
-            },
+            }
             OpCode::Div => {
                 let b = self.safe_pop()?;
                 let a = self.safe_pop()?;
                 self.push(a.div(&b)?);
                 Ok(StepResult::Continue)
-            },
+            }
             OpCode::Equal => {
                 let b = self.safe_pop()?;
                 let a = self.safe_pop()?;
                 self.push(PumpkinValue::Boolean(a == b));
                 Ok(StepResult::Continue)
-            },
+            }
             OpCode::Greater => {
-                    let b = self.safe_pop()?;
-                    let a = self.safe_pop()?;
-                    match (a, b) {
-                        (PumpkinValue::Number(n1), PumpkinValue::Number(n2)) => self.push(PumpkinValue::Boolean(n1 > n2)),
-                        _ => return Err(self.runtime_error("Type error > operands must be numbers")),
+                let b = self.safe_pop()?;
+                let a = self.safe_pop()?;
+                match (a, b) {
+                    (PumpkinValue::Number(n1), PumpkinValue::Number(n2)) => {
+                        self.push(PumpkinValue::Boolean(n1 > n2))
                     }
-                    Ok(StepResult::Continue)
-            },
+                    _ => return Err(self.runtime_error("Type error > operands must be numbers")),
+                }
+                Ok(StepResult::Continue)
+            }
             OpCode::Less => {
-                    let b = self.safe_pop()?;
-                    let a = self.safe_pop()?;
-                    match (a, b) {
-                        (PumpkinValue::Number(n1), PumpkinValue::Number(n2)) => self.push(PumpkinValue::Boolean(n1 < n2)),
-                        _ => return Err(self.runtime_error("Type error < operands must be numbers")),
+                let b = self.safe_pop()?;
+                let a = self.safe_pop()?;
+                match (a, b) {
+                    (PumpkinValue::Number(n1), PumpkinValue::Number(n2)) => {
+                        self.push(PumpkinValue::Boolean(n1 < n2))
                     }
-                    Ok(StepResult::Continue)
-            },
+                    _ => return Err(self.runtime_error("Type error < operands must be numbers")),
+                }
+                Ok(StepResult::Continue)
+            }
             OpCode::Not => {
                 let a = self.safe_pop()?;
                 self.push(PumpkinValue::Boolean(!a.is_truthy()));
                 Ok(StepResult::Continue)
-            },
-            
+            }
+
             OpCode::GetGlobal => {
                 let name_idx = self.read_byte() as usize;
                 let frame = self.frames.last().unwrap();
@@ -276,21 +304,24 @@ impl VM {
                     return Err(self.runtime_error("Corrupt bytecode: Global name not string"));
                 }
                 Ok(StepResult::Continue)
-            },
+            }
             OpCode::SetGlobal => {
                 let name_idx = self.read_byte() as usize;
                 let frame = self.frames.last().unwrap();
                 let name_val = &frame.function.chunk.constants[name_idx];
                 if let PumpkinValue::String(name) = name_val {
-                        let val = self.peek(0).ok_or(self.runtime_error("Stack underflow on SetGlobal"))?.clone();
-                        // name is Rc<String>, assign takes &String usually.
-                        if self.globals.assign(name, val.clone()).is_err() {
-                            self.globals.define(name.to_string(), val); // Define usually takes String ownership? Check env.
-                        }
+                    let val = self
+                        .peek(0)
+                        .ok_or(self.runtime_error("Stack underflow on SetGlobal"))?
+                        .clone();
+                    // name is Rc<String>, assign takes &String usually.
+                    if self.globals.assign(name, val.clone()).is_err() {
+                        self.globals.define(name.as_str(), val); // Define usually takes String ownership? Check env.
+                    }
                 }
                 Ok(StepResult::Continue)
-            },
-            
+            }
+
             // Locals
             OpCode::GetLocal => {
                 let slot = self.read_byte() as usize;
@@ -298,137 +329,191 @@ impl VM {
                 // Access stack relative to BP
                 let absolute_slot = frame.bp + slot;
                 if absolute_slot >= self.stack.len() {
-                     return Err(self.runtime_error("Local variable slot OOB"));
+                    return Err(self.runtime_error("Local variable slot OOB"));
                 }
                 self.push(self.stack[absolute_slot].clone());
                 Ok(StepResult::Continue)
-            },
+            }
             OpCode::SetLocal => {
                 let slot = self.read_byte() as usize;
                 let frame = self.frames.last().unwrap();
                 let absolute_slot = frame.bp + slot;
                 // Peek val
-                let val = self.peek(0).ok_or(self.runtime_error("Stack underflow SetLocal"))?.clone();
+                let val = self
+                    .peek(0)
+                    .ok_or(self.runtime_error("Stack underflow SetLocal"))?
+                    .clone();
                 if absolute_slot >= self.stack.len() {
                     // Usually locals are initialized/pushed before Set?
-                    // If we are defining a local, we just Push? 
+                    // If we are defining a local, we just Push?
                     // No, SetLocal replaces existing slot.
                     // Compiler must guarantee slot exists (arguments or previously pushed locals).
                     return Err(self.runtime_error("Local variable slot OOB (Set)"));
                 }
                 self.stack[absolute_slot] = val;
                 Ok(StepResult::Continue)
-            },
-            
+            }
+
             OpCode::Jump => {
                 let offset = self.read_u16();
                 let frame = self.frames.last_mut().unwrap();
                 frame.ip += offset as usize;
                 Ok(StepResult::Continue)
-            },
+            }
             OpCode::JumpIfFalse => {
                 let offset = self.read_u16();
-                let cond = self.peek(0).ok_or(self.runtime_error("Stack underflow JumpIfFalse"))?;
+                let cond = self
+                    .peek(0)
+                    .ok_or(self.runtime_error("Stack underflow JumpIfFalse"))?;
                 if !cond.is_truthy() {
                     let frame = self.frames.last_mut().unwrap();
                     frame.ip += offset as usize;
                 }
                 Ok(StepResult::Continue)
-            },
+            }
             OpCode::Loop => {
                 let offset = self.read_u16();
                 let frame = self.frames.last_mut().unwrap();
                 frame.ip -= offset as usize;
                 Ok(StepResult::Continue)
-            },
-            
+            }
+            OpCode::RepeatStart => {
+                let offset = self.read_u16();
+                let val = self.safe_pop()?;
+                match val {
+                    PumpkinValue::Number(n) => {
+                        if n <= 0.0 {
+                            let frame = self.frames.last_mut().unwrap();
+                            frame.ip += offset as usize;
+                        } else {
+                            // Push the counter to stack for RepeatEnd to use
+                            self.push(PumpkinValue::Number(n));
+                        }
+                    }
+                    _ => return Err(self.runtime_error("Repeat count must be a number")),
+                }
+                Ok(StepResult::Continue)
+            }
+            OpCode::RepeatEnd => {
+                let offset = self.read_u16();
+                // Peek the counter
+                let counter = self
+                    .peek(0)
+                    .ok_or(self.runtime_error("Stack underflow in RepeatEnd"))?
+                    .clone();
+                match counter {
+                    PumpkinValue::Number(n) => {
+                        let next_n = n - 1.0;
+                        if next_n >= 1.0 {
+                            // Update counter on stack and loop
+                            let last_idx = self.stack.len() - 1;
+                            self.stack[last_idx] = PumpkinValue::Number(next_n);
+                            let frame = self.frames.last_mut().unwrap();
+                            frame.ip -= offset as usize;
+                        } else {
+                            // Loop finished, pop the counter
+                            self.safe_pop()?;
+                        }
+                    }
+                    _ => {
+                        return Err(
+                            self.runtime_error("Internal error: Repeat counter is not a number")
+                        )
+                    }
+                }
+                Ok(StepResult::Continue)
+            }
+
             // --- Module Ops (reuse logic but context is frame) ---
-            OpCode::Import => { 
+            OpCode::Import => {
                 self.run_import_op()?; // Extracted? Or inline.
                 Ok(StepResult::Continue)
-            },
+            }
             OpCode::Export => {
-                 self.run_export_op()?;
-                 Ok(StepResult::Continue)
-            },
+                self.run_export_op()?;
+                Ok(StepResult::Continue)
+            }
             OpCode::ArrayLit => {
                 let count = self.read_u16() as usize;
-                
+
                 // Pop count elements
                 // They are on stack in order: [e1, e2, e3] (pushed last is e3)
                 // If we want array [e1, e2, e3], we need to pop into vec in reverse, then reverse vec?
                 // Or split off stack.
                 // Stack: [..., e1, e2, e3]
                 // We want to remove last count elements and put them in a vector.
-                let start_idx = self.stack.len().checked_sub(count)
+                let start_idx = self
+                    .stack
+                    .len()
+                    .checked_sub(count)
                     .ok_or(self.runtime_error("Stack underflow ArrayLit"))?;
-                
+
                 // Drain returns iterator, collect into Vec
                 let elements: Vec<PumpkinValue> = self.stack.drain(start_idx..).collect();
-                
+
                 let list_val = PumpkinValue::List(Rc::new(RefCell::new(elements)));
                 self.push(list_val);
                 Ok(StepResult::Continue)
-            },
+            }
             OpCode::IndexGet => {
-                 let index_val = self.safe_pop()?;
-                 let obj = self.safe_pop()?;
-                 
-                 match obj {
-                     PumpkinValue::List(list_rc) => {
-                         let list = list_rc.borrow();
-                         match index_val {
-                             PumpkinValue::Number(n) => {
-                                 let idx = n as usize;
-                                 if n < 0.0 || idx >= list.len() {
-                                     return Err(self.runtime_error("Index out of bounds"));
-                                 }
-                                 self.push(list[idx].clone());
-                             },
-                             _ => return Err(self.runtime_error("Index must be a number")),
-                         }
-                     },
-                     // Handle String indexing? Maybe later.
-                     _ => return Err(self.runtime_error("IndexGet on non-agregate")),
-                 }
-                 Ok(StepResult::Continue)
-            },
+                let index_val = self.safe_pop()?;
+                let obj = self.safe_pop()?;
+
+                match obj {
+                    PumpkinValue::List(list_rc) => {
+                        let list = list_rc.borrow();
+                        match index_val {
+                            PumpkinValue::Number(n) => {
+                                let idx = n as usize;
+                                if n < 0.0 || idx >= list.len() {
+                                    return Err(self.runtime_error("Index out of bounds"));
+                                }
+                                self.push(list[idx].clone());
+                            }
+                            _ => return Err(self.runtime_error("Index must be a number")),
+                        }
+                    }
+                    // Handle String indexing? Maybe later.
+                    _ => return Err(self.runtime_error("IndexGet on non-agregate")),
+                }
+                Ok(StepResult::Continue)
+            }
             OpCode::IndexSet => {
                 let val = self.safe_pop()?;
                 let index_val = self.safe_pop()?;
                 let obj = self.safe_pop()?; // The array
-                
+
                 match obj {
                     PumpkinValue::List(list_rc) => {
                         let mut list = list_rc.borrow_mut();
-                         match index_val {
-                             PumpkinValue::Number(n) => {
-                                 let idx = n as usize;
-                                 if n < 0.0 || idx >= list.len() {
-                                     return Err(self.runtime_error("Index out of bounds"));
-                                 }
-                                 list[idx] = val.clone();
-                                 self.push(val); // Assignment expression result
-                             },
-                             _ => return Err(self.runtime_error("Index must be a number")),
-                         }
-                    },
+                        match index_val {
+                            PumpkinValue::Number(n) => {
+                                let idx = n as usize;
+                                if n < 0.0 || idx >= list.len() {
+                                    return Err(self.runtime_error("Index out of bounds"));
+                                }
+                                list[idx] = val.clone();
+                                self.push(val); // Assignment expression result
+                            }
+                            _ => return Err(self.runtime_error("Index must be a number")),
+                        }
+                    }
                     _ => return Err(self.runtime_error("IndexSet on non-list")),
                 }
                 Ok(StepResult::Continue)
-            },
+            }
 
             OpCode::GetProp => {
                 self.run_get_prop()?;
                 Ok(StepResult::Continue)
-            },
-            
+            }
+
             _ => return Err(self.runtime_error(&format!("OpCode {:?} not implemented", op))),
         }
     }
 
     // --- Helpers (Updated for Frames) ---
-    
+
     // Extracted Ops for brevity/cleanliness
     fn run_import_op(&mut self) -> Result<(), PumpkinError> {
         let name_idx = self.read_byte() as usize;
@@ -438,31 +523,35 @@ impl VM {
             if let Some(module) = self.module_registry.get(name.as_str()) {
                 self.push(module.clone());
             } else {
-                    return Err(self.runtime_error(&format!("Module '{}' not found", name)));
+                return Err(self.runtime_error(&format!("Module '{}' not found", name)));
             }
         }
         Ok(())
     }
-    
+
     fn run_export_op(&mut self) -> Result<(), PumpkinError> {
-         let name_idx = self.read_byte() as usize;
-         let frame = self.frames.last().unwrap();
-         let name_val = &frame.function.chunk.constants[name_idx];
-            if let PumpkinValue::String(name) = name_val {
-                let val = self.safe_pop()?;
-                self.current_exports.insert(name.to_string(), val);
-            }
+        let name_idx = self.read_byte() as usize;
+        let name = {
+            let frame = self.frames.last().unwrap();
+            match &frame.function.chunk.constants[name_idx] {
+                PumpkinValue::String(s) => s.to_string(),
+                _ => return Err(self.runtime_error("Export name must be string")),
+            } // frame borrow ends here
+        };
+
+        let val = self.safe_pop()?;
+        self.current_exports.insert(name, val);
         Ok(())
     }
-    
+
     fn run_get_prop(&mut self) -> Result<(), PumpkinError> {
         let prop_idx = self.read_byte() as usize;
         let frame = self.frames.last().unwrap();
         let prop_name = match &frame.function.chunk.constants[prop_idx] {
             PumpkinValue::String(s) => s.to_string(),
-             _ => return Err(self.runtime_error("Property name must be string")),
+            _ => return Err(self.runtime_error("Property name must be string")),
         };
-        
+
         let obj = self.safe_pop()?;
         if let PumpkinValue::Object(map_rc) = obj {
             let map = map_rc.borrow();
@@ -482,48 +571,63 @@ impl VM {
     }
 
     fn safe_pop(&mut self) -> Result<PumpkinValue, PumpkinError> {
-        self.stack.pop().ok_or(self.runtime_error("Stack underflow"))
+        self.stack
+            .pop()
+            .ok_or(self.runtime_error("Stack underflow"))
     }
-    
+
     fn peek(&self, distance: usize) -> Option<&PumpkinValue> {
-        if self.stack.len() <= distance { return None; }
+        if self.stack.len() <= distance {
+            return None;
+        }
         Some(&self.stack[self.stack.len() - 1 - distance])
     }
 
     fn read_byte(&mut self) -> u8 {
         let frame = self.frames.last_mut().unwrap();
         if frame.ip < frame.function.chunk.code.len() {
-             let b = frame.function.chunk.code[frame.ip];
-             frame.ip += 1;
-             b
+            let b = frame.function.chunk.code[frame.ip];
+            frame.ip += 1;
+            b
         } else {
             0
         }
     }
-    
+
     fn read_u16(&mut self) -> u16 {
         let b1 = self.read_byte() as u16;
         let b2 = self.read_byte() as u16;
         (b1 << 8) | b2
     }
-    
+
     fn runtime_error(&self, msg: &str) -> PumpkinError {
         // Use top frame for line
         if let Some(frame) = self.frames.last() {
-             let line = if frame.ip > 0 && frame.ip <= frame.function.chunk.lines.len() {
-                 frame.function.chunk.lines.get(frame.ip - 1).cloned()
-             } else { None };
-             
-             PumpkinError::RuntimeError {
+            let line = if frame.ip > 0 && frame.ip <= frame.function.chunk.lines.len() {
+                frame.function.chunk.lines.get(frame.ip - 1).cloned()
+            } else {
+                None
+            };
+
+            PumpkinError::RuntimeError {
                 message: msg.to_string(),
-                location: line.map(|l| crate::ast::SourceLocation { line: l, col: 0, length: 0 }),
+                location: line.map(|l| crate::ast::SourceLocation {
+                    line: l,
+                    col: 0,
+                    start: 0,
+                    end: 0,
+                }),
                 hint: None,
             }
         } else {
-            PumpkinError::RuntimeError { message: msg.to_string(), location: None, hint: None }
+            PumpkinError::RuntimeError {
+                message: msg.to_string(),
+                location: None,
+                hint: None,
+            }
         }
     }
-    
+
     fn trace_execution(&self) {
         print!("          ");
         for val in &self.stack {

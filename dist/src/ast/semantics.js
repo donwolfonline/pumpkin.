@@ -16,7 +16,7 @@ semantics.addOperation('toAST', {
             loc: getLoc(this)
         };
     },
-    LetDecl(_let, identifier, _eq, exp) {
+    LetDecl(_let, identifier, _colon, _type, _eq, exp) {
         return {
             kind: 'LetStmt',
             name: identifier.toAST(),
@@ -27,7 +27,7 @@ semantics.addOperation('toAST', {
     Reassignment(identifier, _eq, exp) {
         return {
             kind: 'AssignStmt',
-            name: identifier.toAST(),
+            target: identifier.toAST(),
             value: exp.toAST(),
             loc: getLoc(this)
         };
@@ -43,7 +43,7 @@ semantics.addOperation('toAST', {
         // Mapping Ask to an assignment of a call to 'ask'
         return {
             kind: 'AssignStmt',
-            name: identifier.toAST(),
+            target: identifier.toAST(),
             value: {
                 kind: 'CallExpr',
                 callee: { kind: 'Identifier', name: 'ask' },
@@ -77,7 +77,7 @@ semantics.addOperation('toAST', {
             loc: getLoc(this)
         };
     },
-    FuncDecl(_func, identifier, _lp, params, _rp, block) {
+    FuncDecl(_func, identifier, _lp, params, _rp, _colon, _type, block) {
         const paramList = params.numChildren > 0 ? params.children[0].toAST() : [];
         return {
             kind: 'FuncDecl',

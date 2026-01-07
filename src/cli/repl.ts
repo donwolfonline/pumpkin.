@@ -4,20 +4,21 @@
 import * as readlineSync from 'readline-sync';
 import * as path from 'path';
 import * as fs from 'fs';
+import { fileURLToPath } from 'url';
+
+const __dirname = fileURLToPath(new URL('.', import.meta.url));
+
 // @ts-ignore
-import init, { PumpkinVM } from '../../pumpkin_core/pkg/pumpkin_core.js';
+import { PumpkinVM } from '../../pumpkin_core/pkg/pumpkin_core.js';
 // @ts-ignore
 import { parseToAST } from '../parser.js';
 
+
 export async function replCommand() {
-    console.log("🎃 Pumpkin REPL v0.1.0");
+    console.log("🎃 Pumpkin REPL v0.1.6");
     console.log("Type 'exit' to quit.\n");
 
-    // 1. Initialize WASM
-    const wasmPath = path.resolve(__dirname, '../../pumpkin_core/pkg/pumpkin_core_bg.wasm');
-    const wasmBuffer = fs.readFileSync(wasmPath);
-
-    await init(wasmBuffer);
+    // 1. Initialize VM (WASM is auto-loaded by the nodejs target bridge)
     const vm = new PumpkinVM();
 
     while (true) {

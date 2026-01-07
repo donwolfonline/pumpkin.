@@ -1,64 +1,48 @@
-
-// src/renderer/browser.tsx
-
 /**
  * Browser Error Renderer
- * React components for displaying errors and output in the web playground.
+ * 
+ * Formats errors for browser display (e.g. in a playground).
  */
 
 import React from 'react';
-import type { PumpkinError } from '../errors';
+import type { PumpkinError } from '../errors.js';
 
 interface ErrorDisplayProps {
-    error: PumpkinError;
+    error: PumpkinError | Error | any;
+}
+
+interface OutputDisplayProps {
+    output: string[];
+}
+
+interface ResultDisplayProps {
+    output?: string[];
+    error?: PumpkinError | Error | any;
 }
 
 export const ErrorDisplay: React.FC<ErrorDisplayProps> = ({ error }) => {
-    const getMessage = (): string => {
-        if (error.message) {
-            return error.message;
+    const getMessage = () => {
+        if (error instanceof Error && 'what' in error) {
+            return (error as any).what || error.message;
         }
-        if (error.expected && error.actual) {
-            return `Expected ${error.expected}, but got ${error.actual}.`;
-        }
-        if (error.name) {
-            return `Variable '${error.name}' is not defined.`;
-        }
-        return "Unknown error";
+        return String(error.message || error);
     };
 
     return (
         <div className="pumpkin-error-display">
             <div className="error-header">
                 <span className="error-icon">🚨</span>
-                <span className="error-kind">{error.kind}</span>: {getMessage()}
+                <span className="error-title">Error</span>
             </div>
-            {error.location && (
-                <div className="error-location">
-                    at line {error.location.line}, column {error.location.col}
-                </div>
-            )}
-            {error.hint && (
-                <div className="error-hint">
-                    <span className="hint-icon">💡</span> Hint: {error.hint}
-                </div>
-            )}
+            <div className="error-message">{getMessage()}</div>
         </div>
     );
 };
 
-interface OutputDisplayProps {
-    lines: string[];
-}
-
-export const OutputDisplay: React.FC<OutputDisplayProps> = ({ lines }) => {
-    if (lines.length === 0) {
-        return null;
-    }
-
+export const OutputDisplay: React.FC<OutputDisplayProps> = ({ output }) => {
     return (
         <div className="pumpkin-output-display">
-            {lines.map((line, index) => (
+            {output.map((line, index) => (
                 <div key={index} className="output-line">
                     {line}
                 </div>
@@ -67,17 +51,10 @@ export const OutputDisplay: React.FC<OutputDisplayProps> = ({ lines }) => {
     );
 };
 
-// Optional: Combined Result Display
-interface ResultDisplayProps {
-    output: string[];
-    error?: PumpkinError;
-}
-
 export const ResultDisplay: React.FC<ResultDisplayProps> = ({ output, error }) => {
     return (
         <div className="pumpkin-result-display">
-            {output.length > 0 && <OutputDisplay lines={output} />}
-            {error && <ErrorDisplay error={error} />}
+            {error ? <ErrorDisplay error={error} /> : output && <OutputDisplay output={output} />}
         </div>
     );
 };

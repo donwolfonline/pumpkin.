@@ -1,4 +1,3 @@
-
 // pumpkin_core/src/ast.rs
 
 use serde::{Deserialize, Serialize};
@@ -195,5 +194,33 @@ pub struct IndexExpr {
 pub struct MemberExpr {
     pub object: Box<Expression>,
     pub property: Identifier,
+    pub loc: Option<SourceLocation>,
+}
+
+impl Expression {
+    pub fn loc(&self) -> &Option<SourceLocation> {
+        match self {
+            Expression::BinaryExpr(e) => &e.loc,
+            Expression::UnaryExpr(e) => &e.loc,
+            Expression::CallExpr(e) => &e.loc,
+            Expression::Literal(e) => &e.loc,
+            Expression::Identifier(e) => &e.loc,
+            Expression::ArrayLiteral(e) => &e.loc,
+            Expression::ObjectLiteral(e) => &e.loc,
+            Expression::IndexExpr(e) => &e.loc,
+            Expression::MemberExpr(e) => &e.loc,
+        }
+    }
+}
+
+#[derive(Debug, Clone, PartialEq, Serialize, Deserialize)]
+pub struct ImportStmt {
+    pub module: String,
+    pub loc: Option<SourceLocation>,
+}
+
+#[derive(Debug, Clone, PartialEq, Serialize, Deserialize)]
+pub struct ExportStmt {
+    pub declaration: Box<Statement>,
     pub loc: Option<SourceLocation>,
 }

@@ -3,8 +3,12 @@
 
 import * as fs from 'fs';
 import * as path from 'path';
+import { fileURLToPath } from 'url';
+
+const __dirname = fileURLToPath(new URL('.', import.meta.url));
+
 // @ts-ignore
-import init, { PumpkinVM } from '../../pumpkin_core/pkg/pumpkin_core.js';
+import { PumpkinVM } from '../../pumpkin_core/pkg/pumpkin_core.js';
 // We assume index.ts in src exports parseToAST or similar, 
 // based on previous context, user has `src/index.ts` or `src/parser.ts`.
 // I will attempt to import from `../index.js` or generic location.
@@ -18,13 +22,7 @@ export async function runCommand(filePath: string) {
         process.exit(1);
     }
 
-    // 1. Initialize WASM
-    // Path resolution to the .wasm file is tricky in node + commonjs/esm mix.
-    // We assume the build output structure puts pkg nearby.
-    const wasmPath = path.resolve(__dirname, '../../pumpkin_core/pkg/pumpkin_core_bg.wasm');
-    const wasmBuffer = fs.readFileSync(wasmPath);
-
-    await init(wasmBuffer);
+    // 1. Initialize VM (WASM is auto-loaded by the nodejs target bridge)
     const vm = new PumpkinVM();
 
     // 2. Read & Parse

@@ -75,7 +75,20 @@ function evalLetStmt(stmt, env) {
 }
 function evalAssignStmt(stmt, env) {
     const value = evaluate(stmt.value, env);
-    env.assign(stmt.name.name, value);
+    // Handle different target types
+    if (stmt.target.kind === 'Identifier') {
+        const id = stmt.target;
+        env.assign(id.name, value);
+    }
+    else if (stmt.target.kind === 'IndexExpr') {
+        const idx = stmt.target;
+        const obj = evaluate(idx.object, env);
+        const index = evaluate(idx.index, env);
+        obj[index] = value;
+    }
+    else {
+        throw new Error(`Invalid assignment target: ${stmt.target.kind}`);
+    }
 }
 function evalShowStmt(stmt, env) {
     const value = evaluate(stmt.expression, env);

@@ -4,7 +4,7 @@
 import { runCommand } from './run.js';
 import { replCommand } from './repl.js';
 
-const VERSION = "0.1.0";
+const VERSION = "0.1.6";
 
 export function main() {
     const args = process.argv.slice(2);

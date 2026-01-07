@@ -131,7 +131,7 @@ export function EducationalIDE({ initialCode, lessonTitle }: EducationalIDEProps
             <div className="bg-white/20 backdrop-blur-md border-t border-white/10 p-3 px-6 text-[10px] font-heading font-black text-gray-400 flex justify-between uppercase tracking-widest shrink-0">
                 <span className="flex items-center gap-2">
                     <div className="w-1.5 h-1.5 bg-pumpkin-orange rounded-full" />
-                    pumpkin v0.1.0
+                    pumpkin v0.1.6
                 </span>
                 <span className={isRunning ? 'text-green-500 animate-pulse flex items-center gap-2' : 'text-gray-300 flex items-center gap-2'}>
                     <div className={`w-1.5 h-1.5 rounded-full ${isRunning ? 'bg-green-500 shadow-[0_0_8px_#22c55e]' : 'bg-gray-400'}`} />

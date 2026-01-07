@@ -88,6 +88,18 @@ export default function Footer() {
                         <div className="h-4 w-[1px] bg-gray-300 mx-1"></div>
 
                         <a
+                            href="https://www.npmjs.com/package/pumpkin-lang"
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="text-gray-600 hover:text-[#CB3837] transition-all transform hover:scale-110"
+                            aria-label="NPM Package"
+                        >
+                            <svg viewBox="0 0 256 256" className="w-5 h-5 fill-current" role="img" aria-label="NPM">
+                                <path d="M0 256V0h256v256z" fill="#C12127" fillOpacity="0" />
+                                <path d="M48 48h160v160h-32V80h-48v128H48z" />
+                            </svg>
+                        </a>
+                        <a
                             href="https://github.com/donwolfonline/pumpkin."
                             target="_blank"
                             rel="noopener noreferrer"

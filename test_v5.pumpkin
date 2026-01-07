@@ -1,0 +1,11 @@
+
+// hello.pumpkin
+let name = "Developer"
+show "Hello, " + name + "!"
+
+let count = 0
+repeat 3 {
+    count = count + 1
+    show count
+}
+

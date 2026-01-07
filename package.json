@@ -1,6 +1,6 @@
 {
   "name": "pumpkin-lang",
-  "version": "0.1.0",
+  "version": "0.1.6",
   "main": "dist/src/index.js",
   "type": "module",
   "bin": {
@@ -12,8 +12,10 @@
     "LICENSE"
   ],
   "scripts": {
-    "prebuild": "cd pumpkin_core && wasm-pack build --target nodejs --out-dir ../dist/pkg",
-    "build": "tsc && cp -r grammar dist/",
+    "clean": "rm -rf dist",
+    "build:wasm": "cd pumpkin_core && wasm-pack build --target nodejs --out-dir ../dist/pumpkin_core/pkg && rm -f ../dist/pumpkin_core/pkg/.gitignore",
+    "build:ts": "tsc && cp -r grammar dist/",
+    "build": "npm run clean && npm run build:wasm && npm run build:ts",
     "prepublishOnly": "npm run build",
     "start": "npm run build && node dist/src/cli.js repl",
     "test": "echo \"Error: no test specified\" && exit 1"
@@ -35,5 +37,10 @@
     "readline-sync": "^1.4.10",
     "ts-node": "^10.9.2",
     "typescript": "^5.9.3"
+  },
+  "devDependencies": {
+    "@types/react": "^19.2.7",
+    "@types/react-dom": "^19.2.3",
+    "react": "^19.2.3"
   }
 }
