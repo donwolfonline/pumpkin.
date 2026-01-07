@@ -30,6 +30,17 @@ const renderTextWithLinks = (text: string) => {
 const logs = [
     {
         date: 'Jan 7, 2026',
+        version: 'v0.1.8',
+        title: 'Hotfix: Documentation Polish',
+        changes: [
+            'Updated official Marketplace links across README, NPM, and Website.',
+            'Standardized "Click here to install" language for extension discovery.',
+            'Fixed minor linting issues in project documentation.',
+        ],
+        icon: '🔧'
+    },
+    {
+        date: 'Jan 7, 2026',
         version: 'v0.1.7',
         title: 'Release: Official Branding & Editor Support',
         changes: [

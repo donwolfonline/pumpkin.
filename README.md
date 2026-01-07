@@ -1,11 +1,11 @@
 # 🎃 Pumpkin: Code for Humans
 
 > **The programming language that grows your ideas.**
-> *v0.1.7 - The Foundation Release*
+> *v0.1.8 - The Foundation Release*
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
-[![Version](https://img.shields.io/badge/version-0.1.7-orange.svg)]()
-[![Status](https://img.shields.io/badge/status-experimental-blue.svg)]()
+[![Version](https://img.shields.io/badge/version-0.1.8-orange.svg)](https://www.npmjs.com/package/pumpkin-lang)
+[![Status](https://img.shields.io/badge/status-experimental-blue.svg)](https://github.com/donwolfonline/pumpkin.)
 
 Pumpkin is a programming language built for **humans**, not robots. It removes the scary symbols and confusing jargon, replacing them with clear instructions that make sense the first time you read them.
 
@@ -38,7 +38,7 @@ Verify the installation:
 
 ```bash
 npx pumpkin --version
-# Output: 🎃 Pumpkin v0.1.7
+# Output: 🎃 Pumpkin v0.1.8
 ```
 
 ### Editor Support (VS Code)
@@ -46,7 +46,7 @@ npx pumpkin --version
 To get file icons and syntax highlighting, install our official extension:
 
 1. Search for **"Pumpkin Language Support"** in the VS Code Extensions view.
-2. Or visit the **[VS Code Marketplace](https://marketplace.visualstudio.com/items?itemName=FrederickDineen.pumpkin-vscode)**.
+2. Or visit the **[VS Code Marketplace (Click here to install)](https://marketplace.visualstudio.com/items?itemName=FrederickDineen.pumpkin-vscode)**.
 3. Click **Install**.
 
 ---
@@ -59,7 +59,7 @@ Just type `npx pumpkin repl` to start playing immediately.
 
 ```bash
 $ npx pumpkin repl
-Welcome to Pumpkin v0.1.7 🎃
+Welcome to Pumpkin v0.1.8 🎃
 > show "Hello World"
 "Hello World"
 > let x = 10
