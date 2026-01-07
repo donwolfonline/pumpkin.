@@ -1,11 +1,11 @@
 # 🎃 Pumpkin: Code for Humans
 
 > **The programming language that grows your ideas.**
-> *v0.1.7 - The Foundation Release*
+> *v0.1.8 - The Foundation Release*
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
-[![Version](https://img.shields.io/badge/version-0.1.7-orange.svg)]()
-[![Status](https://img.shields.io/badge/status-experimental-blue.svg)]()
+[![Version](https://img.shields.io/badge/version-0.1.8-orange.svg)](https://www.npmjs.com/package/pumpkin-lang)
+[![Status](https://img.shields.io/badge/status-experimental-blue.svg)](https://github.com/donwolfonline/pumpkin.)
 
 Pumpkin is a programming language built for **humans**, not robots. It removes the scary symbols and confusing jargon, replacing them with clear instructions that make sense the first time you read them.
 
@@ -28,17 +28,22 @@ Pumpkin is designed for **Creative Coding**, **Learning**, and **Exploration**.
 
 ### CLI (Mac, Linux, Windows)
 
-You can install the Pumpkin CLI via npm. It works on any machine with Node.js installed.
+You can install the Pumpkin CLI via npm. We recommend a global installation for the best experience:
 
 ```bash
+# Recommended: Global installation
+npm install -g pumpkin-lang
+
+# Or local installation (requires npx)
 npm install pumpkin-lang
 ```
 
 Verify the installation:
 
 ```bash
-npx pumpkin --version
-# Output: 🎃 Pumpkin v0.1.7
+pumpkin --version
+# Or if local: npx pumpkin --version
+# Output: 🎃 Pumpkin v0.1.8
 ```
 
 ### Editor Support (VS Code)
@@ -64,7 +69,7 @@ Just type `npx pumpkin repl` to start playing immediately.
 
 ```bash
 $ npx pumpkin repl
-Welcome to Pumpkin v0.1.7 🎃
+Welcome to Pumpkin v0.1.8 🎃
 > show "Hello World"
 "Hello World"
 > let x = 10
