@@ -52,7 +52,7 @@ export default function InstallationDocs() {
                         <p className="text-gray-700 font-medium mb-8 leading-relaxed">
                             Standalone executables for x86_64 systems. No dependencies required.
                         </p>
-                        <a href="https://github.com/donwolfonline/pumpkin" className="btn btn-secondary w-full text-center py-4 text-lg">
+                        <a href="https://github.com/donwolfonline/pumpkin./releases" className="btn btn-secondary w-full text-center py-4 text-lg">
                             Download Release
                         </a>
                     </div>
