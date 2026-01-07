@@ -1,10 +1,10 @@
 # 🎃 Pumpkin: Code for Humans
 
 > **The programming language that grows your ideas.**
-> *v0.1.6 - The Foundation Release*
+> *v0.1.7 - The Foundation Release*
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
-[![Version](https://img.shields.io/badge/version-0.1.6-orange.svg)]()
+[![Version](https://img.shields.io/badge/version-0.1.7-orange.svg)]()
 [![Status](https://img.shields.io/badge/status-experimental-blue.svg)]()
 
 Pumpkin is a programming language built for **humans**, not robots. It removes the scary symbols and confusing jargon, replacing them with clear instructions that make sense the first time you read them.
@@ -38,8 +38,21 @@ Verify the installation:
 
 ```bash
 npx pumpkin --version
-# Output: 🎃 Pumpkin v0.1.6
+# Output: 🎃 Pumpkin v0.1.7
 ```
+
+### Editor Support (VS Code)
+
+To get syntax highlighting and the official Pumpkin file icon in VS Code:
+
+1. Open your terminal.
+2. Run: `npx pumpkin install-extension`
+3. Restart VS Code.
+
+Alternatively, search for "Pumpkin Language Support" in the VS Code Extensions view.
+
+Once installed, your `.pumpkin` files will look like this:
+![Pumpkin Icon](assets/pumpkin.svg)
 
 ---
 
@@ -51,7 +64,7 @@ Just type `npx pumpkin repl` to start playing immediately.
 
 ```bash
 $ npx pumpkin repl
-Welcome to Pumpkin v0.1.6 🎃
+Welcome to Pumpkin v0.1.7 🎃
 > show "Hello World"
 "Hello World"
 > let x = 10

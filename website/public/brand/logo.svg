@@ -1,0 +1,15 @@
+<svg width="1024" height="1024" viewBox="0 0 1024 1024" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <!-- Stylized Pumpkin Shape -->
+  <rect x="440" y="80" width="144" height="120" rx="40" fill="#4B3621"/>
+  <path d="M512 240C240 240 80 400 80 600C80 840 240 940 512 940C784 940 944 840 944 600C944 400 784 240 512 240Z" fill="#FF8C1A"/>
+  
+  <!-- Subtle Internal Curves (Sections) -->
+  <path d="M350 260C280 350 220 450 220 600C220 750 280 850 350 920" stroke="#E67E14" stroke-width="24" stroke-linecap="round"/>
+  <path d="M674 260C744 350 804 450 804 600C804 750 744 850 674 920" stroke="#E67E14" stroke-width="24" stroke-linecap="round"/>
+
+  <!-- Code Symbols Concept < P > -->
+  <path d="M320 520L240 600L320 680" stroke="white" stroke-width="64" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M704 520L784 600L704 680" stroke="white" stroke-width="64" stroke-linecap="round" stroke-linejoin="round"/>
+  
+  <text x="512" y="660" font-family="system-ui, sans-serif" font-size="280" font-weight="900" text-anchor="middle" fill="white">P</text>
+</svg>

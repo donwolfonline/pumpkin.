@@ -1,0 +1,81 @@
+{
+    "scopeName": "source.pumpkin",
+    "patterns": [
+        {
+            "include": "#comments"
+        },
+        {
+            "include": "#keywords"
+        },
+        {
+            "include": "#strings"
+        },
+        {
+            "include": "#numbers"
+        },
+        {
+            "include": "#operators"
+        }
+    ],
+    "repository": {
+        "comments": {
+            "patterns": [
+                {
+                    "name": "comment.line.double-slash.pumpkin",
+                    "match": "//.*$"
+                },
+                {
+                    "name": "comment.line.number-sign.pumpkin",
+                    "match": "#.*$"
+                }
+            ]
+        },
+        "keywords": {
+            "patterns": [
+                {
+                    "name": "keyword.control.pumpkin",
+                    "match": "\\b(let|show|ask|into|if|else|repeat|times|while|function|return)\\b"
+                },
+                {
+                    "name": "constant.language.boolean.pumpkin",
+                    "match": "\\b(true|false)\\b"
+                }
+            ]
+        },
+        "strings": {
+            "name": "string.quoted.double.pumpkin",
+            "begin": "\"",
+            "end": "\"",
+            "patterns": [
+                {
+                    "name": "constant.character.escape.pumpkin",
+                    "match": "\\\\."
+                }
+            ]
+        },
+        "numbers": {
+            "name": "constant.numeric.pumpkin",
+            "match": "\\b\\d+(\\.\\d+)?\\b"
+        },
+        "operators": {
+            "patterns": [
+                {
+                    "name": "keyword.operator.arithmetic.pumpkin",
+                    "match": "\\+|\\-|\\*|/|%"
+                },
+                {
+                    "name": "keyword.operator.comparison.pumpkin",
+                    "match": "==|!=|<=|>=|<|>"
+                },
+                {
+                    "name": "keyword.operator.logical.pumpkin",
+                    "match": "\\b(and|or|not)\\b"
+                },
+                {
+                    "name": "keyword.operator.assignment.pumpkin",
+                    "match": "="
+                }
+            ]
+        }
+    }
+}

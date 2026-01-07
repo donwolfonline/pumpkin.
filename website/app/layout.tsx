@@ -30,7 +30,7 @@ export const metadata: Metadata = {
   title: "Pumpkin - Code for Humans",
   description: "The programming language you can actually read. Built for beginners, designed for clarity.",
   icons: {
-    icon: '/favicon.png',
+    icon: '/brand/logo.svg',
   },
 };
 

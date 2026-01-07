@@ -26,13 +26,14 @@ export default function Navbar() {
                 <div className="flex justify-between items-center py-4">
                     <Link href="/" className="flex items-center gap-2 group transition-transform hover:scale-105 active:scale-95">
                         <Image
-                            src="/pumpkin-dot-logo.png"
+                            src="/brand/logo.svg"
                             alt="Pumpkin Logo"
-                            width={220}
-                            height={55}
-                            className="h-12 w-auto"
+                            width={50}
+                            height={50}
+                            className="h-10 w-auto"
                             priority
                         />
+                        <span className="font-crazy font-black text-2xl text-gray-900 -ml-1">Pumpkin.</span>
                     </Link>
 
                     {/* Desktop Navigation */}

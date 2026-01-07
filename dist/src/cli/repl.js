@@ -9,7 +9,7 @@ import { PumpkinVM } from '../../pumpkin_core/pkg/pumpkin_core.js';
 // @ts-ignore
 import { parseToAST } from '../parser.js';
 export async function replCommand() {
-    console.log("🎃 Pumpkin REPL v0.1.6");
+    console.log("🎃 Pumpkin REPL v0.1.7");
     console.log("Type 'exit' to quit.\n");
     // 1. Initialize VM (WASM is auto-loaded by the nodejs target bridge)
     const vm = new PumpkinVM();

@@ -1,0 +1,47 @@
+{
+  "name": "pumpkin-vscode",
+  "displayName": "Pumpkin Language Support",
+  "description": "Syntax highlighting and official file icon for the Pumpkin programming language.",
+  "version": "0.1.0",
+  "publisher": "citrullix",
+  "engines": {
+    "vscode": "^1.75.0"
+  },
+  "categories": [
+    "Programming Languages"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/donwolfonline/pumpkin."
+  },
+  "license": "MIT",
+  "contributes": {
+    "languages": [
+      {
+        "id": "pumpkin",
+        "aliases": [
+          "Pumpkin",
+          "pumpkin"
+        ],
+        "extensions": [
+          ".pumpkin"
+        ],
+        "configuration": "./language-configuration.json",
+        "icon": {
+          "light": "./images/icon.svg",
+          "dark": "./images/icon.svg"
+        }
+      }
+    ],
+    "grammars": [
+      {
+        "language": "pumpkin",
+        "scopeName": "source.pumpkin",
+        "path": "./syntaxes/pumpkin.tmLanguage.json"
+      }
+    ]
+  },
+  "devDependencies": {
+    "@vscode/vsce": "^3.7.1"
+  }
+}
