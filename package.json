@@ -26,7 +26,7 @@
     "wasm"
   ],
   "author": "Pumpkin Team",
-  "license": "MIT",
+  "license": "(MIT OR GPL-3.0)",
   "description": "A friendly, interpreted language designed for education.",
   "dependencies": {
     "@types/node": "^25.0.3",

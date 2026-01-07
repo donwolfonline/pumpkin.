@@ -138,7 +138,7 @@ We love contributors! This project is a great place to learn about language desi
 
 ## 📜 License
 
-Pumpkin is released under the [MIT License](LICENSE).
+Pumpkin is released under the [MIT License](LICENSE) and the [GNU GPL v3](LICENSE-GPL). You may choose either license to govern your use of the software.
 
 **Trademark Notice:** The name "Pumpkin", and the "Pumpkin." logo are trademarks of Citrullix Inc. Use of these marks in derivative works requires explicit permission to avoid community confusion.
 

@@ -17,18 +17,33 @@ export default function Footer() {
                             </Link>
                         </div>
 
-                        <a
-                            href="https://github.com/donwolfonline/pumpkin/blob/main/LICENSE"
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            className="group flex items-center gap-2 text-xs font-medium text-gray-400 hover:text-pumpkin-orange transition-colors mt-1"
-                        >
-                            {/* MIT License Icon / Logo Representation */}
-                            <svg viewBox="0 0 24 24" className="w-4 h-4 fill-current opacity-70 group-hover:opacity-100" aria-label="MIT License">
-                                <path d="M9 7V17M15 7V17M4 5H20V19H4V5Z" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" fill="none" />
-                            </svg>
-                            Released under MIT License
-                        </a>
+                        <div className="flex flex-col sm:flex-row items-center gap-2 mt-1">
+                            <a
+                                href="https://github.com/donwolfonline/pumpkin/blob/main/LICENSE"
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                className="group flex items-center gap-2 text-xs font-medium text-gray-400 hover:text-pumpkin-orange transition-colors"
+                            >
+                                {/* MIT License Icon */}
+                                <svg viewBox="0 0 24 24" className="w-4 h-4 fill-current opacity-70 group-hover:opacity-100" aria-label="MIT License">
+                                    <path d="M9 7V17M15 7V17M4 5H20V19H4V5Z" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" fill="none" />
+                                </svg>
+                                MIT License
+                            </a>
+                            <span className="hidden sm:inline text-gray-300 mx-1">•</span>
+                            <a
+                                href="https://github.com/donwolfonline/pumpkin/blob/main/LICENSE-GPL"
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                className="group flex items-center gap-2 text-xs font-medium text-gray-400 hover:text-pumpkin-orange transition-colors"
+                            >
+                                {/* GPL License Icon (Scale) */}
+                                <svg viewBox="0 0 24 24" className="w-4 h-4 fill-current opacity-70 group-hover:opacity-100" aria-label="GPL License">
+                                    <path d="M3 6h18M7 6v14a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2V6M10 10v6M14 10v6" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" fill="none" />
+                                </svg>
+                                GPL v3
+                            </a>
+                        </div>
                     </div>
 
                     {/* Center: Founder Info (Prominent) */}
