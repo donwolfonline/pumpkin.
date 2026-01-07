@@ -41,19 +41,6 @@ npx pumpkin --version
 # Output: 🎃 Pumpkin v0.1.7
 ```
 
-### Editor Support (VS Code)
-
-To get syntax highlighting and the official Pumpkin file icon in VS Code:
-
-1. Open your terminal.
-2. Run: `npx pumpkin install-extension`
-3. Restart VS Code.
-
-Alternatively, search for "Pumpkin Language Support" in the VS Code Extensions view.
-
-Once installed, your `.pumpkin` files will look like this:
-![Pumpkin Icon](assets/pumpkin.svg)
-
 ---
 
 ## ⚡ Quick Start
