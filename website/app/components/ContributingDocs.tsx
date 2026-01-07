@@ -111,7 +111,7 @@ export default function ContributingDocs() {
                     <p className="text-xl font-bold text-gray-800 mb-10 max-w-2xl mx-auto leading-relaxed">
                         Stuck on a build error? Confused by the VM logic? We&apos;re here to help you grow. No gatekeeping, just coding.
                     </p>
-                    <a href="https://github.com/donwolfonline/pumpkin/issues" className="btn btn-primary px-12 py-5 text-2xl group-hover:scale-105 transition-transform">
+                    <a href="https://github.com/donwolfonline/pumpkin./issues" className="btn btn-primary px-12 py-5 text-2xl group-hover:scale-105 transition-transform">
                         Explore Open Issues
                     </a>
                 </div>
