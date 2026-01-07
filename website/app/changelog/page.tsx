@@ -12,7 +12,7 @@ const logs = [
         title: 'Release: Official Branding & Editor Support',
         changes: [
             'Designed and integrated official Pumpkin SVG branding across the ecosystem.',
-            'Launched the official VS Code Marketplace extension (FrederickDineen.pumpkin-vscode). You can [find it here](https://marketplace.visualstudio.com/items?itemName=FrederickDineen.pumpkin-vscode).',
+            'Launched the official VS Code Marketplace extension (FrederickDineen.pumpkin-vscode). [Click here to install](https://marketplace.visualstudio.com/items?itemName=FrederickDineen.pumpkin-vscode).',
             'Added `install-extension` command to CLI for effortless editor setup.',
             'Updated CLI and website components with v0.1.7 synchronization.',
         ],
