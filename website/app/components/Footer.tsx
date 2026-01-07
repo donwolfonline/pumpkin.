@@ -17,7 +17,7 @@ export default function Footer() {
                             </Link>
                         </div>
 
-                        <div className="flex flex-col sm:flex-row items-center gap-2 mt-1">
+                        <div className="flex flex-row items-center gap-3 mt-1">
                             <a
                                 href="https://github.com/donwolfonline/pumpkin/blob/main/LICENSE"
                                 target="_blank"
@@ -30,7 +30,7 @@ export default function Footer() {
                                 </svg>
                                 MIT License
                             </a>
-                            <span className="hidden sm:inline text-gray-300 mx-1">•</span>
+                            <span className="text-gray-300 mx-1">•</span>
                             <a
                                 href="https://github.com/donwolfonline/pumpkin/blob/main/LICENSE-GPL"
                                 target="_blank"
