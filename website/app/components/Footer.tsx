@@ -21,7 +21,7 @@ export default function Footer() {
                     {/* Licenses */}
                     <div className="flex items-center gap-3">
                         <a
-                            href="https://github.com/donwolfonline/pumpkin/blob/main/LICENSE"
+                            href="https://github.com/donwolfonline/pumpkin./blob/main/LICENSE"
                             target="_blank"
                             rel="noopener noreferrer"
                             className="group flex items-center gap-2 text-gray-400 hover:text-pumpkin-orange transition-colors"
@@ -34,7 +34,7 @@ export default function Footer() {
                         </a>
                         <span className="text-gray-300">•</span>
                         <a
-                            href="https://github.com/donwolfonline/pumpkin/blob/main/LICENSE-GPL"
+                            href="https://github.com/donwolfonline/pumpkin./blob/main/LICENSE-GPL"
                             target="_blank"
                             rel="noopener noreferrer"
                             className="group flex items-center gap-2 text-gray-400 hover:text-pumpkin-orange transition-colors"
