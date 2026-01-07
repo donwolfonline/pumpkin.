@@ -8,6 +8,18 @@ import Footer from '../components/Footer';
 const logs = [
     {
         date: 'Jan 7, 2026',
+        version: 'v0.1.7',
+        title: 'Release: Official Branding & Editor Support',
+        changes: [
+            'Designed and integrated official Pumpkin SVG branding across the ecosystem.',
+            'Launched the official VS Code Marketplace extension for syntax highlighting and file icons.',
+            'Added `install-extension` command to CLI for effortless editor setup.',
+            'Updated CLI and website components with v0.1.7 synchronization.',
+        ],
+        icon: '🎨'
+    },
+    {
+        date: 'Jan 7, 2026',
         version: 'v0.1.6',
         title: 'Hotfix: Documentation Sync',
         changes: [
