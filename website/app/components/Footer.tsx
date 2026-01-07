@@ -100,6 +100,17 @@ export default function Footer() {
                             </svg>
                         </a>
                         <a
+                            href="https://marketplace.visualstudio.com/items?itemName=FrederickDineen.pumpkin-vscode"
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="text-gray-600 hover:text-[#0078D4] transition-all transform hover:scale-110"
+                            aria-label="VS Code Marketplace"
+                        >
+                            <svg viewBox="0 0 23 23" className="w-5 h-5 fill-current" role="img" aria-label="Microsoft">
+                                <path d="M11.4 0H0v11.4h11.4V0zM23 0H11.6v11.4H23V0zM11.4 11.6H0V23h11.4V11.6zM23 11.6H11.6V23H23V11.6z" />
+                            </svg>
+                        </a>
+                        <a
                             href="https://github.com/donwolfonline/pumpkin."
                             target="_blank"
                             rel="noopener noreferrer"

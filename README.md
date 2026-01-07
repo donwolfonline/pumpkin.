@@ -41,6 +41,14 @@ npx pumpkin --version
 # Output: 🎃 Pumpkin v0.1.7
 ```
 
+### Editor Support (VS Code)
+
+To get file icons and syntax highlighting, install our official extension:
+
+1. Search for **"Pumpkin Language Support"** in the VS Code Extensions view.
+2. Or visit the **[VS Code Marketplace](https://marketplace.visualstudio.com/items?itemName=FrederickDineen.pumpkin-vscode)**.
+3. Click **Install**.
+
 ---
 
 ## ⚡ Quick Start
