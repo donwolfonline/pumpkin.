@@ -8,17 +8,6 @@ import Footer from '../components/Footer';
 const logs = [
     {
         date: 'Jan 7, 2026',
-        version: 'v0.1.8',
-        title: 'Hotfix: CLI Accessibility',
-        changes: [
-            'Clarified local vs global installation in README and CLI messages.',
-            'Updated postinstall hint to suggest `npx` for standard installations.',
-            'Fixed broken links and badges in documentation.',
-        ],
-        icon: '🔧'
-    },
-    {
-        date: 'Jan 7, 2026',
         version: 'v0.1.7',
         title: 'Release: Official Branding & Editor Support',
         changes: [

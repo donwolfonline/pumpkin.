@@ -20,7 +20,7 @@ export function Console({ output, error }: ConsoleProps) {
     return (
         <div className="bg-gray-50 text-gray-800 font-mono p-4 rounded-lg h-full overflow-y-auto shadow-inner text-sm leading-relaxed border border-gray-200">
             <div className="text-gray-500 mb-2 select-none border-b border-gray-200 pb-1">
-                pumpkin-cli v0.1.8-web
+                pumpkin-cli v0.1.7-web
             </div>
 
             {/* Standard Output */}

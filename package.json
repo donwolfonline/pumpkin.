@@ -1,6 +1,6 @@
 {
   "name": "pumpkin-lang",
-  "version": "0.1.8",
+  "version": "0.1.7",
   "main": "dist/src/index.js",
   "type": "module",
   "bin": {
@@ -19,7 +19,7 @@
     "prepublishOnly": "npm run build",
     "start": "npm run build && node dist/src/cli.js repl",
     "test": "echo \"Error: no test specified\" && exit 1",
-    "postinstall": "echo \"\n🎃 Pumpkin Language installed! \n💡 To get file icons and syntax highlighting in VS Code, run: npx pumpkin install-extension\n\""
+    "postinstall": "echo \"\n🎃 Pumpkin Language installed! \n💡 To get file icons and syntax highlighting in VS Code, run: pumpkin install-extension\n\""
   },
   "keywords": [
     "pumpkin",
