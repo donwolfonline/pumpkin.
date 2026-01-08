@@ -1,4 +1,4 @@
-import { Github } from 'lucide-react';
+import { Github, Linkedin } from 'lucide-react';
 import Link from 'next/link';
 
 export default function Footer() {
@@ -109,6 +109,15 @@ export default function Footer() {
                             <svg viewBox="0 0 23 23" className="w-5 h-5 fill-current" role="img" aria-label="Microsoft">
                                 <path d="M11.4 0H0v11.4h11.4V0zM23 0H11.6v11.4H23V0zM11.4 11.6H0V23h11.4V11.6zM23 11.6H11.6V23H23V11.6z" />
                             </svg>
+                        </a>
+                        <a
+                            href="https://www.linkedin.com/company/iampumpkin"
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="text-gray-600 hover:text-[#0A66C2] transition-all transform hover:scale-110"
+                            aria-label="LinkedIn Company Page"
+                        >
+                            <Linkedin size={20} />
                         </a>
                         <a
                             href="https://github.com/donwolfonline/pumpkin."
