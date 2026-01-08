@@ -1,4 +1,4 @@
-import { Github, Linkedin } from 'lucide-react';
+import { Github, Linkedin, Twitter } from 'lucide-react';
 import Link from 'next/link';
 
 export default function Footer() {
@@ -118,6 +118,15 @@ export default function Footer() {
                             aria-label="LinkedIn Company Page"
                         >
                             <Linkedin size={20} />
+                        </a>
+                        <a
+                            href="https://x.com/thenewpumpkin"
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="text-gray-600 hover:text-black transition-all transform hover:scale-110"
+                            aria-label="Twitter / X"
+                        >
+                            <Twitter size={20} />
                         </a>
                         <a
                             href="https://github.com/donwolfonline/pumpkin."
