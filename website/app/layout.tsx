@@ -35,6 +35,7 @@ export const metadata: Metadata = {
 };
 
 import InteractiveBackground from "./components/InteractiveBackground";
+import { SpeedInsights } from "@vercel/speed-insights/next";
 
 export default function RootLayout({
   children,
@@ -49,6 +50,7 @@ export default function RootLayout({
       >
         <InteractiveBackground />
         {children}
+        <SpeedInsights />
       </body>
     </html>
   );
