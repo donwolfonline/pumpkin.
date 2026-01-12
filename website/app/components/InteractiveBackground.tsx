@@ -15,6 +15,18 @@ export default function InteractiveBackground() {
 
         let animationFrameId: number;
         let particles: Particle[] = [];
+        const offscreenCanvas = document.createElement('canvas');
+        const offscreenCtx = offscreenCanvas.getContext('2d');
+        const particleSize = 3;
+        offscreenCanvas.width = particleSize * 2;
+        offscreenCanvas.height = particleSize * 2;
+
+        if (offscreenCtx) {
+            offscreenCtx.fillStyle = 'rgba(255, 140, 26, 0.4)';
+            offscreenCtx.beginPath();
+            offscreenCtx.arc(particleSize, particleSize, particleSize / 2, 0, Math.PI * 2);
+            offscreenCtx.fill();
+        }
 
         const resize = () => {
             canvas.width = window.innerWidth;
@@ -27,10 +39,7 @@ export default function InteractiveBackground() {
             y: number;
             baseX: number;
             baseY: number;
-            size: number;
             density: number;
-            angle: number;
-            velocity: number;
             opacity: number;
             fadeDirection: number;
 
@@ -39,55 +48,44 @@ export default function InteractiveBackground() {
                 this.y = y;
                 this.baseX = x;
                 this.baseY = y;
-                this.size = Math.random() * 2 + 1;
-                this.density = Math.random() * 30 + 1;
-                this.angle = Math.random() * 360;
-                this.velocity = Math.random() * 0.02 + 0.01;
+                this.density = Math.random() * 20 + 1;
                 this.opacity = Math.random();
-                this.fadeDirection = Math.random() > 0.5 ? 0.01 : -0.01;
+                this.fadeDirection = Math.random() > 0.5 ? 0.005 : -0.005;
             }
 
             draw() {
-                if (!ctx) return;
-                ctx.fillStyle = `rgba(255, 140, 26, ${this.opacity * 0.4})`;
-                ctx.beginPath();
-                ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
-                ctx.fill();
+                if (!ctx || !offscreenCanvas) return;
+                ctx.globalAlpha = this.opacity;
+                ctx.drawImage(offscreenCanvas, this.x - particleSize, this.y - particleSize);
             }
 
             update() {
-                // Hurricane Swirl Logic
-                const dx = mouseRef.current.x - this.x;
-                const dy = mouseRef.current.y - this.y;
-                const distance = Math.sqrt(dx * dx + dy * dy);
-                const forceDirectionX = dx / distance;
-                const forceDirectionY = dy / distance;
-                const maxDistance = 300;
-                const force = (maxDistance - distance) / maxDistance;
+                const dxMouse = mouseRef.current.x - this.x;
+                const dyMouse = mouseRef.current.y - this.y;
+                const distanceSq = dxMouse * dxMouse + dyMouse * dyMouse;
+                const maxDistance = 200;
+                const maxDistanceSq = maxDistance * maxDistance;
 
-                if (distance < maxDistance) {
-                    // Pull towards mouse but add rotational velocity
-                    const swirlAngle = Math.atan2(dy, dx) + 0.1;
+                if (distanceSq < maxDistanceSq) {
+                    const distance = Math.sqrt(distanceSq);
+                    const force = (maxDistance - distance) / maxDistance;
+                    const swirlAngle = Math.atan2(dyMouse, dxMouse) + 0.1;
                     const targetX = mouseRef.current.x - Math.cos(swirlAngle) * distance;
                     const targetY = mouseRef.current.y - Math.sin(swirlAngle) * distance;
 
-                    this.x += (targetX - this.x) * force * 0.1;
-                    this.y += (targetY - this.y) * force * 0.1;
+                    this.x += (targetX - this.x) * force * 0.2;
+                    this.y += (targetY - this.y) * force * 0.2;
                 } else {
-                    // Drift back slowly
                     if (this.x !== this.baseX) {
-                        const dx = this.x - this.baseX;
-                        this.x -= dx / 50;
+                        this.x -= (this.x - this.baseX) * 0.05;
                     }
                     if (this.y !== this.baseY) {
-                        const dy = this.y - this.baseY;
-                        this.y -= dy / 50;
+                        this.y -= (this.y - this.baseY) * 0.05;
                     }
                 }
 
-                // Opacity pulse (disappearing/showing)
                 this.opacity += this.fadeDirection;
-                if (this.opacity > 0.8 || this.opacity < 0.1) {
+                if (this.opacity > 0.6 || this.opacity < 0.1) {
                     this.fadeDirection *= -1;
                 }
             }
@@ -95,12 +93,11 @@ export default function InteractiveBackground() {
 
         const init = () => {
             particles = [];
-            const spacing = 40;
+            const spacing = 80; // Increased spacing to significantly reduce particle count
             for (let y = 0; y < canvas.height; y += spacing) {
                 for (let x = 0; x < canvas.width; x += spacing) {
-                    // Add slight randomness to grid
-                    const posX = x + (Math.random() - 0.5) * 10;
-                    const posY = y + (Math.random() - 0.5) * 10;
+                    const posX = x + (Math.random() - 0.5) * 20;
+                    const posY = y + (Math.random() - 0.5) * 20;
                     particles.push(new Particle(posX, posY));
                 }
             }
@@ -108,10 +105,11 @@ export default function InteractiveBackground() {
 
         const animate = () => {
             ctx.clearRect(0, 0, canvas.width, canvas.height);
-            particles.forEach(p => {
-                p.update();
-                p.draw();
-            });
+            ctx.globalAlpha = 1.0;
+            for (let i = 0; i < particles.length; i++) {
+                particles[i].update();
+                particles[i].draw();
+            }
             animationFrameId = requestAnimationFrame(animate);
         };
 
